@@ -39,7 +39,7 @@
 <body>
 <br>
 <header>
-<h3 style="float: left; width: 30%; font-weight: bold;">&nbsp;모임하기</h3>
+<h3 style="float: left; width: 30%; font-weight: bold;">&nbsp;모1234123임하기</h3>
     <nav id="smallnav">
         <a href="#write" class="icon far fa-heart"></a>
         <a href="#meeting" class="icon far fa-heart"></a>
