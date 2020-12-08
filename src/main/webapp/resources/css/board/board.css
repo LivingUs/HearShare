@@ -1,0 +1,142 @@
+@charset "UTF-8";
+
+body {
+		background-image: url("../../images/overlay.png"), url("../../images/bg.jpg");
+		background-repeat: repeat, no-repeat;
+		background-size: auto, 100% 100%;
+		background-attachment: fixed;
+		overflow-y: scroll;
+	}
+
+#wrapper {
+      width: 70em;
+      margin: 0 auto;
+      min-height: 100vh;
+      max-width: 100%;
+      padding: 4em 0;
+      display: -moz-flex;
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      -ms-align-items: center;
+      align-items: center;
+      -moz-justify-content: center;
+      -webkit-justify-content: center;
+      -ms-justify-content: center;
+      justify-content: center;
+      -moz-transition: opacity 1s ease-in-out;
+      -webkit-transition: opacity 1s ease-in-out;
+      -ms-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out;
+   }
+
+/*smallnav*/
+    #smallnav {
+        text-align: right;
+    }
+
+    #smallnav>a {
+        margin: 0px 10px 0px 10px;
+        font-size: 30px;
+        color: black;
+    }
+
+    #smallnav>a:hover {
+        color: hotpink;
+    }
+
+/*a*/
+a:link { text-decoration: none;}
+
+/* main */
+
+#main {
+      position: relative;
+      overflow: hidden;
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+
+
+
+
+
+
+
+/*Board*/
+.card {
+	position: relative;
+    text-align: left;
+    display: inline-block;
+    margin-right: 21px;
+    margin-bottom: 40px;
+    color : black;
+}
+
+#boardListSub a {
+	text-decoration : none;
+}
+
+#boardListSub a:nth-child(3n+0)>.card {
+	margin-right: 0px;
+}
+
+.card h5 {
+	font-weight : bold;
+}
+
+.card-title {
+	display:block;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.card-text {
+	font-size:14px;
+	height:130px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space: normal;
+	text-align: left; 
+	word-wrap: break-word; 
+	display: -webkit-box; 
+	-webkit-line-clamp: 6; 
+	-webkit-box-orient: vertical;
+	margin-bottom:35px;
+}
+
+.card-body-other * {
+	position: relative;
+	float:left;
+}
+
+.card-body-other i {
+	margin-right:5px;
+}
+
+.card-body-other p {
+	bottom : 5px;
+	margin-right:25px;
+	margin-bottom : 0px;
+}
+
+#boardList a {
+	color : black;
+}
+
+.fas.fa-heart {
+	color : red;
+}
