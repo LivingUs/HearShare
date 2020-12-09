@@ -6,57 +6,33 @@
 <head>
 <meta charset="UTF-8">
 <title>자동결제 관리</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/member/autoPay.css">
+<link rel="shortcut icon" type="image⁄x-icon" href="/resources/images/home.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<style>
-	body {
-		box-sizing: border-box;
-		margin : 0 auto;
-	}
-	#autoPay_top {
-		width : 800px;
-		margin : 0 auto;
-	}
-	.autoPay_tb1 {
-		width : 550px;
-		height : 70px;
-		margin: 0 auto;
-		border-spacing: inherit;
-	}
-	.autoPay_tb1 th {
-		text-align: center;
-	}
-	.autoPay_tb1 td {
-		height : 20px;
-	}
-	#autoPay_bottom {
-		margin : 0 auto;
-		width : 800px;
-		height : 300px;
-	}
-	#autoPay_tb2 {
-		height : 200px;
-		overflow-y: auto;
-	}
-	#autoPay_tb2 .table{
-		margin : 0 auto;
-		color : black;
-		text-align: center;
-		border-collapse: collapse;
-		table-layout: fixed;
-	}
-	#autoPay_tb2 .table th {
-		background : #eeb6a5;
-		text-align: center;
-		position: sticky;
-		top : 0px;
-		height : 20px;
-	}
-
-</style>
+<script src="//code.jquery.com/jquery.min.js"></script>
 </head>
 <body>
+<br>
+	<div id="wrapper">
+        
+		<!-- Nav -->
+		<jsp:include page="../common/menuBar.jsp"></jsp:include>
+        <br>
+        <br>
+		<div id="main">
+			<article id="ticket" class="panel intro">
+				<header>
+					<h3 style="float: left; width: 30%; font-weight: bold;">&nbsp;Theme Ticket</h3>
+					    <nav id="smallnav">
+					        <a href="#mypage" onclick=""><i class="fas fa-user-edit"></i></a> 
+					        <a href="#ticket" onclick="location.href='payAllList.do'"><i class="fas fa-ticket-alt"></i></a> 
+					        <a href="#autoPay"><i class="far fa-credit-card"></i></a> 
+					        <a href="#chart"><i class="fas fa-chart-bar"></i></a> 
+					    </nav>
+					    <hr>
+				</header>
+<section>
 	<div class="wrapper_autoPay">
 		<h2 align="center">자동결제일은 매달 <span style="font-size : 1.3em;">1일</span>입니다.</h2>
 		<hr>
@@ -72,21 +48,23 @@
 					<th>결제수단</th>
 					<td>신용카드</td>
 					<th>다음 결제일</th>
-					<td>2020-11-01&nbsp;&nbsp;<input type="submit" value="해지하기"></td>
+					<td>2020-11-01&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<th>결제금액</th>
 					<td>500,000원</td>
 					<th></th>
-					<td></td>
+					<td>
+					<input class="btn btn-default" type="submit" value="해지하기" style="width:100px;height:30px;padding-top:-10px;">
+					</td>
 				</tr>
 			</table>
 		</div>
 		<br>
 		<div id="autoPay_bottom">
-			<h4 style="font-weight: 900">자동결제 정보</h4>
-			<div id="autoPay_tb2">
-				<table class="table autoPay_tb2">
+			<h4 style="font-weight: 900;" align="center">자동결제 정보</h4><br>
+			<div id="autoPay_tb">
+				<table class="table autoPay_tb">
 					<tr>
 						<th style="width:8%;">No.</th>
 						<th style="width:12%;">결제일</th>
@@ -147,5 +125,10 @@
 			</div>
 		</div>
 	</div>
+	<br><br><br>
+</section>
+</article>
+</div>
+</div>
 </body>
 </html>

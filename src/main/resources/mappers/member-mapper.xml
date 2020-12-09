@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="Member">
+<mapper namespace="MemberMapper">
+
+	<select id="studyPayList" resultType="Reserve">
+		SELECT RDATE, COUNT(RTIME) "RTIME"
+		FROM RESERVE
+		WHERE MEMBERID='user22' AND RTYN='Y' AND RCODE='S'
+		GROUP BY RDATE
+		ORDER BY RDATE DESC
+	</select>
+	
+	<!-- studyPay select검색 -->
+	<select id="studySelect" parameterType="map" resultType="Reserve">
+		SELECT RDATE, COUNT(RTIME) "RTIME"
+		FROM RESERVE
+		WHERE MEMBERID='user22' AND RTYN='Y' AND RCODE='S'
+		AND SUBSTR(TO_CHAR(RDATE),1,2) LIKE SUBSTR(#{year},3,2) AND SUBSTR(TO_CHAR(RDATE),4,2) LIKE #{month}
+		GROUP BY RDATE
+		ORDER BY RDATE DESC
+	</select>
 
 </mapper>

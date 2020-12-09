@@ -8,7 +8,7 @@
 		<setting name="jdbcTypeForNull" value="NULL"></setting>
 	</settings>
 
-<!-- 
+
 	<typeAliases>
 		<typeAlias type="com.kh.spring.member.domain.Member" alias="Member"/>
 	</typeAliases>
@@ -17,5 +17,5 @@
 		<mapper resource="mappers/member-mapper.xml"/>
 	</mappers>
 
- -->
+
 </configuration>
