@@ -1,8 +1,11 @@
 package com.kh.spring.member.controller;
 
+import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.member.service.MemberService;
+import com.kh.spring.member.domain.Member;
 import com.kh.spring.member.domain.Reserve;
 
 @Controller
@@ -57,7 +62,5 @@ public class MemberController {
             return "member/ticket";
 		}
 	}
-
-	
 	
 }
