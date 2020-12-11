@@ -1,18 +1,10 @@
 package com.kh.spring.member.store;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.spring.member.domain.Account;
-import com.kh.spring.member.domain.MonthPay;
-import com.kh.spring.member.domain.Ticket;
-import com.kh.spring.member.domain.Reserve;
+import com.kh.spring.member.domain.Member;
 
 @Repository
 public class MemberStoreLogic implements MemberStore {
@@ -21,53 +13,28 @@ public class MemberStoreLogic implements MemberStore {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Reserve> studyPayList() {
-		return (ArrayList)sqlSession.selectList("MemberMapper.studyPayList");
-	}
-	
-	@Override
-	public ArrayList<Reserve> studySelect(HashMap<String, String> paramMap) {
-		return (ArrayList)sqlSession.selectList("MemberMapper.studySelect", paramMap);
-	}
-	
-	@Override
-	public ArrayList<Ticket> studyTicketList() {
-		return null;
+	public int joinMember(Member member) {
+		return sqlSession.insert("MemberMapper.joinMember", member);
 	}
 
 	@Override
-	public ArrayList<Reserve> healthHealthList() {
-		return null;
+	public int idRecheck(String memberId) {
+		return sqlSession.selectOne("MemberMapper.checkIdDup", memberId);
 	}
 
 	@Override
-	public ArrayList<Ticket> healthTicketList() {
-		return null;
+	public Member loginMember(Member member) {
+		return sqlSession.selectOne("MemberMapper.loginMember", member);
 	}
 
 	@Override
-	public int insertTicket(Ticket ticket) {
+	public int updateMember(Member member) {
 		return 0;
 	}
 
 	@Override
-	public ArrayList<MonthPay> autoPayOne() {
-		return null;
-	}
-
-	@Override
-	public ArrayList<MonthPay> autoPayList() {
-		return null;
-	}
-
-	@Override
-	public int insertAccount(Account account) {
+	public int deleteMember(String memberId) {
 		return 0;
-	}
-
-	@Override
-	public ArrayList<Account> accountList() {
-		return null;
 	}
 
 }
