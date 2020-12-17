@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="placeMapper">
+	
+	<resultMap type="Place" id="placeResultMap">
+		<result property="pNo" column="PNO"></result>
+		<result property="pTitle" column="PTITLE"></result>
+		<result property="pmTitle" column="PMTITLE"></result>
+		<result property="pAddr" column="PADDR"></result>
+		<result property="pPhone" column="PPHONE"></result>
+		<result property="pPrice" column="PPRICE"></result>
+		<result property="pParkYN" column="PPARKYN"></result>
+		<result property="pSaletime" column="PSALETIME"></result>
+		<result property="pClosedate" column="PCLOSEDATE"></result>
+		<result property="pFilename" column="PFILENAME"></result>
+	</resultMap>
+	
+	<select id="placeList" resultType="Place">
+		SELECT * FROM PLACE
+		ORDER BY PNO ASC
+	</select>
+	
+	<select id="placedetail" resultMap="placeResultMap">
+		SELECT * FROM PLACE
+		WHERE PNO = #{pNo}
+	</select>
+	
+	<select id="placeplaytop5" resultType="Place">
+		SELECT * FROM PLACE
+		WHERE PNO='7' OR PNO='13' OR PNO='19' OR PNO='23' OR PNO='29'
+	</select>
+	
+	<select id="placeeattop5" resultType="Place">
+		SELECT * FROM PLACE
+		WHERE PNO='4' OR PNO='10' OR PNO='16' OR PNO='22' OR PNO='28'
+	</select>
+	
+	<insert id="addReview">
+		INSERT INTO MREVIEW
+		VALUES(MREVIEW_SEQ.NEXTVAL, #{memberId}, #{mrContent}, SYSDATE, #{pNo})
+	</insert>
+	
+	<select id="reviewList" resultType="Mreview">
+		SELECT * FROM MREVIEW
+		WHERE PNO = #{pNo}
+		ORDER BY MRNO DESC
+	</select>
+	
+	<delete id="ReviewDelete">
+		DELETE FROM MREVIEW
+		WHERE MRNO = #{mrNo}
+	</delete>
+</mapper>

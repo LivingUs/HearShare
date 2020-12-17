@@ -1,0 +1,198 @@
+body {
+      background-image: url("../../images/overlay.png"), url("../../images/bg.jpg");
+      background-repeat: repeat, no-repeat;
+      background-size: auto, 100% 100%;
+      background-attachment: fixed;
+      overflow-y: scroll;
+   }
+
+#wrapper {
+      width: 70em;
+      margin: 0 auto;
+      min-height: 100vh;
+      max-width: 100%;
+      padding: 4em 0;
+      display: -moz-flex;
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      -ms-align-items: center;
+      align-items: center;
+      -moz-justify-content: center;
+      -webkit-justify-content: center;
+      -ms-justify-content: center;
+      justify-content: center;
+      -moz-transition: opacity 1s ease-in-out;
+      -webkit-transition: opacity 1s ease-in-out;
+      -ms-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out;
+   }
+
+/*smallnav*/
+    #smallnav {
+        text-align: right;
+    }
+
+    #smallnav>a {
+        margin: 0px 10px 0px 10px;
+        font-size: 30px;
+        color: black;
+        text-decoration: none;
+    }
+
+    #smallnav>a:hover {
+        color: hotpink;
+    }
+
+/*a*/
+a:link { text-decoration: none;}
+
+/* main */
+
+#main {
+      position: relative;
+      overflow: hidden;
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+
+    #Mmodify_btn,
+    #Mdelete_btn {
+        width: 120px;
+        height: 40px;
+        background-color: #F7DBD3;
+        color: black;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        float: right;
+        color: white;
+        margin-top: -17px;
+    }
+    
+    #Mdelete_btn {
+        border-right: 1px solid lightgray;
+        height: 40px;
+    }
+    
+    #Mmodify_btn:hover,
+    #Mdelete_btn:hover {
+        background-color: #eeb6a5;
+    }
+    
+    #meetingdetail_div,
+    #meetingdetail_div2 {
+        width: 900px;
+    }
+
+    #meetingdetail_img {
+        width: 300px;
+        height: 300px;
+        float: left;
+        margin-right: 20px;
+    }
+
+    #meetingdetail_title {
+        font-size: 25px;
+        font-weight: bold;
+        color: black;
+        float: left;
+    }
+    
+    #meetingdetail_subtitle {
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    
+    #meetingdetail_date {
+        font-weight: bold;
+        color: black;
+        font-size: 20px;
+    }
+    
+    #meetingdetail_bar {
+        border: 1px solid lightgray;
+        font-size: 1px;
+        position: relative;
+        left: 5px;
+        bottom: 3px;
+    }
+    
+    #meetingdetail_icon {
+        font-size: 20px;
+        color: black;
+    }
+    
+    #meetingdetail_person {
+        font-weight: bold;
+        color: black;
+        font-size: 20px;
+    }
+    
+    #meetingdetail_textarea {
+        width: 574px;
+        height: 183px;
+        border: none;
+    }
+    
+    #meetingdetail_function {
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+        position: relative;
+    }
+    
+    #meetingdetail_Fspan {
+        font-size: 15px; 
+        color: gray;
+    }
+    
+    #meetingdetail_Ctitle {
+        float: left;
+        font-weight: bold;
+        margin-left: 25px;
+        margin-top: -5px;
+        font-size: 22px;
+    }
+    
+    #meetingdetail_comment {
+        width: 770px;
+        margin: 0 auto;
+    }
+    
+    #meetingdetail_commentinsert {
+        width: 750px;
+        margin: 0 auto;
+    }
+    
+    #meetingdetail_commentbox {
+        border-radius: 5px;
+        width: 680px;
+        height: 40px;
+        padding-left: 10px;
+    }
+    
+    #meetingdetail_commentinsert_btn {
+        width: 60px;
+        height: 30px;
+/*         background-color: #eeb6a5;
+        border: none;
+        color: white; */
+        font-size: 13px;
+        border-radius: 5px;
+        margin-left: 5px;
+    }

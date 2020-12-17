@@ -1,0 +1,115 @@
+body {
+      background-image: url("../../images/overlay.png"), url("../../images/bg.jpg");
+      background-repeat: repeat, no-repeat;
+      background-size: auto, 100% 100%;
+      background-attachment: fixed;
+      overflow-y: scroll;
+   }
+
+#wrapper {
+      width: 70em;
+      margin: 0 auto;
+      min-height: 100vh;
+      max-width: 100%;
+      padding: 4em 0;
+      display: -moz-flex;
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      -ms-align-items: center;
+      align-items: center;
+      -moz-justify-content: center;
+      -webkit-justify-content: center;
+      -ms-justify-content: center;
+      justify-content: center;
+      -moz-transition: opacity 1s ease-in-out;
+      -webkit-transition: opacity 1s ease-in-out;
+      -ms-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out;
+   }
+
+/*smallnav*/
+    #smallnav {
+        text-align: right;
+    }
+
+    #smallnav>a {
+        margin: 0px 10px 0px 10px;
+        font-size: 30px;
+        color: black;
+        text-decoration: none;
+    }
+
+    #smallnav>a:hover {
+        color: hotpink;
+    }
+
+/*a*/
+a:link { text-decoration: none;}
+
+/* main */
+
+#main {
+      position: relative;
+      overflow: hidden;
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+
+    #placetop_subtitle {
+        font-size: 18px;
+        float: left;
+        position: relative;
+        top: 7px;
+        font-family: 'Jal_Onuel';
+    }
+    
+    #placetop_div {
+        width: 900px;
+    }
+
+    #placetop_img {
+        width: 200px;
+        height: 200px;
+        float: left;
+        margin-right: 20px;
+    }
+
+    #placetop_title {
+        font-size: 25px;
+        font-weight: bold;
+        color: black;
+        float: left;
+    }
+    
+    #placetop_like {
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    
+    #placetop_likespan {
+        font-size: 15px;
+        color: gray;
+        position: relative;
+        right: 7px;
+    }
+
+    #placetop_addr {
+        font-size: 20px;
+        color: gray;
+        float: left;
+        font-weight: bold;
+    } 

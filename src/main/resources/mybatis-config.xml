@@ -20,6 +20,11 @@
       <typeAlias type="com.kh.spring.other.domain.Ticket" alias="Ticket"/>
       <typeAlias type="com.kh.spring.other.domain.MonthPay" alias="MonthPay"/>
       <typeAlias type="com.kh.spring.other.domain.Account" alias="Account"/>
+      	<typeAlias type="com.kh.spring.meeting.domain.Meeting" alias="Meeting"/>
+		<typeAlias type="com.kh.spring.meeting.domain.Mcomment" alias="Mcomment"/>
+		<typeAlias type="com.kh.spring.meeting.domain.MeetingDetail" alias="MeetingDetail"/>
+		<typeAlias type="com.kh.spring.place.domain.Place" alias="Place"/>
+		<typeAlias type="com.kh.spring.place.domain.Mreview" alias="Mreview"/>
    </typeAliases>
 	
 	<mappers>
@@ -28,6 +33,9 @@
 		<mapper resource="mappers/reserve-mapper.xml"/>
 		<mapper resource="mappers/calendar-mapper.xml"/>
       <mapper resource="mappers/other-mapper.xml"/>
+      	<mapper resource="mappers/meeting-mapper.xml"/>
+		<mapper resource="mappers/place-mapper.xml"/>
+		<mapper resource="mappers/member-mapper.xml"/>
 		
 	</mappers>
 

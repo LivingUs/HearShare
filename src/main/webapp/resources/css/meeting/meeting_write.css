@@ -1,0 +1,127 @@
+body {
+      background-image: url("../../images/overlay.png"), url("../../images/bg.jpg");
+      background-repeat: repeat, no-repeat;
+      background-size: auto, 100% 100%;
+      background-attachment: fixed;
+      overflow-y: scroll;
+   }
+
+#wrapper {
+      width: 70em;
+      margin: 0 auto;
+      min-height: 100vh;
+      max-width: 100%;
+      padding: 4em 0;
+      display: -moz-flex;
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      -ms-align-items: center;
+      align-items: center;
+      -moz-justify-content: center;
+      -webkit-justify-content: center;
+      -ms-justify-content: center;
+      justify-content: center;
+      -moz-transition: opacity 1s ease-in-out;
+      -webkit-transition: opacity 1s ease-in-out;
+      -ms-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out;
+   }
+
+/*smallnav*/
+    #smallnav {
+        text-align: right;
+    }
+
+    #smallnav>a {
+        margin: 0px 10px 0px 10px;
+        font-size: 30px;
+        color: black;
+        text-decoration: none;
+    }
+
+    #smallnav>a:hover {
+        color: hotpink;
+    }
+
+/*a*/
+a:link { text-decoration: none;}
+
+/* main */
+
+#main {
+      position: relative;
+      overflow: hidden;
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+
+    #Msub_title {
+        font-size: 18px;
+        float: left;
+        position: relative;
+        top: 7px;
+        font-family: 'Jal_Onuel';
+    }
+    
+    #Mwrite_title {
+        font-size: 15px;
+        width: 400px;
+        height: 48px;
+        padding-left: 10px;
+    }
+    
+    #select_person,
+    #select_time {
+        width: 200px;
+        padding: .8em .5em;
+        border: 1px solid #999;
+        font-family: inherit;
+        background: url('/resources/images/meeting/arrow.jpg') no-repeat 95% 50%;
+        border-radius: 0px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        font-size: 15px;
+    }
+    
+    #select_person::-ms-expand,
+    #select_time::-ms-expand {
+        display: none;
+    } 
+    
+    #Mwrite_content {
+        width: 850px;
+        font-size: 15px;
+        padding: 10px;
+    }
+    
+    #Mwrite_btnfileselect {
+        display: inline-block;
+        padding: .5em .5em;
+        /* label의 패딩값과 일치 */
+        border: 1px solid #ebebeb;
+        position: relative;
+        top: 2px;
+        right: 5px;
+        border-radius: .25em;
+        width: 225px;
+    }
+    
+    #Mwrite_btn {
+        width: 100px;
+        height: 40px;
+        border-radius: 5px;
+    }

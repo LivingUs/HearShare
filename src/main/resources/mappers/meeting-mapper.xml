@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="meetingMapper">
+
+	<resultMap type="Meeting" id="meetingResultMap">
+		<result property="mNo" column="MNO"></result>
+		<result property="mTitle" column="MTITLE"></result>
+		<result property="mContent" column="MCONTENT"></result>
+		<result property="mWritedate" column="MWRITEDATE"></result>
+		<result property="mUpdatedate" column="MUPDATEDATE"></result>
+		<result property="moriginalFileName" column="MORIGINALFILENAME"></result>
+		<result property="mrenameFileName" column="MRENAMEFILENAME"></result>
+		<result property="mPeople" column="MPEOPLE"></result>
+		<result property="mDate" column="MDATE"></result>
+		<result property="mYN" column="MYN"></result>
+		<result property="mtime" column="MTIME"></result>
+		<result property="memberId" column="MEMBERID"></result>
+		<result property="pNo" column="PNO"></result>
+	</resultMap>
+
+	<insert id="meetingWrite">
+		INSERT INTO MEETING
+		VALUES(MEETING_SEQ.NEXTVAL, #{mTitle}, #{mContent}, SYSDATE, SYSDATE, #{moriginalFileName}, #{mrenameFileName}, #{mPeople}, #{mDate} , 'Y', 'Y', SYSDATE, #{memberId}, #{pNo})
+	</insert>
+	
+	<select id="selectPlace" resultMap="meetingResultMap">
+		SELECT * FROM MEETING
+		JOIN PLACE ON MEETING.PNO = PLACE.PNO
+		WHERE MEETING.PNO = #{pNo} AND MEETING.MNO = #{mNo}
+<!--		<selectKey keyProperty="mNo" resultType="Meeting" order="AFTER">
+			SELECT MEETING_SEQ.CURRVAL FROM DUAL
+		</selectKey> -->
+	</select>
+	
+	<select id="selectCurrVal">
+		SELECT MEETING_SEQ.CURRVAL FROM DUAL
+	</select>
+
+	<select id="meetingList" resultType="Meeting">
+		SELECT * FROM MEETING
+		ORDER BY MNO DESC
+	</select>
+	
+	<select id="meetingdetail" resultMap="meetingResultMap">
+		SELECT * FROM MEETING
+		WHERE MNO = #{mNo}
+	</select>
+	
+	<delete id="meetingDelete">
+		DELETE FROM MEETING
+		WHERE MNO = #{mNo}
+	</delete>
+	
+	<insert id="addComment">
+		INSERT INTO MCOMMENT
+		VALUES(MCOMMENT_SEQ.NEXTVAL, #{mcContent}, SYSDATE, #{memberId}, #{mNo})
+	</insert>
+	
+	<select id="commentList" resultType="Mcomment">
+		SELECT * FROM MCOMMENT
+		WHERE MNO = #{mNo}
+		ORDER BY MCTIME DESC
+	</select>
+	
+	<delete id="CommentDelete">
+		DELETE FROM MCOMMENT
+		WHERE MCNO = #{mcNo}
+	</delete>
+	
+</mapper>
