@@ -1,0 +1,138 @@
+@charset "UTF-8";
+/* 포인트 글꼴 */
+@font-face {
+    font-family: 'Jal_Onuel';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+		background-image: url("../../images/overlay.png"), url("../../images/bg.jpg");
+		background-repeat: repeat, no-repeat;
+		background-size: auto, 100% 100%;
+		background-attachment: fixed;
+		overflow-y: scroll;
+	}
+
+#wrapper {
+      width: 70em;
+      margin: 0 auto;
+      min-height: 100vh;
+      max-width: 100%;
+      padding: 4em 0;
+      display: -moz-flex;
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      -ms-align-items: center;
+      align-items: center;
+      -moz-justify-content: center;
+      -webkit-justify-content: center;
+      -ms-justify-content: center;
+      justify-content: center;
+      -moz-transition: opacity 1s ease-in-out;
+      -webkit-transition: opacity 1s ease-in-out;
+      -ms-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out;
+   }
+
+/*smallnav*/
+    #smallnav {
+        text-align: right;
+    }
+
+    #smallnav>a {
+        margin: 0px 10px 0px 10px;
+        font-size: 30px;
+        color: black;
+    }
+
+    #smallnav>a:hover {
+        color: hotpink;
+    }
+
+/*a*/
+a:link { text-decoration: none;}
+
+/* main */
+
+#main {
+      position: relative;
+      overflow: hidden;
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+   
+	div {
+		margin : 0 auto;
+	}
+	#chart_top {
+		height : 450px;
+	}
+	.chart_top {
+		width : 50%;
+		height : 450px;
+		float : left;
+	}
+	#chart_input {
+		height : 400px;
+		margin : 0 auto;
+		margin-top : 6px;
+		padding-top : 35px;
+		padding-left : 20px;
+		background-color : #FBEFEF;
+	}
+	#chart_div {
+		height : 400px;
+		margin : 0 auto;
+		margin-top : 6px;
+	}
+	#chart_bottom {
+		height : 900px;
+		margin-top : 15px;
+		margin : 0 auto;
+		background-color : #FBEFEF;
+	}
+	#chart_bottom_top {
+		height : 450px;
+		padding-top : 30px;
+	}
+	#chart_bottom_bottom {
+		height : 450px;
+		padding-top : 15px;
+	}
+	.chart_p {
+		font-size : 22px;
+		font-weight: 900;
+		padding-top : 1%;
+	}
+	.chart_tb {
+		width : 90%;
+		height : 220px;
+		margin : 0 auto;
+	}
+	.chart_tb .table {
+		margin : 0 auto;
+		color : black;
+		text-align: center;
+		table-layout: fixed;
+	}
+	.chart_tb .table th {
+		background : #eeb6a5;
+		text-align: center;
+	}
+	.chart_tb .table td{
+		border-bottom: 1px solid #eeb6a5;
+	}

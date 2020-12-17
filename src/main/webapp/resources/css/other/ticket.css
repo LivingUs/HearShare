@@ -1,0 +1,260 @@
+@charset "UTF-8";
+/* 포인트 글꼴 */
+@font-face {
+    font-family: 'Jal_Onuel';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+		background-image: url("../../images/overlay.png"), url("../../images/bg.jpg");
+		background-repeat: repeat, no-repeat;
+		background-size: auto, 100% 100%;
+		background-attachment: fixed;
+		overflow-y: scroll;
+	}
+
+#wrapper {
+      width: 70em;
+      margin: 0 auto;
+      min-height: 100vh;
+      max-width: 100%;
+      padding: 4em 0;
+      display: -moz-flex;
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      -ms-align-items: center;
+      align-items: center;
+      -moz-justify-content: center;
+      -webkit-justify-content: center;
+      -ms-justify-content: center;
+      justify-content: center;
+      -moz-transition: opacity 1s ease-in-out;
+      -webkit-transition: opacity 1s ease-in-out;
+      -ms-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out;
+   }
+
+/*smallnav*/
+    #smallnav {
+        text-align: right;
+    }
+
+    #smallnav>a {
+        margin: 0px 10px 0px 10px;
+        font-size: 30px;
+        color: black;
+    }
+
+    #smallnav>a:hover {
+        color: hotpink;
+    }
+
+/*a*/
+a:link { text-decoration: none;}
+
+/* main */
+
+#main {
+      position: relative;
+      overflow: hidden;
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+
+
+
+/* ticket */
+
+	* {
+		box-sizing : border-box;
+	}
+	#top_section {
+		height : 50px;
+		margin-left : 30px;
+	}
+	.title_tabs {
+		list-style: none;
+    	margin: 0 auto;
+		float: left;
+		width: 500px;
+		display: block;
+		text-align: center;
+		text-decoration: none;
+		color: black;
+		font-size : 20px;
+		padding: 15px 0;
+		background: #eeb6a5;
+		cursor: pointer;
+	}
+	.title_tabs:hover, .title_tabs:focus {
+		 text-decoration: none;
+		 color: black;
+		background : #FBEFEF;
+	}
+	#content_section {
+		width : 1000px;
+		height : 300px;
+		margin : 0 auto;
+	}
+	.mid {
+		float : left;
+		margin-top : 50px;
+		margin-left : 100px;
+	}
+	#p_text {
+		margin-top : 50px;
+		font-size : 30px;
+		text-align: center;
+	}
+	#tb_ticket {
+		width : 1000px;
+		height : 400px;
+		margin : 0 auto;
+	}
+	.tab {
+	  padding-top: 80px;
+	  margin-bottom: 20px;
+	  position: relative;
+	  overflow: hidden;
+	  background: #fff;
+	  width: 100%;
+	  margin: 0 auto;
+	  line-height: 1.5;
+	  font-weight: 300;
+	  color: #888;
+	  -webkit-font-smoothing: antialiased;
+	}
+	.tab_content {
+		background-color : #FBEFEF;
+	}
+	.tabs {
+	  display: table;
+	  position: relative;
+	  overflow: hidden;
+	  margin: 0;
+	  width: 100%;
+	  margin-left: 750px;
+	}
+	.tabs li {
+	  float: left;
+	  line-height: 38px;
+	  overflow: hidden;
+	  padding: 0;
+	  position: relative;
+	}
+	.tabs a {
+	  background-color: #eff0f2;
+	  border-bottom: 1px solid #fff;
+	  color: black;
+	  font-weight: 500;
+	  display: block;
+	  letter-spacing: 0;
+	  outline: none;
+	  padding: 0 20px;
+	  text-decoration: none;
+	  -webkit-transition: all 0.2s ease-in-out;
+	  -moz-transition: all 0.2s ease-in-out;
+	  transition: all 0.2s ease-in-out;
+	  border-bottom: 2px solid #eeb6a5;
+	}
+	.tabs_item {
+	  display: none;
+	  padding: 30px 0;
+	}
+	.tabs_item:first-child {
+	  display: block;
+	}
+	.current a {
+	  color: #fff;
+	  background: #eeb6a5;
+	}
+	#select_date {
+		margin-left : 380px;
+		margin-bottom : 20px;
+	}
+	.select_date {
+	 	 display: inline-block;
+	 	 height : 35px;
+	 	 width: 100px;
+		padding : 3px;
+		margin-top : 2px;
+		margin-right : 2px;
+		border-radius : 5px;
+		border : 1px solid lightgray;
+	}
+	#reserve_tb {
+		height : 200px;
+		overflow-y: auto;
+	}
+	#reserve_tb .table {
+		width : 850px;
+		margin-left : 60px;
+		color : black;
+		text-align: center;
+		border-collapse: collapse;
+		table-layout: fixed;
+	}
+	#reserve_tb .table th {
+		background : #eeb6a5;
+		text-align: center;
+		position: sticky;
+		top : 0px;
+	}
+	#ticket_tb .table {
+		width : 880px;
+		height : 200px;
+		margin : 0 auto;
+		color : black;
+		text-align: center;
+		table-layout: fixed;
+	}
+	#ticket_tb .table th {
+		background : #eeb6a5;
+		text-align: center;
+		height : 15px;
+	} 
+	p {
+		text-align: center;
+		font-size : 15px;
+		line-height : 30px;
+	}
+	.buy_study {
+		width : 800px;
+		height : 350px;
+		margin : 0 auto;
+	}
+	.study_pic {
+		float : left;
+		width : 400px;
+	}
+	.study_pic img {
+		width : 350px;
+		margin-top : 15px;
+		margin-left: 50px;
+	}
+	.study_submit {
+		float : left;
+		width : 300px;
+		margin-left : 30px;
+		margin-top : 15px;
+	}
+	.study_submit .radio {
+		font-size : 18px;
+		padding-top : 10px;
+		line-height: 1.8;
+	}

@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+/* ticket */
+
+	* {
+		box-sizing : border-box;
+	}
+	#ticket_tb .table {
+		width : 730px;
+		height : 180px;
+		margin : 0 auto;
+		color : black;
+		text-align: center;
+		table-layout: fixed;
+	}
+	#ticket_tb .table th {
+		background : #eeb6a5;
+		text-align: center;
+		height : 15px;
+	}

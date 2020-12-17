@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="OtherMapper">
+
+	<select id="studyPayList" resultType="Reserve">
+		SELECT RDATE, COUNT(RTIME) "RTIME"
+		FROM RESERVE
+		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='S'
+		GROUP BY RDATE
+		ORDER BY RDATE DESC
+	</select>
+
+	<!-- 스터디 정기권 남은 갯수 -->
+	<select id="studyTicket" resultType="Ticket">
+		SELECT SUM(TPRICENO)-SUM(TUSENO) "TYN"
+		FROM TICKET
+		WHERE TCODE='S' AND TYN='Y'
+		AND MEMBERID= #{memberId}
+	</select>
+
+	<!-- studyPay select검색 -->
+	<select id="studySelect" parameterType="map" resultType="Reserve">
+		SELECT RDATE, COUNT(RTIME) "RTIME"
+		FROM RESERVE
+		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='S'
+		AND SUBSTR(RDATE,1,2) LIKE SUBSTR(#{year},3,2) AND SUBSTR(RDATE,4,2) LIKE #{month}
+		GROUP BY RDATE
+		ORDER BY RDATE DESC
+	</select>
+	
+	<!-- 스터디 정기권 구매 조회 -->
+	<select id="studyTicketList" resultType="Ticket">
+		SELECT TNO, TDATE, TPRICENO, TPRICENO*800 "TUSENO", TPRICENO-TUSENO "TCODE"
+		FROM TICKET
+		WHERE TCODE='S' AND MEMBERID= #{memberId}
+		ORDER BY TNO DESC
+	</select>
+	
+	<!-- 스터디 페이징 -->
+	<select id="getListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM TICKET
+		WHERE TCODE='S' AND MEMBERID= #{memberId}
+	</select>
+	
+	<!-- 헬스룸 리스트 -->
+	<select id="healthPayList" resultType="Reserve">
+		SELECT RDATE, COUNT(RTIME) "RTIME"
+		FROM RESERVE
+		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='H'
+		GROUP BY RDATE
+		ORDER BY RDATE DESC
+	</select>
+	
+	<!-- 헬스 정기권 남은 갯수 -->
+	<select id="healthTicket" resultType="Ticket">
+		SELECT SUM(TPRICENO)-SUM(TUSENO) "TYN"
+		FROM TICKET
+		WHERE TCODE='H' AND TYN='Y'
+		AND MEMBERID= #{memberId}
+	</select>	
+	
+	<!-- 헬스 select검색 -->
+	<select id="healthSelect" parameterType="map" resultType="Reserve">
+		SELECT RDATE, COUNT(RTIME) "RTIME"
+		FROM RESERVE
+		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='H'
+		AND SUBSTR(RDATE,1,2) LIKE SUBSTR(#{year},3,2) AND SUBSTR(RDATE,4,2) LIKE #{month}
+		GROUP BY RDATE
+		ORDER BY RDATE DESC
+	</select>
+	
+	<!-- 헬스 정기권 구매 조회 -->
+	<select id="healthTicketList" resultType="Ticket">
+		SELECT TNO, TDATE, TPRICENO, TPRICENO*800 "TUSENO", TPRICENO-TUSENO "TCODE"
+		FROM TICKET
+		WHERE TCODE='H' AND MEMBERID= #{memberId}
+		ORDER BY TNO DESC
+	</select>
+	
+	<!-- 헬스 페이징 -->
+	<select id="getListCountHealth" resultType="int">
+		SELECT COUNT(*)
+		FROM TICKET
+		WHERE TCODE='H' AND MEMBERID= #{memberId}
+	</select>	
+	
+	<!-- 스터디 정기권 구매-->
+	<insert id="insertStudyTicket">
+		INSERT INTO TICKET
+		VALUES(TICKET_SEQ.NEXTVAL, SYSDATE, #{tPriceNo}, DEFAULT, 'S', DEFAULT, #{memberId})
+	</insert>
+	
+	<!-- 헬스 정기권 구매 -->
+	<insert id="insertHealthTicket">
+		INSERT INTO TICKET
+		VALUES(TICKET_SEQ.NEXTVAL, SYSDATE, #{tPriceNo}, DEFAULT, 'H', DEFAULT, #{memberId})
+	</insert>	
+	
+	<!-- 자동결제 해지 -->
+	<update id="autoPayStop">
+		UPDATE MONTHPAY SET MPTYN='N' WHERE MEMBERID=#{memberId}
+	</update>
+	
+	<!-- 자동결제 출력 -->
+	<select id="autoPayList" resultType="MonthPay">
+		SELECT MPNO, MPDATE, TRUNC(MPDATE,'MM') || ' ~ ' || LAST_DAY(MPDATE) "MEMBERID",
+		TO_CHAR(ADD_MONTHS( TRUNC(MPDATE,'MM'), 1 ),'YYYY-MM-DD') "NEXTPAY" , MPMEANS, MPTYN, MPPRICE
+		FROM MONTHPAY
+		WHERE MEMBERID=#{memberId}
+		ORDER BY MPNO DESC
+	</select>
+	
+	<!-- 가계부 입력 -->
+	<insert id="insertAccount">
+		INSERT INTO ACCOUNT
+		VALUES(ACCOUNT_SEQ.NEXTVAL, #{acInOut} , DEFAULT, #{acPrice}, #{acBig}, #{acSmall}, #{memberId})
+	</insert>
+	
+	<!-- 가계부 출력  -->
+	<select id="accountList" resultType="Account">
+		SELECT ACNO, ACDATE, TO_CHAR( ACPRICE , '999,999,999,999,999') "ACPRICE", ACBIG, ACSMALL, ACINOUT
+		FROM ACCOUNT
+		WHERE MEMBERID=#{memberId}
+		AND ACDATE BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)
+		ORDER BY ACDATE DESC
+	</select>
+	
+	<!-- 가계부 페이징 -->
+	<select id="getListCountAccount" resultType="int">
+		SELECT COUNT(*)
+		FROM ACCOUNT
+		WHERE MEMBERID=#{memberId}
+		AND ACDATE BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)
+	</select>
+	
+	<!-- 쉐어하우스 리스트 -->
+	<select id="monthList" resultType="Reserve">
+		SELECT COUNT(RDATE)*1000 "RDATE"
+		FROM RESERVE
+		WHERE MEMBERID=#{memberId} AND RTYN='N'
+		AND RDATE BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)
+		UNION ALL
+		SELECT COUNT(TPRICENO)*800 
+		FROM TICKET
+		WHERE MEMBERID=#{memberId}
+		AND TDATE BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)
+		UNION ALL
+		SELECT NVL(MAX(MPPRICE),0)
+		FROM MONTHPAY
+		WHERE MEMBERID=#{memberId}
+        AND MPDATE BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)
+	</select>
+	
+	<!-- 가계부 입출합계 -->
+	<select id="accountSum" resultType="Account">
+		SELECT NVL(SUM(CASE WHEN ACINOUT='in' THEN ACPRICE END),0) "ACIN",
+		        NVL(SUM(CASE WHEN ACINOUT='out' THEN ACPRICE END),0) "ACOUT"
+		FROM ACCOUNT
+		WHERE MEMBERID=#{memberId}
+		AND ACDATE BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)
+	</select>
+	
+	<!-- 엑셀 출력 -->
+	<select id="excelConvert" resultType="Account">
+		SELECT ACNO, ACDATE, TO_CHAR( ACPRICE , '999,999,999,999,999') "ACPRICE", ACBIG, ACSMALL, ACINOUT
+		FROM ACCOUNT
+		WHERE MEMBERID=#{memberId}
+		AND ACDATE BETWEEN TRUNC(SYSDATE,'MM') AND LAST_DAY(SYSDATE)
+		ORDER BY ACDATE DESC
+	</select>
+	
+	<!-- 차트 -->
+	
+	
+</mapper>
