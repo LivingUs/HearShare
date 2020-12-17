@@ -21,6 +21,11 @@
 
         <!-- Nav -->
 		<jsp:include page="common/menuBar.jsp"></jsp:include>
+		
+		<div id="welcome">
+			<h2>${loginMember.memberName }님 Hear : Share에 오신걸 환영합니다!</h2>
+			<img src="../../resources/images/firework.gif">
+		</div>
 	</div>
 </body>
 </html>

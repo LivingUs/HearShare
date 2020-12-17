@@ -19,7 +19,7 @@
 		<div id="main">
 			<article class="panel intro">
 				<header>
-					<h3>&nbsp;Board Write</h3>
+					<h3>&nbsp;Notice Write</h3>
 					    <nav id="smallnav">
 					        <a href="#" onclick="location.href='boardWrite.do'"><i class="fas fa-edit"></i></a> 
 					        <a href="#"><i class="fas fa-user-edit"></i></a> 
@@ -31,15 +31,7 @@
 					<article id="boardWriteForm">
 					<form action="boardWrite.do" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="memberId" value="${loginMember.memberId }">
-							<select class="custom-select" name="bHead">
-							  <option selected>글머리를 선택해주세요</option>
-							  <option value="소통해요">소통해요</option>
-							  <option value="궁금해요">궁금해요</option>
-							  <option value="건의해요">건의해요</option>
-							</select>
-							<br>
-							<br>
-							<br>
+							<input type="hidden" name="bHead" value="공지사항">
 							<div>
 								<h5>Title</h5>
 								<div class="input-group mb-3">

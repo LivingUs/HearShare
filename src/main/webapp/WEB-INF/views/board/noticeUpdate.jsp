@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,7 @@
 		<div id="main">
 			<article class="panel intro">
 				<header>
-					<h3>&nbsp;Board Write</h3>
+					<h3>&nbsp;Notice Update</h3>
 					    <nav id="smallnav">
 					        <a href="#" onclick="location.href='boardWrite.do'"><i class="fas fa-edit"></i></a> 
 					        <a href="#"><i class="fas fa-user-edit"></i></a> 
@@ -29,21 +30,13 @@
 				</header>
 				<section>
 					<article id="boardWriteForm">
-					<form action="boardWrite.do" method="post" enctype="multipart/form-data">
+					<form action="boardUpdate.do" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="memberId" value="${loginMember.memberId }">
-							<select class="custom-select" name="bHead">
-							  <option selected>글머리를 선택해주세요</option>
-							  <option value="소통해요">소통해요</option>
-							  <option value="궁금해요">궁금해요</option>
-							  <option value="건의해요">건의해요</option>
-							</select>
-							<br>
-							<br>
-							<br>
+							<input type="hidden" name="bNo" value="${board.bNo }">
 							<div>
-								<h5>Title</h5>
+							<h5>Title</h5>
 								<div class="input-group mb-3">
-								  <input type="text" class="form-control" name="bTitle" placeholder="제목을 입력해주세요." aria-label="Username" aria-describedby="basic-addon1">
+								  <input type="text" class="form-control" name="bTitle" placeholder="${board.bTitle }" aria-label="Username" aria-describedby="basic-addon1">
 								</div>
 								<h5>Contents
 								<a href="#" class="far fa-comment-dots fa-lg" id="contentIcon"></a>
@@ -51,20 +44,20 @@
 								<input type="hidden" id="iconCheck" value="0">
 								</h5>
 								<div class="input-group" id="writeContents">
-								  <textarea class="form-control" name="bContent" aria-label="With textarea" placeholder="내용을 입력해주세요." rows="5"></textarea>
+								  <textarea class="form-control" name="bContent" aria-label="With textarea" placeholder="${board.bContent }" rows="5"></textarea>
 								</div>
 								<div class="input-group" id="fileContents">
 								  <div class="filebox"> 
 									  <input class="upload-name" value="파일선택" disabled="disabled"> 
 									  <label for="ex_filename">업로드</label> 
-									  <input type="file" id="ex_filename" class="upload-hidden" name="bUploadFile"> 
+									  <input type="file" id="ex_filename" class="upload-hidden" name="reloadFile"> 
 								  </div>
 								</div>			
 								<br>
 							</div>
 							<div id="buttonGroup">
 				                <input type="submit" class="btn btn-outline-danger" value="Submit">
-				                <input type="reset" class="btn btn-outline-secondary" value="Cancel">
+				                <input type="reset" class="btn btn-outline-secondary" value="cancel">
 			                </div>
 						</form>
 				    </article>

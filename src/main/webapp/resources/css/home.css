@@ -1,3 +1,21 @@
+/* 포인트 글꼴 */
+@font-face {
+    font-family: 'Jal_Onuel';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 일반 글꼴 */
+@font-face {
+    font-family: 'BCcardL';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.1/BCcardL.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
 /* Basic */
 	body {
 		background-image: url("../images/overlay.png"), url("../images/bg.jpg");
@@ -41,6 +59,7 @@
 }
 
 .home-form pre {
+	font-family: 'BCcardL';
     position: absolute;
     font-size : 20px;
     color:dimgray;
@@ -51,11 +70,12 @@
 .home-form img {
 	position:absolute; 
 	width:50px;
-	margin-left: 210px;
-	margin-top: 60px;
+	margin-left: 230px;
+	margin-top: 50px;
 }
 
 .home-form h1{
+	font-family: 'Jal_Onuel';
 	font-size: 70px;
 	color:dimgray;
 	text-align: center;
@@ -64,3 +84,19 @@
    
 /*a*/
 a:link { text-decoration: none;}
+
+
+#welcome h2 {
+	font-family: 'BCcardL';
+	position : relative;
+	top : 100px;
+	color : dimgray;
+}
+
+#welcome img {
+	position : relative;
+	width:200px;
+	height:200p;
+	bottom : 50px;
+	left : 480px;
+}

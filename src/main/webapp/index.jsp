@@ -14,7 +14,7 @@
         <pre>  듣다   여기</pre>
         <br>
         <h1>Hear : Share</h1>
-        <form action="#">
+        <form action="memberLogin.do" method="get">
             <div class="int-area">
                 <input type="text" name="memberId" id="id" autocomplete="off" required><label for="id">ID</label>
             </div>

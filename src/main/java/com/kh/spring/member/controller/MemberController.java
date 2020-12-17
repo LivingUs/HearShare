@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -54,7 +61,7 @@ public class MemberController {
 		return idRecheck+"";
 	}
 	
-/*	
+	
 	// 이메일 인증
 	@RequestMapping(value="emailCertified.do", method=RequestMethod.GET)
 	public ModelAndView emailCertified(ModelAndView mv, HttpServletRequest request) {
@@ -124,7 +131,7 @@ public class MemberController {
 			e.printStackTrace();
 		}
 	}
-*/	
+	
 	
 	// 로그인
 	@RequestMapping(value="memberLogin.do", method=RequestMethod.GET)

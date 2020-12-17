@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BoardMapper">
+
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD
+		VALUES (BOARD_SEQ.NEXTVAL, #{bTitle}, #{bContent}, DEFAULT, DEFAULT, #{bFileName}, DEFAULT, DEFAULT, DEFAULT, #{bHead}, #{memberId})
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+		SET BTITLE = #{bTitle}, BCONTENT = #{bContent}, BUPDATEDATE = SYSDATE, BFILENAME = #{bFileName}, BHEAD = #{bHead}
+		WHERE BNO = #{bNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="Board">
+		UPDATE BOARD
+		SET BYN = 'N'
+		WHERE BNO = #{bNo}
+	</update>
+	
+	<select id="boardListCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD
+		WHERE BYN = 'Y'
+	</select>
+	
+	<select id="boardList" resultType="Board">
+		SELECT * FROM BOARD
+		WHERE BYN = 'Y'
+		ORDER BY BNO DESC
+	</select>
+	
+	<select id="boardMyList" resultType="Board">
+		SELECT * FROM BOARD
+		WHERE MEMBERID = #{memberId} OR MEMBERID = 'admin' AND BYN = 'Y'
+		ORDER BY BNO DESC
+	</select>
+	
+	<select id="boardPagingList" resultType="Board">
+		SELECT * FROM BOARD
+		WHERE BYN = 'Y' AND MEMBERID != 'admin'
+		ORDER BY BNO DESC
+	</select>
+	
+	<select id="selectBoard" resultType="Board">
+		SELECT * FROM BOARD
+		WHERE BNO = #{bNo}
+	</select>
+	
+	<select id="searchBoard" resultType="Board">
+		SELECT * FROM BOARD
+		<where>
+			<if test="searchValue.toString() == 'bTitle'">
+				BTITLE LIKE '%' || #{searchContent} || '%' OR MEMBERID = 'admin' AND BYN = 'Y'
+			</if>
+			<if test="searchValue.toString() == 'bHead'">
+				BHEAD LIKE #{searchContent} OR MEMBERID = 'admin' AND BYN = 'Y'
+			</if>
+			<if test="searchValue.toString() == 'memberId'">
+				MEMBERID LIKE #{searchContent} OR MEMBERID = 'admin' AND BYN = 'Y'
+			</if>
+		</where>
+		ORDER BY BNO DESC 
+	</select>
+	
+	<update id="addViewNo" parameterType="Board">
+		UPDATE BOARD
+		SET BVIEWNO = BVIEWNO + 1
+		WHERE BNO = #{bNo}
+	</update>
+	
+	<insert id="insertComment" parameterType="BoardComment">
+		INSERT INTO BCOMMENT
+		VALUES (BCOMMENT_SEQ.NEXTVAL, #{bcContent}, SYSTIMESTAMP, DEFAULT, #{memberId}, #{bNo})
+	</insert>
+	
+	<update id="deleteComment" parameterType="BoardComment">
+		UPDATE BCOMMENT
+		SET BCYN = 'N'
+		WHERE BNO = #{bNo} AND MEMBERID = #{memberId} AND BCNO = #{bcNo}
+	</update>
+	
+	<select id="commentList" resultType="BoardComment">
+		SELECT * FROM BCOMMENT
+		WHERE BNO = #{bNo} AND BCYN = 'Y'
+		ORDER BY BCTIME DESC
+	</select>
+	
+	<insert id="addLike" parameterType="BoardLike">
+		INSERT INTO BOARDLIKE
+		VALUES (BOARDLIKE_SEQ.NEXTVAL, DEFAULT, #{bNo}, #{memberId})
+	</insert>
+	
+	<select id="selectBoardLike" resultType="BoardLike">
+		SELECT * FROM BOARDLIKE
+		WHERE BNO = #{bNo} AND MEMBERID = #{memberId}
+	</select>
+	
+	<update id="updateY" parameterType="BoardLike">
+		UPDATE BOARDLIKE
+		SET LCHECKYN = 'Y'
+		WHERE BNO = #{bNo} AND MEMBERID = #{memberId} 
+	</update>
+	
+	<update id="updateN" parameterType="BoardLike">
+		UPDATE BOARDLIKE
+		SET LCHECKYN = 'N'
+		WHERE BNO = #{bNo} AND MEMBERID = #{memberId} 
+	</update>
+	
+	
+	
+</mapper>
