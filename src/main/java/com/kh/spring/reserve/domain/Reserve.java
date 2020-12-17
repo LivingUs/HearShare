@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 public class Reserve {
 	
 	private int rNo;
-	private Date rDate;
+	private String rDate;
 	private String rTime;
 	private String rTyn;
 	private Timestamp rCheckTime;
@@ -17,7 +17,11 @@ public class Reserve {
 
 	
 
-	public Reserve(int rNo, Date rDate, String rTime, String rTyn, Timestamp rCheckTime, String rCode,
+	
+
+
+
+	public Reserve(int rNo, String rDate, String rTime, String rTyn, Timestamp rCheckTime, String rCode,
 			String memberId) {
 		super();
 		this.rNo = rNo;
@@ -31,6 +35,10 @@ public class Reserve {
 
 
 
+
+
+
+
 	public int getrNo() {
 		return rNo;
 	}
@@ -39,13 +47,27 @@ public class Reserve {
 		this.rNo = rNo;
 	}
 
-	public Date getrDate() {
+	
+
+	public String getrDate() {
 		return rDate;
 	}
 
-	public void setrDate(Date rDate) {
+
+
+
+
+
+
+	public void setrDate(String rDate) {
 		this.rDate = rDate;
 	}
+
+
+
+
+
+
 
 	public String getrTime() {
 		return rTime;

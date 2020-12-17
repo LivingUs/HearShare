@@ -14,11 +14,21 @@
 		<typeAlias type="com.kh.spring.board.domain.Board" alias="Board"/>
 		<typeAlias type="com.kh.spring.board.domain.BoardComment" alias="BoardComment"/>
 		<typeAlias type="com.kh.spring.board.domain.BoardLike" alias="BoardLike"/>
-	</typeAliases>
+		<typeAlias type="com.kh.spring.reserve.domain.Reserve" alias="Reserve"/>
+		<typeAlias type="com.kh.spring.reserve.domain.Ticket" alias="Ticket"/>
+      <typeAlias type="com.kh.spring.other.domain.Reserve" alias="Reserve"/>
+      <typeAlias type="com.kh.spring.other.domain.Ticket" alias="Ticket"/>
+      <typeAlias type="com.kh.spring.other.domain.MonthPay" alias="MonthPay"/>
+      <typeAlias type="com.kh.spring.other.domain.Account" alias="Account"/>
+   </typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/board-mapper.xml"/>
+		<mapper resource="mappers/reserve-mapper.xml"/>
+		<mapper resource="mappers/calendar-mapper.xml"/>
+      <mapper resource="mappers/other-mapper.xml"/>
+		
 	</mappers>
 
 

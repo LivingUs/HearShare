@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reserveMapper">
+	
+	<select id="bringStudy" parameterType="HashMap" resultType="Ticket">
+		SELECT * FROM TICKET WHERE MEMBERID=#{memberId} AND TCODE=#{rCode} AND TYN='Y'
+	</select>
+	
+	<!-- <insert id="insertReserve" parameterType="Reserve">
+	<foreach collection="list" item="list" separator=";">
+		INSERT INTO RESERVE VALUES (RESERVE_SEQ.NEXTVAL, "${list.rDate}", "${list.rTime}", DEFAULT, NULL, NULL, "${list.rCode}", "${list.memberId}")
+	</foreach>
+	</insert> -->
+
+	<insert id="insertReserve" parameterType="java.util.List">
+		<foreach collection="list" item="list" open="INSERT ALL" close="SELECT * FROM SYS.DUAL"
+			separator=" "> INTO RESERVE (
+			RNO, RDATE,RTIME, RTYN, RCHECKYN, RCHECKTIME, RCODE, MEMBERID) VALUES (GET_ACCESS_RESERVE ,#{list.rDate}, #{list.rTime}, #{list.rTyn}, DEFAULT, NULL, 
+			#{list.rCode} , #{list.memberId} ) </foreach>
+	</insert>
+	
+	<select id="reserveList" parameterType="HashMap" resultType="Reserve">
+		SELECT * FROM RESERVE WHERE RCODE=#{rCode} AND RDATE=#{rDate}
+	</select>
+	
+	<update id="ticketUpdate" parameterType="Ticket">
+		UPDATE TICKET SET TUSENO=#{tUseNo} WHERE TNO=#{tNo} AND MEMBERID=#{memberId}
+	</update>
+	
+	<update id="ticketEnd" parameterType="Ticket">
+		UPDATE TICKET SET TUSENO=#{tUseNo}, TYN='N' WHERE TNO=#{tNo} AND MEMBERID=#{memberId}
+	</update>
+	
+	<insert id="bbqInsert" parameterType="Reserve">
+		INSERT INTO RESERVE VALUES (RESERVE_SEQ.NEXTVAL, #{rDate}, #{rTime}, DEFAULT, DEFAULT, NULL, 'B', #{memberId})
+	</insert>
+</mapper>
