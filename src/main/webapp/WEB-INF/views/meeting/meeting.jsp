@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -34,19 +35,24 @@
         <button id="Mcontinue_btn" class="btn_meeting">진행중인 모임</button>
     </div><br>
 <section>
+		
+		 
 		<c:set var="i" value="0" />
 		<c:set var="j" value="3" />	
     <table id="meeting_continue">
     	<c:forEach items="${mList}" var="meeting">
- 		<c:set var="mJYN" value="${meeting.mJYN}"/>
-		<c:if test="${mJYN eq 'Y'}">
+    	<%-- <fmt:parseDate value='${meeting.mtime}' var='mtime' pattern="yyyy-mm-dd" scope="page"/> --%>
+
+ 		<c:set var="mDeadline" value="${meeting.mDeadline}"/>
+ 		<c:if test="${mDeadline eq 'Y'}">
 		<c:if test="${i%j == 0 }">
 		<tr>
 		</tr>
 		</c:if> 
         <td>
         	<c:url var="mDetail" value="meetingdetail.do">
-        	<c:param name="mNo" value="${meeting.mNo}"></c:param>
+	        	<c:param name="mNo" value="${meeting.mNo}"></c:param>
+	        	<c:param name="pNo" value="${meeting.pNo}"></c:param>
         	</c:url>
             <a href="${mDetail}">
                 <div id="meeting_div">
@@ -64,9 +70,14 @@
                 <div id="meeting_subtitle">
                     ${meeting.memberId}
                 </div>
-                <span id="meeting_date">D-7</span>
+                <c:if test="${meeting.mPeoplecount == meeting.mPeople}">
+	            <span id="meeting_date">마감</span>
+	            </c:if>
+	            <c:if test="${meeting.mPeoplecount != meeting.mPeople}">
+                <span id="meeting_date">D-${meeting.mJYN}</span>
+	            </c:if>
                 <span id="meeting_icon" class="fas fa-users fa-4x"></span>
-                <span id="meeting_person">5/10</span>
+	            <span id="meeting_person">${meeting.mPeoplecount}/${meeting.mPeople}</span>
                 </div>
             </a>
         </td>
@@ -81,12 +92,11 @@
 		<c:set var="b" value="3" />
 		<c:set var="c" value="0" />
     <table id="meeting_enter" class="d-none">
-    	<c:forEach items="${mList}" var="meeting">
-    	<c:set var="mJYN" value="${meeting.mJYN}"/>
-    		<c:if test="${mJYN eq 'N' }">
+    	<c:forEach items="${mList2}" var="meeting">
+    		<c:if test="${ loginMember.memberId eq meeting.memberId }">
 			<c:set var="c" value="${c+1 }" />
 			</c:if>			
-   			<c:if test="${mJYN eq 'N' && c > 0}">
+   			<c:if test="${ loginMember.memberId eq meeting.memberId  && c > 0}">
    			<c:if test="${a%b == 0 }">
 			<tr>
 			</tr>
@@ -94,6 +104,7 @@
 	        <td>
 	        	<c:url var="mDetail" value="meetingdetail.do">
 	        	<c:param name="mNo" value="${meeting.mNo}"></c:param>
+	        	<c:param name="pNo" value="${meeting.pNo}"></c:param>
 	        	</c:url>
 	            <a href="${mDetail}">
 	                <div id="meeting_div">
@@ -108,7 +119,12 @@
 	                </div>
 	                <span id="meeting_date">D-7</span>
 	                <span id="meeting_icon" class="fas fa-users fa-4x"></span>
-	                <span id="meeting_person">참가</span>
+	                <c:if test="${meeting.mPeoplecount} == ${meeting.mPeople}">
+	                <span id="meeting_person">모임 마감</span>
+	                </c:if>
+	                <c:if test="${meeting.mPeoplecount} != ${meeting.mPeople}">
+	                <span id="meeting_person">${meeting.mPeoplecount}/${meeting.mPeople}</span>
+	                </c:if>
 	                </div>
 	            </a>
 	        </td>
@@ -120,10 +136,10 @@
     </table>
     
     <c:if test="${c == 0 }">
-		<table id="meeting_enter" class="d-none" style="margin: 0 auto;">
+		<table id="meeting_enter2" class="d-none" style="margin: 0 auto;">
 	        <td>
 	            <div style="text-align: center; font-weight: bold;">
-	            <br><br><br><br><br><br><br><br><br><br><br>
+	            <br><br><br><br><br><br><br><br><br>
 	            <p>참가중인 모임이 없습니다 ㅠ_ㅠ</p>
 	            <p>진행중인 모임에서 모임을 참가해보세요!</p>
 	            <br><br><br><br><br><br><br><br><br><br><br>
@@ -151,10 +167,12 @@
         $("#Mcontinue_btn").click(function() {
             $("#meeting_continue").removeClass('d-none');
             $("#meeting_enter").addClass('d-none');
+            $("#meeting_enter2").addClass('d-none');
         });
         $("#Menter_btn").click(function() {
             $("#meeting_continue").addClass('d-none');
             $("#meeting_enter").removeClass('d-none');
+            $("#meeting_enter2").removeClass('d-none');
         });
     });
     var help = document.getElementsByClassName('btn_meeting');
@@ -168,5 +186,35 @@
             this.style.color = "white";
         });
     }
+    
+
+    
+    
+    <c:forEach items="${mList}" var="meeting">
+	    /*날짜 구하기*/
+	    var date = new Date();
+	    var year = date.getFullYear();
+	    var month = date.getMonth()+1
+	    var day = date.getDate();
+	    if(month < 10){
+	        month = "0"+month;
+	    }
+	    if(day < 10){
+	        day = "0"+day;
+	    }
+	    var today = year+""+month+""+day;
+	    document.write('<br>현재 날짜 : ' + today);
+	    
+	    var mtime = '${meeting.mtime}';
+	    document.write('<br>모임 날짜 : ' + mtime);
+    	var sub = mtime - date;
+    	var day = 1000 * 60 * 60 * 24;
+    	
+	    document.write('<br>' + (parseInt(sub/day)));
+    </c:forEach>
+    
+
+
+    
 </script>    
 </html>

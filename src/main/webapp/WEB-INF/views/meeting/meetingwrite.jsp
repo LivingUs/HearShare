@@ -35,7 +35,6 @@
         <input type="text" id="Mwrite_title" placeholder="제목을 입력하세요." name="mTitle" required>
         <select id="select_person" style="margin: 0px 20px 0px 20px;" name="mPeople" required>
 			<option value="">모집 인원</option>
-            <option value="1">1명</option>
 		    <option value="2">2명</option>
 		    <option value="3">3명</option>
             <option value="4">4명</option>

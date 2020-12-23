@@ -47,7 +47,7 @@ body {
     }
 
     #smallnav>a:hover {
-        color: hotpink;
+        color: hotpink;       
     }
 
 /*a*/
@@ -103,3 +103,12 @@ a:link { text-decoration: none;}
         font-size: 30px;
         color: red;
     }
+    
+    #nav a:nth-child(2) {
+    opacity: 1.0;
+}
+
+#nav a:nth-child(2):after {
+   opacity: 1.0;
+    border-bottom-width: 0.5em;
+}

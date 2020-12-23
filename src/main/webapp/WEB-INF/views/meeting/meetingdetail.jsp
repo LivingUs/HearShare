@@ -29,10 +29,10 @@
     </nav>
 <hr>
 </header>
-	<c:if test="${ loginMember.memberId eq meeting.memberId }">
+	<c:if test="${ loginMember.memberId eq meetingdetail.memberId }">
     <div style="text-align: right;">
 		<c:url var="mDelete" value="meetingDelete.do">
-			<c:param name="mNo" value="${meeting.mNo}"></c:param>
+			<c:param name="mNo" value="${meetingdetail.mNo}"></c:param>
 		</c:url>
         <button id="Mmodify_btn">
         	<a onclick='MeetingDelete();' style="color: white;">글 삭제</a>
@@ -42,32 +42,40 @@
         </button>
     </div><br></c:if>
 <section><br>
+	<c:url var="mJoin" value="meetingJoin.do">
+		<c:param name="mNo" value="${meetingdetail.mNo}"></c:param>
+	</c:url>
     <table style="margin: 0 auto;">
         <td>
             <div id="meetingdetail_div">
             <div id="meetingdetail_img">
-            	<c:if test="${!empty meeting.moriginalFileName}">
-            	<img src="/resources/meetingFiles/${meeting.moriginalFileName}" style="width: 300px; height: 300px;">
+            	<c:if test="${!empty meetingdetail.moriginalFileName}">
+            	<img src="/resources/meetingFiles/${meetingdetail.moriginalFileName}" style="width: 300px; height: 300px;">
             	</c:if>
-            	<c:if test="${empty meeting.moriginalFileName}">
+            	<c:if test="${empty meetingdetail.moriginalFileName}">
                 <img src="/resources/images/home.png" style="width: 300px; height: 300px;">
                 </c:if>
             </div>
             <div id="meetingdetail_title">
-                ${meeting.mTitle}
+                ${meetingdetail.mTitle}
             </div>
             <div id="meetingdetail_subtitle">
-                <span id="meetingdetail_date">D-7</span>
+                <c:if test="${meetingdetail.mPeoplecount == meetingdetail.mPeople}">
+	            <span id="meetingdetail_date">마감</span>
+	            </c:if>
+	            <c:if test="${meetingdetail.mPeoplecount != meetingdetail.mPeople}">
+                <span id="meetingdetail_date">D-${meetingdetail.mJYN}</span>
+                </c:if>
                 <span id="meetingdetail_bar"></span>&nbsp;
                 <span id="meetingdetail_icon" class="fas fa-users fa-4x"></span>
-                <span id="meetingdetail_person">5/10</span>
+                <span id="meetingdetail_person">${meetingdetail.mPeoplecount}/${meetingdetail.mPeople}</span>
             </div><br><br>
             <hr style="width: 573px; margin-left: 321px;">
             <div id="meetingdetail_content" style="float: left;">
-               <textarea id="meetingdetail_textarea" readonly>${meeting.mContent}</textarea> 
+               <textarea id="meetingdetail_textarea" readonly>${meetingdetail.mContent}</textarea> 
             </div><br><br><br><br><br><br>
             <div id="meetingdetail_function">
-                <a href="#" class="fas fa-user-plus" style="color: black;"> 
+                <a onclick='MeetingJoin();' class="fas fa-user-plus" style="color: black; text-decoration: none; cursor: pointer;"> 
                 <span id="meetingdetail_Fspan">참여하기</span>
                 </a>&nbsp;&nbsp;
                 <a href="#" class="far fa-comment" style="color: black;"> 
@@ -78,27 +86,31 @@
         </td>
     </table><br>
     
-    
+    <c:if test="${meetingdetail.pNo > 0}">
     <div style="margin: 0 auto; center; width: 780px; height: 150px; background-color: #eeb6a5; padding: 15px; color: white;">
         <table>
             <td>
+            	<c:url var="pDetail" value="placedetail.do">
+        		<c:param name="pNo" value="${meetingdetail.pNo}"></c:param>
+        		</c:url>
                 <div style="width: 750px;">
                 <div style="width: 140px; height: 120px; float: left; margin-right: 15px;">
-                <img src="${place.pFilename}" style="width: 140px; height: 120px;">
+                <img src="${meetingdetail.pFilename}" style="width: 140px; height: 120px;">
                 </div>
                 <div style="font-size: 20px; font-weight: bold; float: left;">
-               	${place.pTitle}
+               	${meetingdetail.pTitle}
                 </div>
                 <div style="float: right; font-size: 18px; font-weight: bold;">
              	자세히 보기
-                <p class="far fa-arrow-alt-circle-right" style="color: white;"></p><br><br>
+                <a href="${pDetail}" class="far fa-arrow-alt-circle-right" style="color: white;"></a><br><br>
                 </div><br><br>
-                <div style="font-size: 16px; font-weight: bold; float: left; margin-top: -15px;">${place.pmTitle}</div><br>
-                <div style="font-size: 15px; float: left; margin-top: 15px;">영업시간 : ${place.pSaletime}</div>    
+                <div style="font-size: 16px; font-weight: bold; float: left; margin-top: -15px;">${meetingdetail.pmTitle}</div><br>
+                <div style="font-size: 15px; float: left; margin-top: 15px;">영업시간 : ${meetingdetail.pSaletime}</div>    
                 </div>
             </td>
         </table>    
    </div><br>
+   </c:if>
     
     <hr style="width: 870px;">
     <table style="margin: 0 auto;">
@@ -133,7 +145,7 @@
 			getCommentList();
 			$("#meetingdetail_commentinsert_btn").on("click", function() {
 				var meetingdetail_commentbox = $("#meetingdetail_commentbox").val();
-				var mNo = ${meeting.mNo};
+				var mNo = ${meetingdetail.mNo};
 				
 				$.ajax({
 					url : "addComment.do",
@@ -152,7 +164,7 @@
 		});
 		
  		function getCommentList() {
-			var mNo = ${meeting.mNo};
+			var mNo = ${meetingdetail.mNo};
 			$.ajax({
 				url : "commentList.do",
 				type : "get",
@@ -220,5 +232,34 @@
  	    		return false;
  	    	}
  	    };
+ 	    
+	     function MeetingJoin() {
+	 	    	result = confirm('모임에 참여하시겠습니까?');
+	 	    	var loginMemberId = '${loginMember.memberId}';
+	 	    	var writeMemberId = '${meetingdetail.memberId}';
+	 	    	$.ajax({
+					url : "meetingJoin.do",
+					type : "get",
+					data : {"memberId" : memberId, "mNo" : mNo},
+					dataType : "json",
+					success : function(data) {
+						var enjoyMemberId = '${minsert.memberId}';
+			 	    	if(result == true){
+		 	 	    		if(loginMemberId == writeMemberId) {
+			 	    			alert("모임 주죄차이십니다.")
+			 	    			return false;
+		 	 	    		} else if(loginMemberId == enjoyMemberId) {
+				 	    		alert("이미 모임에 참가하셨습니다.")
+				 	    		return false;
+			 	    		} else {
+			 	    		alert("모임에 참가되셨습니다.")
+			 	    		location.href="${mJoin}";
+			 	    		}
+			 	    	} else {
+			 	    		return false;
+			 	    	}
+			 	    }
+		 	    });
+		     }
 	</script>
 </body></html>

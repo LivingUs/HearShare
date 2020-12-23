@@ -16,35 +16,94 @@
 		<result property="mtime" column="MTIME"></result>
 		<result property="memberId" column="MEMBERID"></result>
 		<result property="pNo" column="PNO"></result>
+		<result property="mPeoplecount" column="MPEOPLECOUNT"></result>
+		<result property="mDeadline" column="MDEADLINE"></result>
+	</resultMap>
+	
+	<resultMap type="MeetingDetail" id="meetingdetailResultMap">
+		<result property="mNo" column="MNO"></result>
+		<result property="mTitle" column="MTITLE"></result>
+		<result property="mContent" column="MCONTENT"></result>
+		<result property="mWritedate" column="MWRITEDATE"></result>
+		<result property="mUpdatedate" column="MUPDATEDATE"></result>
+		<result property="moriginalFileName" column="MORIGINALFILENAME"></result>
+		<result property="mrenameFileName" column="MRENAMEFILENAME"></result>
+		<result property="mPeople" column="MPEOPLE"></result>
+		<result property="mDate" column="MDATE"></result>
+		<result property="mYN" column="MYN"></result>
+		<result property="mtime" column="MTIME"></result>
+		<result property="memberId" column="MEMBERID"></result>
+		<result property="pNo" column="PNO"></result>
+		<result property="pTitle" column="PTITLE"></result>
+		<result property="pmTitle" column="PMTITLE"></result>
+		<result property="pSaletime" column="PSALETIME"></result>
+		<result property="pFilename" column="PFILENAME"></result>
+		<result property="mPeoplecount" column="MPEOPLECOUNT"></result>
 	</resultMap>
 
 	<insert id="meetingWrite">
 		INSERT INTO MEETING
-		VALUES(MEETING_SEQ.NEXTVAL, #{mTitle}, #{mContent}, SYSDATE, SYSDATE, #{moriginalFileName}, #{mrenameFileName}, #{mPeople}, #{mDate} , 'Y', 'Y', SYSDATE, #{memberId}, #{pNo})
+		VALUES(MEETING_SEQ.NEXTVAL, #{mTitle}, #{mContent}, SYSDATE, SYSDATE, #{moriginalFileName}, #{mrenameFileName}, #{mPeople}, #{mDate} , 'Y', 'Y', SYSDATE + #{mDate}, #{memberId}, #{pNo}, '1', 'Y')
 	</insert>
 	
-	<select id="selectPlace" resultMap="meetingResultMap">
-		SELECT * FROM MEETING
-		JOIN PLACE ON MEETING.PNO = PLACE.PNO
-		WHERE MEETING.PNO = #{pNo} AND MEETING.MNO = #{mNo}
-<!--		<selectKey keyProperty="mNo" resultType="Meeting" order="AFTER">
-			SELECT MEETING_SEQ.CURRVAL FROM DUAL
-		</selectKey> -->
+	<select id="meetingDetailPlace" resultMap="meetingdetailResultMap">
+		<if test="pNo != 0">
+			SELECT * FROM MEETING
+			JOIN PLACE ON MEETING.PNO = PLACE.PNO
+			WHERE MEETING.PNO = #{pNo} AND MEETING.MNO = #{mNo}
+		</if>
+		<if test="pNo == 0">
+			SELECT * FROM MEETING
+			WHERE MNO = #{mNo}
+		</if>
 	</select>
 	
-	<select id="selectCurrVal">
-		SELECT MEETING_SEQ.CURRVAL FROM DUAL
-	</select>
-
 	<select id="meetingList" resultType="Meeting">
+		SELECT MNO, MTITLE, MCONTENT, MWRITEDATE, MUPDATEDATE, MORIGINALFILENAME, MRENAMEFILENAME, MPEOPLE, MDATE, MYN, MTIME, MEMBERID, PNO, MPEOPLECOUNT, MDEADLINE, TO_CHAR(MTIME,'YYMMDD') - TO_CHAR(SYSDATE,'YYMMDD') "MJYN" 
+		FROM MEETING
+		ORDER BY MWRITEDATE DESC
+	</select>
+	
+	<select id="meetingInsertList" resultType="Meeting">
 		SELECT * FROM MEETING
-		ORDER BY MNO DESC
+		JOIN MINSERT ON MEETING.MNO = MINSERT.MNO
+		WHERE MINSERT.MEMBERID = #{memberId}
 	</select>
 	
 	<select id="meetingdetail" resultMap="meetingResultMap">
 		SELECT * FROM MEETING
 		WHERE MNO = #{mNo}
 	</select>
+	
+	<update id="meetingJoin">
+		UPDATE MEETING
+			SET MPEOPLECOUNT = MPEOPLECOUNT + 1
+		WHERE MNO = #{mNo}
+	</update>
+	
+	<select id="meetingDday" resultType="Meeting">
+		SELECT TO_CHAR(MTIME,'YYMMDD') - TO_CHAR(SYSDATE,'YYMMDD') "MNO" 
+		FROM MEETING
+	</select>
+	
+	<update id="meetingDeadline">
+		<!-- <if test="mPeople == mPeoplecount"> -->  <!-- or mtime == SYSDATE -->
+		UPDATE MEETING
+			SET MDEADLINE = 'N'
+		WHERE MNO = #{mNo}
+		<!-- </if> -->
+	</update>
+	
+	<update id="meetingTimeDeadline">
+		UPDATE MEETING 
+			SET MDEADLINE = 'N'
+		WHERE SYSDATE LIKE MTIME
+	</update>
+	
+	<insert id="meetingJoinInsert">
+		INSERT INTO MINSERT
+		VALUES(MINSERT_SEQ.NEXTVAL, #{mNo}, #{memberId})
+	</insert>
 	
 	<delete id="meetingDelete">
 		DELETE FROM MEETING

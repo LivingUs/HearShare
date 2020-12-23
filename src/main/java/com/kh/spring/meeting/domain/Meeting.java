@@ -19,6 +19,8 @@ public class Meeting {
 	private Date mtime;
 	private String memberId;
 	private int pNo;
+	private int mPeoplecount;
+	private String mDeadline;
 	
 	public Meeting() {}
 
@@ -134,11 +136,28 @@ public class Meeting {
 		this.pNo = pNo;
 	}
 
+	public int getmPeoplecount() {
+		return mPeoplecount;
+	}
+
+	public void setmPeoplecount(int mPeoplecount) {
+		this.mPeoplecount = mPeoplecount;
+	}
+
+	public String getmDeadline() {
+		return mDeadline;
+	}
+
+	public void setmDeadline(String mDeadline) {
+		this.mDeadline = mDeadline;
+	}
+
 	@Override
 	public String toString() {
 		return "Meeting [mNo=" + mNo + ", mTitle=" + mTitle + ", mContent=" + mContent + ", mWritedate=" + mWritedate
 				+ ", mUpdatedate=" + mUpdatedate + ", moriginalFileName=" + moriginalFileName + ", mrenameFileName="
 				+ mrenameFileName + ", mPeople=" + mPeople + ", mDate=" + mDate + ", mJYN=" + mJYN + ", mYN=" + mYN
-				+ ", mtime=" + mtime + ", memberId=" + memberId + ", pNo=" + pNo + "]";
+				+ ", mtime=" + mtime + ", memberId=" + memberId + ", pNo=" + pNo + ", mPeoplecount=" + mPeoplecount
+				+ ", mDeadline=" + mDeadline + "]";
 	}
 }

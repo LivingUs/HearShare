@@ -22,6 +22,7 @@ public class MeetingDetail {
 	private String pmTitle;
 	private String pSaletime;
 	private String pFilename;
+	private int mPeoplecount;
 	
 	public MeetingDetail() {}
 
@@ -169,12 +170,21 @@ public class MeetingDetail {
 		this.pFilename = pFilename;
 	}
 
+	public int getmPeoplecount() {
+		return mPeoplecount;
+	}
+
+	public void setmPeoplecount(int mPeoplecount) {
+		this.mPeoplecount = mPeoplecount;
+	}
+
 	@Override
 	public String toString() {
 		return "MeetingDetail [mNo=" + mNo + ", mTitle=" + mTitle + ", mContent=" + mContent + ", mWritedate="
 				+ mWritedate + ", mUpdatedate=" + mUpdatedate + ", moriginalFileName=" + moriginalFileName
 				+ ", mrenameFileName=" + mrenameFileName + ", mPeople=" + mPeople + ", mDate=" + mDate + ", mJYN="
 				+ mJYN + ", mYN=" + mYN + ", mtime=" + mtime + ", memberId=" + memberId + ", pNo=" + pNo + ", pTitle="
-				+ pTitle + ", pmTitle=" + pmTitle + ", pSaletime=" + pSaletime + ", pFilename=" + pFilename + "]";
+				+ pTitle + ", pmTitle=" + pmTitle + ", pSaletime=" + pSaletime + ", pFilename=" + pFilename
+				+ ", mPeoplecount=" + mPeoplecount + "]";
 	}
 }
