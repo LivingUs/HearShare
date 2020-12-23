@@ -17,10 +17,11 @@
 		<typeAlias type="com.kh.spring.board.domain.BoardLike" alias="BoardLike"/>
 		<typeAlias type="com.kh.spring.reserve.domain.Reserve" alias="Reserve"/>
 		<typeAlias type="com.kh.spring.reserve.domain.Ticket" alias="Ticket"/>
-      <typeAlias type="com.kh.spring.other.domain.Reserve" alias="Reserve"/>
-      <typeAlias type="com.kh.spring.other.domain.Ticket" alias="Ticket"/>
-      <typeAlias type="com.kh.spring.other.domain.MonthPay" alias="MonthPay"/>
-      <typeAlias type="com.kh.spring.other.domain.Account" alias="Account"/>
+		<typeAlias type="com.kh.spring.calendar.domain.MonthPay" alias="MonthPay"/>
+        <typeAlias type="com.kh.spring.other.domain.Reserve" alias="OtReserve"/>
+        <typeAlias type="com.kh.spring.other.domain.Ticket" alias="OtTicket"/>
+        <typeAlias type="com.kh.spring.other.domain.MonthPay" alias="OtMonthPay"/>
+        <typeAlias type="com.kh.spring.other.domain.Account" alias="Account"/>
       	<typeAlias type="com.kh.spring.meeting.domain.Meeting" alias="Meeting"/>
 		<typeAlias type="com.kh.spring.meeting.domain.Mcomment" alias="Mcomment"/>
 		<typeAlias type="com.kh.spring.meeting.domain.MeetingDetail" alias="MeetingDetail"/>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="OtherMapper">
 
-	<select id="studyPayList" resultType="Reserve">
+	<select id="studyPayList" resultType="OtReserve">
 		SELECT RDATE, COUNT(RTIME) "RTIME"
 		FROM RESERVE
 		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='S'
@@ -11,7 +11,7 @@
 	</select>
 
 	<!-- 스터디 정기권 남은 갯수 -->
-	<select id="studyTicket" resultType="Ticket">
+	<select id="studyTicket" resultType="OtTicket">
 		SELECT SUM(TPRICENO)-SUM(TUSENO) "TYN"
 		FROM TICKET
 		WHERE TCODE='S' AND TYN='Y'
@@ -19,7 +19,7 @@
 	</select>
 
 	<!-- studyPay select검색 -->
-	<select id="studySelect" parameterType="map" resultType="Reserve">
+	<select id="studySelect" parameterType="map" resultType="OtReserve">
 		SELECT RDATE, COUNT(RTIME) "RTIME"
 		FROM RESERVE
 		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='S'
@@ -29,7 +29,7 @@
 	</select>
 	
 	<!-- 스터디 정기권 구매 조회 -->
-	<select id="studyTicketList" resultType="Ticket">
+	<select id="studyTicketList" resultType="OtTicket">
 		SELECT TNO, TDATE, TPRICENO, TPRICENO*800 "TUSENO", TPRICENO-TUSENO "TCODE"
 		FROM TICKET
 		WHERE TCODE='S' AND MEMBERID= #{memberId}
@@ -44,7 +44,7 @@
 	</select>
 	
 	<!-- 헬스룸 리스트 -->
-	<select id="healthPayList" resultType="Reserve">
+	<select id="healthPayList" resultType="OtReserve">
 		SELECT RDATE, COUNT(RTIME) "RTIME"
 		FROM RESERVE
 		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='H'
@@ -53,7 +53,7 @@
 	</select>
 	
 	<!-- 헬스 정기권 남은 갯수 -->
-	<select id="healthTicket" resultType="Ticket">
+	<select id="healthTicket" resultType="OtTicket">
 		SELECT SUM(TPRICENO)-SUM(TUSENO) "TYN"
 		FROM TICKET
 		WHERE TCODE='H' AND TYN='Y'
@@ -61,7 +61,7 @@
 	</select>	
 	
 	<!-- 헬스 select검색 -->
-	<select id="healthSelect" parameterType="map" resultType="Reserve">
+	<select id="healthSelect" parameterType="map" resultType="OtReserve">
 		SELECT RDATE, COUNT(RTIME) "RTIME"
 		FROM RESERVE
 		WHERE MEMBERID= #{memberId} AND RTYN='Y' AND RCODE='H'
@@ -71,7 +71,7 @@
 	</select>
 	
 	<!-- 헬스 정기권 구매 조회 -->
-	<select id="healthTicketList" resultType="Ticket">
+	<select id="healthTicketList" resultType="OtTicket">
 		SELECT TNO, TDATE, TPRICENO, TPRICENO*800 "TUSENO", TPRICENO-TUSENO "TCODE"
 		FROM TICKET
 		WHERE TCODE='H' AND MEMBERID= #{memberId}
@@ -103,7 +103,7 @@
 	</update>
 	
 	<!-- 자동결제 출력 -->
-	<select id="autoPayList" resultType="MonthPay">
+	<select id="autoPayList" resultType="OtMonthPay">
 		SELECT MPNO, MPDATE, TRUNC(TO_DATE(MPDATE,'YY/MM/DD'),'MM') || ' ~ ' || LAST_DAY(TO_DATE(MPDATE,'YY/MM/DD')) "MEMBERID",
 		TO_CHAR(ADD_MONTHS( TRUNC(TO_DATE(MPDATE,'YY/MM/DD'),'MM'), 1 ),'YYYY-MM-DD') "NEXTPAY" , MPMEANS, MPTYN, MPPRICE, MYN
 		FROM MONTHPAY
@@ -135,7 +135,7 @@
 	</select>
 	
 	<!-- 쉐어하우스 리스트 -->
-	<select id="monthList" resultType="Reserve">
+	<select id="monthList" resultType="OtReserve">
 		SELECT COUNT(RDATE)*1000 "RDATE"
 		FROM RESERVE
 		WHERE MEMBERID=#{memberId} AND RTYN='N'
@@ -197,7 +197,7 @@
 		GROUP BY ACNO)
 	</select>
 	
-	<select id="checkIdStudy" resultType="Reserve">
+	<select id="checkIdStudy" resultType="OtReserve">
 		SELECT RNO, RTIME FROM RESERVE
 		WHERE RDATE=SUBSTR(TO_CHAR(SYSDATE),1,8) AND RCODE='S' 
 		AND RCHECKYN='N' AND MEMBERID=#{memberId}
@@ -211,7 +211,7 @@
 		</foreach>
 	</update>
 	
-	<select id="checkIdHealth" resultType="Reserve">
+	<select id="checkIdHealth" resultType="OtReserve">
 		SELECT RNO, RTIME FROM RESERVE
 		WHERE RDATE=SUBSTR(TO_CHAR(SYSDATE),1,8) AND RCODE='H' 
 		AND RCHECKYN='N' AND MEMBERID=#{memberId}
