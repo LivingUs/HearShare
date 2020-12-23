@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'GmarketSansBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+	background-color : #eeb6a5;
+	/* font-family : 'GmarketSansBold'; */
+}
+#wrapper {
+	background-color : white;
+	width : 1600px;
+	height : 700px;
+	margin : 80px auto;
+	border-radius : 8px;
+	box-shadow : 5px 5px 5px gray;
+}
+#main_section {
+	padding-top : 180px;
+}
+p {
+	text-align: center;
+}
+#title {
+	font-family: 'GmarketSansBold';
+	font-size : 100px;
+}
+.clock {
+	color : #666;
+	font-size : 20px;
+	text-align : center;
+	font-family : 'GmarketSansBold';
+}
+#inputSection {
+	margin : 0 auto;
+	text-align : center;
+}
+#inputMemberId {
+	width : 500px;
+	height : 80px;
+	font-size : 25px;
+	border-radius: 8px;
+	text-align : center;
+	margin-bottom : 20px;
+}
+#searchBtn {
+	width : 130px;
+	height : 60px;
+	margin-left : 10px;
+	margin-bottom : 20px;
+}
+.modal {
+        text-align: center;
+}
+ 
+@media screen and (min-width: 768px) { 
+        .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+        }
+}
+ 
+.modal-dialog {
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+}

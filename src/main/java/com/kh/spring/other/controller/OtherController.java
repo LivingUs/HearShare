@@ -1,8 +1,9 @@
 package com.kh.spring.other.controller;
 
-import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,12 +50,13 @@ public class OtherController {
 	//스터디룸 사용내역 출력
 	@RequestMapping(value="payAllList.do", method=RequestMethod.GET)
 	public String PayAllList(Model model, HttpServletRequest request, HttpServletResponse response,
-				Reserve reserve, Ticket ticket,
 				@RequestParam(value="page", required=false)Integer page) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Reserve reserve = new Reserve();
+		Ticket ticket = new Ticket();
 		reserve.setMemberId(memberId);
 		ticket.setMemberId(memberId);
 		//사용내역 출력
@@ -83,13 +85,16 @@ public class OtherController {
 
 	//스터디 사용내역 날짜검색
 	@RequestMapping(value="studySelect.do", method=RequestMethod.GET)
-	public String studySelect(HttpServletResponse response, Model model, Reserve reserve, Ticket ticket,
+	public String studySelect(HttpServletResponse response, Model model,
 			@RequestParam("year") String year, @RequestParam("month") String month) throws Exception{
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Reserve reserve = new Reserve();
+		Ticket ticket = new Ticket();
 		reserve.setMemberId(memberId);
+		ticket.setMemberId(memberId);
 		
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("year", year);
@@ -98,9 +103,14 @@ public class OtherController {
 		ArrayList<Reserve> studySelect = service.studySelect(paramMap);
 		System.out.println(year);
 		System.out.println(month);
-		if(!studySelect.isEmpty()) {
+		
+		//남은갯수
+		Ticket studyTicket = service.studyTicket(ticket);
+		
+		if(!studySelect.isEmpty() || studyTicket != null) {
 			model.addAttribute("studyPay", studySelect);
-			return "redirect:payAllList.do";
+			model.addAttribute("studyTicket", studyTicket);
+			return "other/ticket";
 		}else {
 			model.addAttribute("msg","조회 실패");
             return "other/ticket";
@@ -109,13 +119,15 @@ public class OtherController {
 	
 	//스터디 결제내역 출력
 	@RequestMapping(value="studyTicketList.do", method=RequestMethod.GET)
-	public String studyTicketList(Model model, HttpServletRequest request, Ticket ticket,
+	public String studyTicketList(Model model, HttpServletRequest request,
 			@RequestParam(value="page", required=false)Integer page) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Ticket ticket = new Ticket();
 		ticket.setMemberId(memberId);
+		
 		//결제내역 출력
 		int currentPage = (page != null) ? page : 1;
 		int listCount = service.getListCount(ticket);
@@ -134,12 +146,13 @@ public class OtherController {
 	//헬스룸 사용내역 출력
 	@RequestMapping(value="healthPay.do", method=RequestMethod.GET)
 	public String healthPayList(Model model, HttpServletRequest request,
-				Reserve reserve, Ticket ticket,
 				@RequestParam(value="page", required=false)Integer page) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Reserve reserve = new Reserve();
+		Ticket ticket = new Ticket();
 		reserve.setMemberId(memberId);
 		ticket.setMemberId(memberId);
 		
@@ -168,13 +181,16 @@ public class OtherController {
 
 	//헬스 사용내역 날짜검색
 	@RequestMapping(value="healthSelect.do", method=RequestMethod.GET)
-	public String healthSelect(HttpServletResponse response, Model model, Reserve reserve,
+	public String healthSelect(HttpServletResponse response, Model model,
 			@RequestParam("year") String year, @RequestParam("month") String month) throws Exception{
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Reserve reserve = new Reserve();
+		Ticket ticket = new Ticket();
 		reserve.setMemberId(memberId);
+		ticket.setMemberId(memberId);
 		
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("year", year);
@@ -183,8 +199,13 @@ public class OtherController {
 		ArrayList<Reserve> healthSelect = service.healthSelect(paramMap);
 		System.out.println(year);
 		System.out.println(month);
-		if(!healthSelect.isEmpty()) {
+		
+		//남은 갯수
+		Ticket healthTicket = service.healthTicket(ticket);
+		
+		if(!healthSelect.isEmpty() || healthTicket != null) {
 			model.addAttribute("healthPay", healthSelect);
+			model.addAttribute("healthTicket", healthTicket);
 			return "other/ticketHealth";
 		}else {
 			model.addAttribute("msg","조회 실패");
@@ -194,13 +215,15 @@ public class OtherController {
 
 	//헬스 결제내역 출력
 	@RequestMapping(value="healthTicketList.do", method=RequestMethod.GET)
-	public String healthTicketList(Model model, HttpServletRequest request, Ticket ticket,
+	public String healthTicketList(Model model, HttpServletRequest request,
 				@RequestParam(value="page", required=false)Integer page) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Ticket ticket = new Ticket();
 		ticket.setMemberId(memberId);
+		
 		//결제내역 출력
 		int currentPage = (page != null) ? page : 1;
 		int listCount = service.getListCountHealth(ticket);
@@ -218,11 +241,12 @@ public class OtherController {
 	
 	//스터디 정기권 구매
 	@RequestMapping(value="insertStudyTicket.do", method=RequestMethod.POST)
-	public String insertStudyTicket(Model model, Ticket ticket) throws Exception {
+	public String insertStudyTicket(Model model) throws Exception {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Ticket ticket = new Ticket();
 		ticket.setMemberId(memberId);
 		
 		int result = service.insertStudyTicket(ticket);
@@ -235,11 +259,12 @@ public class OtherController {
 	
 	//헬스 정기권 구매
 	@RequestMapping(value="insertHealthTicket.do", method=RequestMethod.POST)
-	public String insertHealthTicket(Model model, Ticket ticket) {
+	public String insertHealthTicket(Model model) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Ticket ticket = new Ticket();
 		ticket.setMemberId(memberId);
 		
 		int result = service.insertHealthTicket(ticket);
@@ -253,11 +278,12 @@ public class OtherController {
 	
 	//정기결제 리스트
 	@RequestMapping(value="autoPayList.do", method=RequestMethod.GET)
-	public String autoPayList(Model model, MonthPay monthPay) {
+	public String autoPayList(Model model) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		MonthPay monthPay = new MonthPay();
 		monthPay.setMemberId(memberId);
 		
 		ArrayList<MonthPay> mList = service.autoPayList(monthPay);
@@ -271,20 +297,21 @@ public class OtherController {
 	}
 	
 	//정기결제 해지
-	@RequestMapping(value="autoPayStop.do", method=RequestMethod.POST)
-	public String autoPayStop(HttpServletRequest request, Model model, MonthPay monthPay) {
+	@RequestMapping(value="autoPayStop.do", method=RequestMethod.GET)
+	public String autoPayStop(HttpServletRequest request, Model model) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		MonthPay monthPay = new MonthPay();
 		monthPay.setMemberId(memberId);
 		
 		int result = service.autoPayStop(monthPay);
 		if(result > 0) {
-			return "other/autoPay";
+			return "redirect:autoPayList.do";
 		}else {
 			model.addAttribute("msg", "해지 실패");
-			return "other/autoPay";
+			return "redirect:autoPayList.do";
 		}
 	}
 	
@@ -297,6 +324,7 @@ public class OtherController {
 		String memberId = loginMember.getMemberId();
 		account.setMemberId(memberId);
 		
+		System.out.println(account);
 		int result = service.insertAccount(account);
 		if(result > 0) {
 			return "redirect:accountList.do";
@@ -308,12 +336,14 @@ public class OtherController {
 	
 	//이번달 가계부 출력
 	@RequestMapping(value="accountList.do", method=RequestMethod.GET)
-	public ModelAndView accountList(ModelAndView mv, Account account, Reserve reserve,
+	public ModelAndView accountList(ModelAndView mv,
 					@RequestParam(value="page", required=false)Integer page) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Account account = new Account();
+		Reserve reserve = new Reserve();
 		account.setMemberId(memberId);
 		reserve.setMemberId(memberId);
 		
@@ -339,11 +369,12 @@ public class OtherController {
 	
 	//엑셀출력
 	@RequestMapping(value="excelConvert.do", method=RequestMethod.GET)
-	public void excelConvert(HttpServletResponse response, Account account) throws Exception {
+	public void excelConvert(HttpServletResponse response) throws Exception {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
+		Account account = new Account();
 		account.setMemberId(memberId);
 		//리스트 받아오기
 		ArrayList<Account> eList = service.excelConvert(account);
@@ -433,15 +464,99 @@ public class OtherController {
 	
 	//차트
 	@ResponseBody
-	@RequestMapping(value="chartView.do", method=RequestMethod.GET)
-	public String chartView(Model model, Account account) {
+	@RequestMapping(value="chart.do", method=RequestMethod.GET)
+	public String chart(Model model, HttpServletResponse response) throws Exception {
+		//세션
+		HttpSession session = request.getSession();
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		String memberId = loginMember.getMemberId();
+		Account account = new Account();
+		account.setMemberId(memberId);
 		
-//		Gson gson = new Gson();
-//		ArrayList<Account> chartList = service.chart();
-//		
-//		return gson.toJson(chartList);
-		return "";
+		ArrayList<Account> chartList = service.chart(account);
+		//DB > JSON 변환
+		Gson gson = new Gson();
+		String chartData = gson.toJson(chartList);
+		return chartData;
+	}
+		
+	//스터디룸 체크인 화면
+	@RequestMapping(value="checkInStudyView.do", method=RequestMethod.GET)
+	public String stduyCheckInView() {
+		return "checkIn/studyCheckInView";
 	}
 	
+	//스터디 아이디 검색 후 출력
+	@ResponseBody
+	@RequestMapping(value="checkIdStudy.do", method=RequestMethod.GET)
+	public void checkIdStudy(Model model, String memberId, HttpServletResponse response) throws Exception{
+		ArrayList<Reserve> checkStudy = service.checkIdStudy(memberId);
+		
+		for(Reserve check : checkStudy) {
+			check.setrTime(URLEncoder.encode(check.getrTime(), "UTF-8"));
+		}
+		
+		Gson gson = new Gson();
+		gson.toJson(checkStudy, response.getWriter());
+		
+	}
+	
+	//스터디룸 체크인하기
+	@RequestMapping(value="checkSelectStudy.do", method=RequestMethod.GET)
+	public String checkInStudy(Model model, HttpServletResponse response, HttpServletRequest reqeust) {
+		
+		//chkbox의 name값으로 파라미터 넘겨받아 배열로 생성
+		String [] studySelect = request.getParameterValues("studyCheck");
+		//String 문자열을 int형 배열로 바꿔줌
+		ArrayList<Integer> rNoList = new ArrayList<Integer>();
+		for(int i=0; i<studySelect.length; i++) {
+			rNoList.add(Integer.parseInt(studySelect[i]));
+		}
+		int result = service.checkSelectStudy(rNoList);
+		if(result > 0) {
+			model.addAttribute("msg", "체크인 되었습니다.");
+			return "checkIn/studyCheckInView";
+		}else {
+			model.addAttribute("msg", "체크인에 실패했습니다.");
+			return "checkIn/studyCheckInView";	
+		}
+	}
+
+	//헬스 아이디 검색 후 출력
+	@ResponseBody
+	@RequestMapping(value="checkIdHealth.do", method=RequestMethod.GET)
+	public void checkIdHealth(Model model, String memberId, HttpServletResponse response) throws Exception{
+		ArrayList<Reserve> checkHealth = service.checkIdStudy(memberId);
+		
+		for(Reserve check : checkHealth) {
+			check.setrTime(URLEncoder.encode(check.getrTime(), "UTF-8"));
+		}
+		
+		Gson gson = new Gson();
+		gson.toJson(checkHealth, response.getWriter());
+		
+	}
+	
+	//헬스룸 체크인하기
+	@RequestMapping(value="checkSelectHealth.do", method=RequestMethod.GET)
+	public String checkInHealth(Model model, HttpServletResponse response, HttpServletRequest reqeust) {
+		
+		//chkbox의 name값으로 파라미터 넘겨받아 배열로 생성
+		String [] healthSelect = request.getParameterValues("healthCheck");
+		//String 문자열을 int형 배열로 바꿔줌
+		ArrayList<Integer> rNoList = new ArrayList<Integer>();
+		for(int i=0; i<healthSelect.length; i++) {
+			rNoList.add(Integer.parseInt(healthSelect[i]));
+		}
+		int result = service.checkSelectHealth(rNoList);
+		if(result > 0) {
+			model.addAttribute("msg", "체크인 되었습니다.");
+			return "checkIn/healthCheckInView";
+		}else {
+			model.addAttribute("msg", "체크인에 실패했습니다.");
+			return "checkIn/healthCheckInView";	
+		}
+	}
+
 
 }

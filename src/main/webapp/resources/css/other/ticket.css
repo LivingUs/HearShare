@@ -57,7 +57,14 @@ body {
     #smallnav>a:hover {
         color: hotpink;
     }
+#nav a:nth-child(4) {
+    opacity: 1.0;
+}
 
+#nav a:nth-child(4):after {
+   opacity: 1.0;
+    border-bottom-width: 0.5em;
+}
 /*a*/
 a:link { text-decoration: none;}
 

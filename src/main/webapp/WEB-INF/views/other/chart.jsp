@@ -11,6 +11,13 @@
 <link rel="shortcut icon" type="image⁄x-icon" href="/resources/images/home.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<link rel="stylesheet" type="text/css" href="../../resources/css/other/chartInclude.css">
+
 </head>
 <body>
 <br>
@@ -26,7 +33,7 @@
 				    <nav id="smallnav">
 				        <a href="#mypage" onclick=""><i class="fas fa-user-edit"></i></a> 
 				        <a href="#ticket" onclick="location.href='payAllList.do'"><i class="fas fa-ticket-alt"></i></a> 
-				        <a href="#autoPay" onclick="location.href='autoPayList.do'"><i class="far fa-credit-card"></i></a> 
+					    <a href="#autoPay" onclick="location.href='autoPayList.do'"><i class="far fa-credit-card"></i></a> 
 				        <a href="#chart" onclick="location.href='accountList.do'"><i class="fas fa-chart-bar"></i></a> 
 				    </nav>
 				    <hr>
@@ -41,8 +48,8 @@
 					  <div class="form-inline form-group">
 						<label class="col-sm-2 control-label">구분</label>
 						<div class="col-sm-10">
-						  	<input type="radio" name="acInOut" value="in"> 수입 &nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="acInOut" value="out"> 지출
+						  	<input type="radio" name="acInOut" id="acInOut" value="in" checked> 수입 &nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="acInOut" id="acInOut" value="out"> 지출
 						</div>
 					  </div>
 					  <div class="form-inline form-group">
@@ -60,7 +67,7 @@
 						<div class="form-inline form-group">
 						<label class="col-sm-2 control-label">내용</label>
 						<div class="col-sm-10">
-						  <select class="form-control" name="acBig" style="width:300px;height:45px;">
+						  <select class="form-control" id="acBig" name="acBig" style="width:300px;height:45px;">
 							  <option value="음식">음식</option>
 							  <option value="커피">커피</option>
 							  <option value="쇼핑">쇼핑</option>
@@ -76,7 +83,8 @@
 					  </div>
 						
 					  <div class="form-group">
-						  <button type="submit" class="btn btn-outline-danger col-sm-5" style="margin-left:120px;margin-top:10px;">저장</button>
+						  <button type="submit" class="btn btn-outline-danger col-sm-5" onclick="return reCheck();" style="margin-left:120px; margin-top:10px;">저장</button>
+<!-- 						  <button type="submit" class="btn btn-outline-danger col-sm-5" onclick="return reCheck();" style="margin-left:120px;margin-top:10px;">저장</button> -->
 					  </div>
 					</form>
 					
@@ -84,14 +92,17 @@
 			</div>
 			<div class="chart_top">
 				<div id="chart_div">
-					<iframe src="chartView.do" style="width:100%; height:400px; border:none;"></iframe>
+					<figure class="highcharts-figure">
+					  <div id="container"></div>
+					</figure>
 				</div>
 			</div>
 		</div>
 		<div id="chart_bottom">
 			<div id="chart_bottom_top">
 				<div align="center" class="chart_p"><p style="display:inline-block; margin-left:35%;">&#91; 이번달 소비생활 &#93;</p>
-				<button type="button" class="btn btn-outline-danger" onclick="location.href='excelConvert.do'" id="excelConvertBtn" style="display:inline-block; margin-left:15%;">엑셀파일로 저장</button></div>
+				<button type="button" class="btn btn-outline-danger" onclick="location.href='excelConvert.do'" id="excelConvertBtn"
+						style="display:inline-block; margin-left:15%;">엑셀파일로 저장</button></div>
 				<br>
 				<div class="chart_tb">
 					<div id="table_layout">
@@ -194,9 +205,9 @@
 						</tr>
 					</table>
 					<br>
-							<input type="hidden" id="themeOut" value="${month[0].rDate  }">
-							<input type="hidden" id="ticketOut" value="${month[1].rDate }">
-							<input type="hidden" id="payOut" value="${month[2].rDate }">
+						<input type="hidden" id="themeOut" value="${month[0].rDate  }">
+						<input type="hidden" id="ticketOut" value="${month[1].rDate }">
+						<input type="hidden" id="payOut" value="${month[2].rDate }">
 					<p align="center" style="font-weight: 900; font-size:20px;"><span style="color:green;">합계</span> / <span id="hap"></span></p>
 				</div>					
 			</div>
@@ -208,6 +219,7 @@
 </div>
 
     <script>
+    //Datepicker
     $(function() {
         $('#datepicker').datepicker({
             dateFormat: 'yy-mm-dd' //Input Display Format 변경
@@ -220,10 +232,28 @@
             ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
             ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
             ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트    
+        	,maxDate : 0
         });
        //초기값을 오늘 날짜로 설정
         $('#datepicker').datepicker('setDate', 'today');
     });
+
+    //input 유효성체크
+	function reCheck() {
+		if($("#acPrice").val() == 0){
+			alert("금액을 입력해주세요.");
+			$("#acPrice").focus();
+			return false;
+		} else if($("#acSmall").val() == 0){
+			alert("내용을 입력해주세요.");
+			$("#acSmall").focus();
+			return false;
+		}
+		else { //result == true
+			return true;
+		}
+	}
+    
     
     //천단위 콤마찍기
     function AddComma(num) {
@@ -258,6 +288,69 @@
     });
 </script>
 
+<script>
+	$(function() {
+
+	//x축 표현해줄 날짜
+		var $today = new Date();
+		var $month = ($today.getMonth() + 1)+'월';  // 월
+		var $preMonth = ($today.getMonth())+'월'; // 1달전
+		var $ppreMonth = ($today.getMonth() - 1)+'월'; //2달전
+		
+		//차트 AJAX
+		$.ajax({
+			url : "chart.do",
+			type : "GET",
+			dataType : "JSON",
+			async : false,
+			contentType : 'application/json; charset=UTF-8',
+			success : function(data){ 
+				
+				var dataArr = new Array();
+				for(i in data){ //배열담기
+					dataArr.push(Number(data[i].acPrice));
+	            }
+				
+				Highcharts.chart('container', {
+				    chart: {
+				        type: 'column',
+				        styledMode: true
+				    },
+				    title: {
+				        text: '최근 3개월 가계부 지출 '
+				    },
+				   xAxis: { //x축
+			            categories: [$ppreMonth, $preMonth, $month]
+			        }, 
+				    yAxis: [{ //y축
+				        className: 'highcharts-color-0',
+				        title: false
+				    }], 
+				    plotOptions: {
+				        column: {
+				            borderRadius: 5
+				        }
+				    },
+				    lang: [{
+				        thousandsSep: ',',
+				    	labels: {
+				           formatter: function () {
+				               return this.value / 1000 + '원';
+				           }
+				   	 	},
+				    }],
+				    series: [{ 
+				    	name : '가계부',
+						data: dataArr,
+						}],
+				    credits:{
+				    	enabled:false
+				    }
+			});
+			}
+		});
+	});
+</script>
 
 <!-- 	<script src="../../resources/js/jquery.min.js"></script>  -->
 	<script src="../../../resources/js/breakpoints.min.js"></script>

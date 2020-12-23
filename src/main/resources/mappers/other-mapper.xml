@@ -104,10 +104,10 @@
 	
 	<!-- 자동결제 출력 -->
 	<select id="autoPayList" resultType="MonthPay">
-		SELECT MPNO, MPDATE, TRUNC(MPDATE,'MM') || ' ~ ' || LAST_DAY(MPDATE) "MEMBERID",
-		TO_CHAR(ADD_MONTHS( TRUNC(MPDATE,'MM'), 1 ),'YYYY-MM-DD') "NEXTPAY" , MPMEANS, MPTYN, MPPRICE
+		SELECT MPNO, MPDATE, TRUNC(TO_DATE(MPDATE,'YY/MM/DD'),'MM') || ' ~ ' || LAST_DAY(TO_DATE(MPDATE,'YY/MM/DD')) "MEMBERID",
+		TO_CHAR(ADD_MONTHS( TRUNC(TO_DATE(MPDATE,'YY/MM/DD'),'MM'), 1 ),'YYYY-MM-DD') "NEXTPAY" , MPMEANS, MPTYN, MPPRICE, MYN
 		FROM MONTHPAY
-		WHERE MEMBERID=#{memberId}
+		WHERE MEMBERID=#{memberId} AND MYN='Y'
 		ORDER BY MPNO DESC
 	</select>
 	
@@ -171,6 +171,59 @@
 	</select>
 	
 	<!-- 차트 -->
+	<select id="chart" resultType="Account">
+		SELECT NVL(ACPRICE, 0) "ACPRICE" FROM (
+		SELECT SUM(MAX(ACPRICE))  "ACPRICE"
+		FROM ACCOUNT
+		WHERE ACDATE BETWEEN ADD_MONTHS( TRUNC(SYSDATE,'MM'), -2 )
+		AND LAST_DAY(ADD_MONTHS( TRUNC(SYSDATE,'MM'), -2 ))
+		AND ACINOUT='out' AND MEMBERID=#{memberId}
+		GROUP BY ACNO)
+		UNION ALL
+		SELECT NVL(ACPRICE, 0) FROM (
+		SELECT SUM(MAX(ACPRICE))  "ACPRICE"
+		FROM ACCOUNT
+		WHERE ACDATE BETWEEN ADD_MONTHS( TRUNC(SYSDATE,'MM'), -1 )
+		AND LAST_DAY(ADD_MONTHS( TRUNC(SYSDATE,'MM'), -1 ))
+		AND ACINOUT='out' AND MEMBERID=#{memberId}
+		GROUP BY ACNO)
+		UNION ALL
+		SELECT NVL(ACPRICE, 0) FROM (
+		SELECT SUM(MAX(ACPRICE)) "ACPRICE"
+		FROM ACCOUNT
+		WHERE ACDATE BETWEEN TRUNC(SYSDATE,'MM')
+		AND LAST_DAY(SYSDATE)
+		AND ACINOUT='out' AND MEMBERID=#{memberId}
+		GROUP BY ACNO)
+	</select>
 	
+	<select id="checkIdStudy" resultType="Reserve">
+		SELECT RNO, RTIME FROM RESERVE
+		WHERE RDATE=SUBSTR(TO_CHAR(SYSDATE),1,8) AND RCODE='S' 
+		AND RCHECKYN='N' AND MEMBERID=#{memberId}
+	</select>
 	
+	<update id="checkSelectStudy" parameterType="java.util.HashMap">
+		UPDATE RESERVE
+		SET RCHECKYN='Y' WHERE RNO IN
+		<foreach collection="rNoList" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	
+	<select id="checkIdHealth" resultType="Reserve">
+		SELECT RNO, RTIME FROM RESERVE
+		WHERE RDATE=SUBSTR(TO_CHAR(SYSDATE),1,8) AND RCODE='H' 
+		AND RCHECKYN='N' AND MEMBERID=#{memberId}
+	</select>
+	
+	<update id="checkSelectHealth" parameterType="java.util.HashMap">
+		UPDATE RESERVE
+		SET RCHECKYN='Y' WHERE RNO IN
+		<foreach collection="rNoList" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	
+
 </mapper>

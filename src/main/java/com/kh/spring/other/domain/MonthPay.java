@@ -1,14 +1,13 @@
 package com.kh.spring.other.domain;
 
-import java.sql.Date;
-
 public class MonthPay {
 	
 	private int mpNo;
-	private Date mpDate;
+	private String mpDate;
 	private int mpPrice;
 	private String mpMeans;
 	private String mpTyn;
+	private String mYn;
 	private String memberId;
 	private String nextPay;
 	
@@ -16,13 +15,15 @@ public class MonthPay {
 		super();
 	}
 
-	public MonthPay(int mpNo, Date mpDate, int mpPrice, String mpMeans, String mpTyn, String memberId, String nextPay) {
+	public MonthPay(int mpNo, String mpDate, int mpPrice, String mpMeans, String mpTyn, String mYn, String memberId,
+			String nextPay) {
 		super();
 		this.mpNo = mpNo;
 		this.mpDate = mpDate;
 		this.mpPrice = mpPrice;
 		this.mpMeans = mpMeans;
 		this.mpTyn = mpTyn;
+		this.mYn = mYn;
 		this.memberId = memberId;
 		this.nextPay = nextPay;
 	}
@@ -35,11 +36,11 @@ public class MonthPay {
 		this.mpNo = mpNo;
 	}
 
-	public Date getMpDate() {
+	public String getMpDate() {
 		return mpDate;
 	}
 
-	public void setMpDate(Date mpDate) {
+	public void setMpDate(String mpDate) {
 		this.mpDate = mpDate;
 	}
 
@@ -67,6 +68,14 @@ public class MonthPay {
 		this.mpTyn = mpTyn;
 	}
 
+	public String getmYn() {
+		return mYn;
+	}
+
+	public void setmYn(String mYn) {
+		this.mYn = mYn;
+	}
+
 	public String getMemberId() {
 		return memberId;
 	}
@@ -86,8 +95,8 @@ public class MonthPay {
 	@Override
 	public String toString() {
 		return "MonthPay [mpNo=" + mpNo + ", mpDate=" + mpDate + ", mpPrice=" + mpPrice + ", mpMeans=" + mpMeans
-				+ ", mpTyn=" + mpTyn + ", memberId=" + memberId + ", nextPay=" + nextPay + "]";
+				+ ", mpTyn=" + mpTyn + ", mYn=" + mYn + ", memberId=" + memberId + ", nextPay=" + nextPay + "]";
 	}
-	
+
 	
 }

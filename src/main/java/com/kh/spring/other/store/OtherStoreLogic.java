@@ -128,11 +128,33 @@ public class OtherStoreLogic implements OtherStore {
 	}
 
 	@Override
-	public ArrayList<Account> chart() {
-		return (ArrayList)sqlSession.selectList("OtherMapper.chart");
+	public ArrayList<Account> chart(Account account) {
+		return (ArrayList)sqlSession.selectList("OtherMapper.chart", account);
 	}
 
+	@Override
+	public ArrayList<Reserve> checkIdStudy(String memberId) {
+		return (ArrayList)sqlSession.selectList("OtherMapper.checkIdStudy", memberId);
+	}
 
+	@Override
+	public int checkSelectStudy(ArrayList<Integer> rNoList) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("rNoList", rNoList);
+		return sqlSession.update("OtherMapper.checkSelectStudy", paramMap);
+	}
+
+	@Override
+	public ArrayList<Reserve> checkIdHealth(String memberId) {
+		return (ArrayList)sqlSession.selectList("OtherMapper.checkIdHealth", memberId);
+	}
+
+	@Override
+	public int checkSelectHealth(ArrayList<Integer> rNoList) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("rNoList", rNoList);
+		return sqlSession.update("OtherMapper.checkSelectHealth", paramMap);
+	}
 
 
 

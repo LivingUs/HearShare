@@ -26,9 +26,6 @@
 					    <nav id="smallnav">
 					        <a href="#mypage" onclick=""><i class="fas fa-user-edit"></i></a> 
 					        <a href="#ticket" onclick="location.href='payAllList.do'"><i class="fas fa-ticket-alt"></i></a>
-					        <%-- <c:if test="${!empty mList }">
-					        <a href="#autoPay" onclick="location.href='autoPayList.do'"><i class="far fa-credit-card"></i></a> 
-					        </c:if> --%>
 					        <a href="#autoPay" onclick="location.href='autoPayList.do'"><i class="far fa-credit-card"></i></a> 
 					        <a href="#chart" onclick="location.href='accountList.do'"><i class="fas fa-chart-bar"></i></a> 
 					    </nav>
@@ -39,35 +36,51 @@
 		<h2 align="center">자동결제일은 매달 <span style="font-size : 1.3em;">1일</span>입니다.</h2>
 		<hr>
 		<div id="autoPay_top">
-			<table class="table-borderless autoPay_tb1">
-					<tr>
-						<th>상 태</th>
-						<td>
-							<c:if test="${mList[0].mpTyn eq 'Y'}">
-								이용중
+			<c:if test="${!empty mList }">
+				<table class="table-borderless autoPay_tb1">
+						<tr>
+							<th>상 태</th>
+							<td>
+								<c:if test="${mList[0].mpTyn eq 'Y'}">
+									이용중
+								</c:if>
+								<c:if test="${mList[0].mpTyn eq 'N'}">
+									이용중지
+								</c:if>
+							</td>
+							<th>결제기간</th>
+							<td>${mList[0].memberId }</td>
+						</tr>
+						<tr>
+							<th>결제수단</th>
+							<td>${mList[0].mpMeans }</td>
+							<th>다음 결제일</th>
+							<td>${mList[0].nextPay }</td>
+						</tr>
+						<tr>
+							<th>결제금액</th>
+							<td>${mList[0].mpPrice }원</td>
+							<th></th>
+							<td>
+							<c:if test="${mList[0].mpTyn eq 'Y' }"> <!-- 자동결제 이용중일 때만 해지하기 버튼 생성 -->
+								<button class="btn btn-outline-danger" type="button" onclick="stopConfirm(); "style="width:120px;height:35px;">해지하기</button>
+								<script>
+									function stopConfirm(){
+										if(confirm("정말 해지하시겠습니까?")) document.location = 'autoPayStop.do';
+									};
+								</script>
 							</c:if>
-							<c:if test="${mList[0].mpTyn eq 'N'}">
-								이용중지
-							</c:if>
-						</td>
-						<th>결제기간</th>
-						<td>${mList[0].memberId }</td>
-					</tr>
-					<tr>
-						<th>결제수단</th>
-						<td>${mList[0].mpMeans }</td>
-						<th>다음 결제일</th>
-						<td>${mList[0].nextPay }</td>
-					</tr>
-					<tr>
-						<th>결제금액</th>
-						<td>${mList[0].mpPrice }</td>
-						<th></th>
-						<td>
-						<button class="btn btn-outline-danger" type="button" onclick="location.href='autoPayStop.do'" style="width:120px;height:35px;">해지하기</button>
-						</td>
-					</tr>
-			</table>
+							</td>
+						</tr>
+				</table>
+			</c:if>
+			<c:if test="${empty mList }">
+				<br>
+				<p style="text-align:center; font-size:20px; ">한 번의 자동결제 신청으로, 관리비 납입을 간편하게 이용하세요.<br><br>
+				<button class="btn btn-outline-danger" type="button" style="width:250px; height:50px;">자동결제 신청하러 가기>></button>
+				</p>
+				<br>
+			</c:if>
 		</div>
 		<br>
 		<div id="autoPay_bottom">
@@ -82,24 +95,30 @@
 						<th style="width:12%;">결제금액</th>
 						<th style="width:8%;">상태</th>
 					</tr>
-				<c:forEach items="${mList}" var="mList">
-					<tr>
-						<td>${mList.mpNo}</td>
-						<td>${mList.mpDate }</td>
-						<td>${mList.memberId }</td>
-						<td>${mList.mpMeans }</td>
-						<td>${mList.mpPrice }원</td>
-						<td>
-							<c:if test="${!empty mList.mpMeans }">
-								완료
-							</c:if>
-							<c:if test="${empty mList.mpMeans }">
-								미납
-							</c:if>
-						</td>
-					</tr>
-				</c:forEach>
-				
+					<c:if test="${!empty mList }">
+						<c:forEach items="${mList}" var="mList">
+							<tr>
+								<td>${mList.mpNo}</td>
+								<td>${mList.mpDate }</td>
+								<td>${mList.memberId }</td>
+								<td>${mList.mpMeans }</td>
+								<td>${mList.mpPrice }원</td>
+								<td>
+									<c:if test="${mList.mYn eq 'Y' }">
+										완료
+									</c:if>
+									<c:if test="${mList.mYn eq 'N' }">
+										미납
+									</c:if>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty mList }">
+						<tr>
+							<td colspan="6">조회된 정보가 없습니다.</td>
+						</tr>
+					</c:if>
 				</table>
 			</div>
 		</div>

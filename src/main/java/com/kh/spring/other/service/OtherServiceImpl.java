@@ -120,11 +120,29 @@ public class OtherServiceImpl implements OtherService{
 	}
 
 	@Override
-	public ArrayList<Account> chart() {
-		return store.chart();
+	public ArrayList<Account> chart(Account account) {
+		return store.chart(account);
 	}
 
+	@Override
+	public ArrayList<Reserve> checkIdStudy(String memberId) {
+		return store.checkIdStudy(memberId);
+	}
 
+	@Override
+	public int checkSelectStudy(ArrayList<Integer> rNoList) {
+		return store.checkSelectStudy(rNoList);
+	}
+
+	@Override
+	public ArrayList<Reserve> checkIdHealth(String memberId) {
+		return store.checkIdHealth(memberId);
+	}
+
+	@Override
+	public int checkSelectHealth(ArrayList<Integer> rNoList) {
+		return store.checkSelectHealth(rNoList);
+	}	
 	
 
 

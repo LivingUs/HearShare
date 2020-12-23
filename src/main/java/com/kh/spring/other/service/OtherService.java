@@ -54,8 +54,18 @@ public interface OtherService {
 	public ArrayList<Account> excelConvert(Account account);
 	
 	//차트
-	public ArrayList<Account> chart();
+	public ArrayList<Account> chart(Account account);
 	
+	//스터디 체크인 아이디 겁색
+	public ArrayList<Reserve> checkIdStudy(String memberId);
 	
+	//스터디 체크인
+	public int checkSelectStudy(ArrayList<Integer> rNoList);
+	
+	//헬스 체크인 아이디 겁색
+	public ArrayList<Reserve> checkIdHealth(String memberId);
+	
+	//헬스 체크인
+	public int checkSelectHealth(ArrayList<Integer> rNoList);
 	
 }

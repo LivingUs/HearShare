@@ -8,7 +8,6 @@ public class Account {
 	private String acInOut;
 	private Date acDate;
 	private String acPrice;
-	private String acPirce;
 	private String acBig;
 	private String acSmall;
 	private String memberId;
@@ -19,14 +18,13 @@ public class Account {
 		super();
 	}
 
-	public Account(int acNo, String acInOut, Date acDate, String acPrice, String acPirce, String acBig, String acSmall,
-			String memberId, int acIn, int acOut) {
+	public Account(int acNo, String acInOut, Date acDate, String acPrice, String acBig, String acSmall, String memberId,
+			int acIn, int acOut) {
 		super();
 		this.acNo = acNo;
 		this.acInOut = acInOut;
 		this.acDate = acDate;
 		this.acPrice = acPrice;
-		this.acPirce = acPirce;
 		this.acBig = acBig;
 		this.acSmall = acSmall;
 		this.memberId = memberId;
@@ -64,14 +62,6 @@ public class Account {
 
 	public void setAcPrice(String acPrice) {
 		this.acPrice = acPrice;
-	}
-
-	public String getAcPirce() {
-		return acPirce;
-	}
-
-	public void setAcPirce(String acPirce) {
-		this.acPirce = acPirce;
 	}
 
 	public String getAcBig() {
@@ -114,12 +104,6 @@ public class Account {
 		this.acOut = acOut;
 	}
 
-	@Override
-	public String toString() {
-		return "Account [acNo=" + acNo + ", acInOut=" + acInOut + ", acDate=" + acDate + ", acPrice=" + acPrice
-				+ ", acPirce=" + acPirce + ", acBig=" + acBig + ", acSmall=" + acSmall + ", memberId=" + memberId
-				+ ", acIn=" + acIn + ", acOut=" + acOut + "]";
-	}
 	
 
 	
