@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kh.spring.board.common.Pagination;
+import com.kh.spring.board.common.BoardPagination;
 import com.kh.spring.board.domain.Board;
 import com.kh.spring.board.domain.BoardComment;
 import com.kh.spring.board.domain.BoardLike;
@@ -69,19 +70,23 @@ public class BoardController {
 	
 	// 자유게시판 페이징 스크롤
 	@RequestMapping(value="boardPaging.do", method=RequestMethod.POST)
+	@ResponseBody
 	public void boardPaging (HttpServletRequest request, HttpServletResponse response, Integer start) throws Exception{
 		
 		int currentPage = (start != null) ? start : 1;
 		int listCount = bService.getBoardListCount();
-		
+		HashMap<String, Object> boardMap = new HashMap<String, Object>();
 		// Pagination클래스는 common 패키지에 있음
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		
-		
+		PageInfo pi = BoardPagination.getPageInfo(currentPage, listCount);
 		ArrayList<Board> bList = bService.selectList(pi);
+		
+		boardMap.put("pi", pi);
+		boardMap.put("bList", bList);
+
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(bList, response.getWriter());
+		gson.toJson(boardMap, response.getWriter());
 	}
+	
 	
 	
 	// 게시판 게시글 등록화면
@@ -90,6 +95,8 @@ public class BoardController {
 		
 		return "board/boardWrite";
 	}
+	
+	
 	
 	// 공지사항 등록화면
 	@RequestMapping(value="noticeWriteForm.do", method=RequestMethod.GET)
@@ -117,7 +124,15 @@ public class BoardController {
 		String path = null;
 		
 		if (result > 0) {
-			path = "redirect:boardList.do";
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.println("<script>alert('게시물이 등록되었습니다.'); location.href='boardList.do';</script>");
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			try {
 				response.setContentType("text/html; charset=UTF-8");
@@ -179,13 +194,13 @@ public class BoardController {
 	}
 
 	// 공지사항 수정화면
-		@RequestMapping(value="noticeUpdateView.do", method=RequestMethod.GET)
-		public ModelAndView updateNoticeView(ModelAndView mv, int bNo) {
-			mv.addObject("board", bService.selectBoard(bNo));
-			mv.setViewName("board/noticeUpdate");	
-			
-			return mv;
-		}
+	@RequestMapping(value="noticeUpdateView.do", method=RequestMethod.GET)
+	public ModelAndView updateNoticeView(ModelAndView mv, int bNo) {
+		mv.addObject("board", bService.selectBoard(bNo));
+		mv.setViewName("board/noticeUpdate");	
+		
+		return mv;
+	}
 	
 	
 	// 게시물 수정
@@ -211,7 +226,15 @@ public class BoardController {
 		int result = bService.updateBoard(board);
 		
 		if (result > 0) {
-			mv.setViewName("redirect:boardList.do");
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.println("<script>alert('게시물이 수정되었습니다.'); location.href='boardList.do';</script>");
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			try {
 				response.setContentType("text/html; charset=UTF-8");
@@ -255,7 +278,15 @@ public class BoardController {
 		String path = null;
 		
 		if (result > 0) {
-			path = "redirect:boardList.do";
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.println("<script>alert('게시물이 삭제되었습니다.'); location.href='boardList.do';</script>");
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			try {
 				response.setContentType("text/html; charset=UTF-8");
@@ -273,7 +304,7 @@ public class BoardController {
 	
 	
 	
-	// 내가 쓴글
+	// 내가 쓴 글
 	@RequestMapping(value="myBoard.do", method = RequestMethod.GET)
 	public ModelAndView myBoard(ModelAndView mv, Board board, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -285,7 +316,7 @@ public class BoardController {
 		
 		if (!bList.isEmpty()) {
 			mv.addObject("bList", bList);
-			mv.setViewName("board/board");
+			mv.setViewName("board/boardMine");
 		} else {
 			try {
 				response.setContentType("text/html; charset=UTF-8");
@@ -305,13 +336,13 @@ public class BoardController {
 	
 	
 	// 게시물 검색
-	@RequestMapping(value="boardSearch.do", method=RequestMethod.GET)
+	@RequestMapping(value="boardSearch.do", method=RequestMethod.POST)
 	public ModelAndView searchBoard(ModelAndView mv, BoardSearch bSearch, HttpServletResponse response) {
 		ArrayList<Board> searchBList = bService.searchBoardList(bSearch);
 		
 		if (!searchBList.isEmpty()) {
 			mv.addObject("bList", searchBList);
-			mv.setViewName("board/board");
+			mv.setViewName("board/boardSearch");
 		} else {
 			try {
 				response.setContentType("text/html; charset=UTF-8");
@@ -427,6 +458,15 @@ public class BoardController {
 		String path = null;
 		
 		if (result > 0) {
+			/* try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.println("<script>alert('댓글이 삭제되었습니다.'); location.href='boardContent.do?bNo="+bNo+"';</script>");
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} */
 			path = "redirect:boardContent.do?bNo="+bNo;
 		} else {
 			try {

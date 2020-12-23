@@ -37,7 +37,7 @@
 							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
 								<div class="modal-dialog" role="document"> 
 									<div class="modal-content">
-										<form action="boardSearch.do" method="post">
+										<form action="boardSearch.do" method="get">
 											<div class="modal-header"> 
 												<h5 class="modal-title">Board Search</h5> 
 											</div> 
@@ -80,11 +80,39 @@
 				    	<br>
 				    	<hr>
 				    	<!-- 게시판 리스트 출력 -->
-					   	<div id="boardListSub" align="center"></div>
-					   	<div id="moreBtnArea">
-					   			<a id="moreBtn" totalCount="" currentCount="">
-					   				<img src="../../../resources/images/scrolldown-icon-new.gif">
-					   			</a>
+					   	<div id="boardListSub" align="center">
+					   	<c:forEach items="${bList }" var="bList">
+							<c:url var="bContent" value="boardContent.do">
+						<c:param name="bNo" value="${bList.bNo }"></c:param>
+						</c:url>
+						<c:if test="${bList.memberId ne 'admin' }">
+							<a href="${bContent }">
+								<div class="card" style="width: 21rem;">
+							 <div class="card-body">
+							<h5 class="card-title">${bList.bTitle }</h5>
+							<h6 id="boardHead">#${bList.bHead }</h6>
+							   <c:if test="${bList.bFileName ne null }">
+							  	<p class="card-text" id="inFile">${bList.bContent }</p>
+							  	<div id="imgArea">
+							  		<img src="../../../resources/buploadFiles/${bList.bFileName }">
+							  	</div>
+						  </c:if>
+						  <c:if test="${bList.bFileName eq null }">
+						  	<p class="card-text" id="noneFile">${bList.bContent }</p>
+						  </c:if>
+						  <hr>
+						  <div class="card-body-other">
+						   <i class="fas fa-heart fa-lg"></i>
+						   <p>${bList.bLike }</p>
+						   <i class="fas fa-eye fa-lg"></i>
+						   <p>${bList.bViewNo }</p>
+						   <p>${bList.bWriteDate }</p>
+							    </div>
+							  </div>
+							</div>
+						</a>
+						</c:if>
+						</c:forEach>
 					   	</div>
 				    </article>
 				</section>
@@ -113,106 +141,7 @@
 				mousePause: true,
 				showItems: 1
 		});
-		
-		// 스크롤 페이징
-		boardListPage(i);
-	
-		$(window).scroll(function() {
-		    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-		    	boardListPage(++i);
-		    }
-		});
 	});
-	
-    
-    // 페이징 스크롤
-	function boardListPage(start) {
-		var param = { start : start };
-		$.ajax({
-			url : "boardPaging.do",
-			data : param,
-			type : "post",
-			dataType : "json",
-			success : function(data) {
-				$boardListSub = $("#boardListSub");
-				
- 				var $a;
- 				var $divCard;
- 				var $divCardBody;
- 				var $h5Title;
- 				var $h6Head;
- 				var $pTextInfile;
- 				var $pTextNonefile;
- 				var $divImg;
- 				var $img;
- 				var $hr;
- 				var $divOther;
- 				var $iHeart;
- 				var $iEye;
- 				var $pLike;
- 				var $pView;
- 				var $pDate;				
-				
-				for(var i in data.bList) {
-					$a = $("<a href='boardContent.do?bNo="+data.bList[i].bNo+"'>");
-					$divCard = $("<div class='card' style='width: 21rem;'>");
-					$divCardBody = $("<div class='card-body'>");
-					$h5Title = $("<h5 class='card-title'>").text(data.bList[i].bTitle);
-					$h6Head = $("<h6 id='boardHead'>").text("#"+data.bList[i].bHead);
-					$pTextInfile = $("<p class='card-text' id='inFile'>").text(data.bList[i].bContent);
-					$pTextNonefile = $("<p class='card-text' id='noneFile'>").text(data.bList[i].bContent);
-					$divImg = $("<div id='imgArea'>");
-					$img = $("<img src='../../../resources/buploadFiles/"+data.bList[i].bFileName+"'>");
-					$hr = $("<hr>");
-					$divOther = $("<div class='card-body-other'>");
-					$iHeart = $("<i class='fas fa-heart fa-lg'>");
-					$iEye = $("<i class='fas fa-eye fa-lg'>");
-					$pLike = $("<p>").text(data.bList[i].bLike);
-					$pView = $("<p>").text(data.bList[i].bViewNo);
-					$pDate = $("<p>").text(data.bList[i].bUpdateDate);	
-					
-					$boardListSub.append($a);
-					$a.append($divCard);
-					$divCard.append($divCardBody);
-					$divCardBody.append($h5Title);
-					$divCardBody.append($h6Head);
-					if (data.bList[i].bFileName != null) {
-						$divCardBody.append($pTextInfile);
-						$divCardBody.append($divImg);
-						$divImg.append($img);
-					} else if (data.bList[i].bFileName == null) {
-						$divCardBody.append($pTextNonefile);
-					}
-					$divCardBody.append($hr);
-					$divCardBody.append($divOther);
-					$divOther.append($iHeart);
-					$divOther.append($pLike);
-					$divOther.append($iEye);
-					$divOther.append($pView);
-					$divOther.append($pDate);
-				}
-				/* $("#moreBtn").val(Number(start)+1);
-				$("#moreBtn").attr("currentCount", Number($("#moreBtn").attr("currentCount"))+data.length); */
-				$("#moreBtn").attr("totalCount", data.pi.listCount);
-				$("#moreBtn").attr("currentCount", Number($("#moreBtn").attr("currentCount"))+data.bList.length);
-				var totalCount = $("#moreBtn").attr("totalCount");
-				var currentCount = $("#moreBtn").attr("currentCount");
-
-				if(totalCount == currentCount) {
-					$("#moreBtn").attr("disabled", true);
-					$("#moreBtnArea").css("display", "none");
-				}
-			}
-		});
-	}
-    
-/*  	$(function() {
-		boardListPage(1);
-		
-		$("#moreBtn").click(function() {
-			boardListPage($(this).val());
-		});
-	}); */
 	
      
     </script>

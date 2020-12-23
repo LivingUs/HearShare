@@ -14,7 +14,8 @@ body {
 		background-size: auto, 100% 100%;
 		background-attachment: fixed;
 		overflow-y: scroll;
-	}
+	}	
+	
 
 #wrapper {
       width: 70em;
@@ -42,9 +43,9 @@ body {
       -webkit-transition: opacity 1s ease-in-out;
       -ms-transition: opacity 1s ease-in-out;
       transition: opacity 1s ease-in-out;
-   }
+   }   
 
-		body.is-preload #wrapper {
+body.is-preload #wrapper {
 			opacity: 0;
 		}
 
@@ -85,7 +86,6 @@ body {
 		}
 
 
-
 /*smallnav*/
 #smallnav {
     text-align: right;
@@ -102,6 +102,10 @@ body {
     -ms-transition: opacity .25s ease-in-out;
     transition: opacity .25s ease-in-out;
     text-decoration : none;
+}
+
+#smallnav a:hover {
+	color: hotpink;
 }
 
 
@@ -154,7 +158,7 @@ body {
  }
 
 #smallnav a:hover {
-     opacity: 0.6;
+     opacity: 1.0;
  }
 
 #smallnav a:hover span {
@@ -169,7 +173,7 @@ body {
      border-bottom-width: 0.5em;
  }
 
-@media screen and (max-width: 980px) {
+ @media screen and (max-width: 980px) {
      #smallnav a span {
         display: none;
      }
@@ -193,13 +197,9 @@ a:link { text-decoration: none;}
       -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
       transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
    }
+   
 
-
-
-
-
-/*Board*/
-
+/* mypage */   
 header>h3 {
 	font-family: 'Jal_Onuel';
 	float: left; 
@@ -208,234 +208,125 @@ header>h3 {
 	margin-bottom: 0px;
 }
 
-
-#noticeIcon {
-	float:left; 
-	margin-right:10px;
+span.id{
+	display:none;
+	color:red;
 }
 
-#noticeRolling {
-	overflow: hidden; 
+span.pw {
+	display:none;
+	color:red;
+}
+
+span.id.ok {
+	color:green;
+}
+
+.memberUpdate-form {
 	position: relative;
-	width : 80%; 
-	height: 25px;
-	float : left;
-	left : 10px;
+	z-index: 2;
+    text-align: center;
 }
 
-#noticeRolling>ul {
-	position: absolute; 
-	margin: 0px; 
-	padding: 0px; 
-	top: 0px;
-	width : 100%;
+.memberUpdate-form h1{
+	font-family: 'Jal_Onuel';
+	font-size: 70px;
+	color:dimgray;
+	text-align: center;
+    margin-bottom: 20px;
 }
 
-#noticeRolling>ul>li {
-	width : 100%;
-	margin: 0px; 
-	padding: 0px; 
-	height: 25px; 
-	display: list-item;
-	font-weight : bold;
-	font-size : 20px;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	white-space:nowrap;
+.memberUpdate-form>h3{
+	font-family: 'Jal_Onuel';
+    color:#4c4c4c;
 }
 
-
-.card {
-	position: relative;
-    text-align: left;
-    display: inline-block;
-    margin-left : 5px;
-    margin-right: 16px;
-    margin-bottom: 40px;
-    color : black;
-    float : left;
+.memberUpdate-form a {
+	text-decoration: none;
+    color : dimgray;
+    font-size : 20px;
 }
 
-#boardListSub a {
-	text-decoration : none;
-}
-
-#boardListSub a:nth-child(3n+0)>.card {
-	margin-right: 0px;
-}
-
-.card h5 {
-	font-weight : bold;
-}
-
-.card-title {
-	display:inline-block;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	white-space:nowrap;
-	width : 220px;
-}
-
-#boardHead {
-	font-size : 14px;
-	width : 100px;
-	position : absolute;
-	top : 24px;
-	left : 250px;
-}
-
-#imgArea {
-	width:120px;
-	height:120px;
-	position : absolute;
-	bottom : 68px;
-	left : 200px;
-}
-
-#imgArea img { 
-	max-width: 100%; 
-	height: 100%;
-	object-fit: cover;
-
-}
-
-#noneFile {
-	font-size:14px;
-	height:130px;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	white-space: normal;
-	text-align: left; 
-	word-wrap: break-word; 
-	display: -webkit-box; 
-	-webkit-line-clamp: 6; 
-	-webkit-box-orient: vertical;
-	margin-bottom:20px;
-}
-
-#inFile {
-	font-size:14px;
-	height:130px;
-	width : 170px;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	white-space: normal;
-	text-align: left; 
-	word-wrap: break-word; 
-	display: -webkit-box; 
-	-webkit-line-clamp: 6; 
-	-webkit-box-orient: vertical;
-	margin-bottom:20px;
+.memberUpdate-form a:hover {
+	opacity: 0.6;
 }
 
 
-.card-body-other * {
-	position: relative;
-	float:left;
+.int-area{
+    width:400px;
+    position:relative;
+    margin-top:20px;
+    left : 350px;
 }
 
-.card-body-other i {
-	margin-right:5px;
+.int-area i{
+    position: absolute;
+    top:20px;
+    left:-40px;
+    color:#4c4c4c;
 }
 
-.card-body-other p {
-	bottom : 5px;
-	margin-right:25px;
-	margin-bottom : 0px;
+.int-area input{
+    position: relative;
+    width: 100%;
+    padding: 20px 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid dimgray;
+    font-size: 18px;
+    color : #4c4c4c;
+    outline: none;
+    
 }
 
-.card-body-other p:last-child {
-	position:absolute;
-	margin-right:0px;
-	left : 230px;
+.int-area input:second{
+    position: relative;
+    width: 100%;
+    padding: 20px 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid dimgray;
+    font-size: 18px;
+    color : dimgray;
+    outline: none;
+    
 }
 
-#boardList a {
-	color : black;
+.int-area label.warning {
+    color: red !important;
+    animation: warning .3s ease;
+    animation-iteration-count: 3;
 }
-
-.fas.fa-heart {
-	color : red;
-}
-
-/* 모달창 스타일 */
-.modal {
-        text-align: center;
-}
-
-.modal-dialog {
-	width : 600px;
-}
- 
-@media screen and (min-width: 1200px) { 
-        .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-        }
-}
- 
-.modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-}
-
-
-
-#moreBtnArea {
-	width : 100%;
-	height : 80px;
-	text-align : center;
-	float : left;
-}
-
-#moreBtnArea img {
-	width : 200px;
-	height : 100px;
+@keyframes warning {
+    0% {transform: translateX(-8px);}
+    25% {transform: translateX(8px);}
+    50% {transform: translateX(-8px);}
+    75% {transform: translateX(8px);}
 }
 
 
-@media screen and (max-width: 977px) {
-	
-	.card {
-		position: relative;
-	    text-align: left;
-	    display: inline-block;
-	    margin-left : 0px;
-	    margin-right: 0px;
-	    margin-bottom: 40px;
-	    color : black;
-	    float : left;
-	}
-	
+.security-area i {
+    margin: 20px;
+    color:#4c4c4c;
 }
 
-
-@media screen and (max-width: 908px) {
-	#boardListSub {
-		text-align : center;
-	}
-	
-	.card {
-		position: relative;
-	    text-align: left;
-	    display: inline-block;
-	    margin-left : 0px;
-	    margin-right: 0px;
-	    margin-bottom: 40px;
-	    color : black;
-	    float : right;
-	}
-	
+.fas.fa-times {
+    color:orangered;
+    position:relative;
+    right:20px;
 }
 
-#nav a:nth-child(1) {
+.fas.fa-check {
+    color:green;
+    position:relative;
+    right:20px;
+}
+
+#nav a:nth-child(4) {
     opacity: 1.0;
 }
 
-#nav a:nth-child(1):after {
+#nav a:nth-child(4):after {
 	opacity: 1.0;
     border-bottom-width: 0.5em;
 }

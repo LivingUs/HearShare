@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+/* 포인트 글꼴 */
+@font-face {
+    font-family: 'Jal_Onuel';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 	
 *{margin: 0; padding: 0;}
 	
@@ -34,6 +41,7 @@ span.id.ok {
 }
 
 .memberJoin-form h1{
+	font-family: 'Jal_Onuel';
 	font-size: 70px;
 	color:dimgray;
 	text-align: center;
@@ -41,6 +49,7 @@ span.id.ok {
 }
 
 .memberJoin-form>h3{
+	font-family: 'Jal_Onuel';
     color:#4c4c4c;
 }
 

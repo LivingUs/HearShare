@@ -14,15 +14,12 @@
         <pre>  듣다   여기</pre>
         <br>
         <h1>Hear : Share</h1>
-        <form action="memberLogin.do" method="get">
+        <form action="memberLogin.do" method="post">
             <div class="int-area">
                 <input type="text" name="memberId" id="id" autocomplete="off" required><label for="id">ID</label>
             </div>
             <div class="int-area">
                 <input type="password" name="password" id="pw" autocomplete="off" required><label for="pw">PASSWORD</label>
-            </div>
-            <div class="caption">
-                <a href="">Forgot Password?</a>
             </div>
             <div class="btn-area">
                     <button id="btn" type="submit">LOGIN</button>
@@ -30,7 +27,6 @@
         </form>
          <br>
       <a href="memberJoin.do">Sign in</a>
-      <a href="home.do">홈으로</a>
     </section>
     <img src="resources/images/home.png" style="width:50px;margin-bottom: 420px;">
     

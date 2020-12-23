@@ -16,12 +16,12 @@
 <body>
 	<section class="memberJoin-form">
         <br>
-         <img src="../../../resources/images/home.png" style="position:relative;width:50px;left:230px;top:30px;">
+         <img src="../../../resources/images/home.png" style="position:relative;width:50px;left:250px;top:30px;">
         <h1>Hear : Share
             <br>
             <h3>회원가입</h3>
         </h1>
-        <form action="memberJoin.do" method="post">
+        <form action="memberJoin.do" method="post" name="memberJoinForm">
             <div class="int-area">
                 <i class="fas fa-user fa-2x"></i><input type="text" name="memberId" id="memberId" autocomplete="off" required placeholder="아이디를 입력해주세요.">
                 <br>
@@ -51,23 +51,23 @@
                 <i class="fas fa-home fa-2x" style="left:-42px;"></i><input type="text" name="roomNo" autocomplete="off" required placeholder="방 호수를 입력해주세요.">
             </div>
             <div class="int-area">
-                <i class="fas fa-fingerprint fa-2x"></i><input type="text" name="code" autocomplete="off" required placeholder="인증번호를 입력해주세요.">
+                <i class="fas fa-fingerprint fa-2x"></i><input type="text" name="code" id="code" autocomplete="off" required placeholder="인증번호를 입력해주세요.">
             </div>
             <div class="security-area">
                 
                 <a href="javascript:emailCertified();"><i class="far fa-envelope fa-2x"></i></a>
-                <i class="fas fa-times fa-2x" id="noneEmail"></i>
-                <i class="fas fa-check fa-2x" id="checkEmail"></i>
-                <input type="hidden" id="emailRecheck" value="0">
+                <i class="fas fa-times fa-2x" id="noneEmail" style="display:inline-block;"></i>
+                <i class="fas fa-check fa-2x" id="checkEmail" style="display:none;"></i>
+                <input type="hidden" id="emailRecheck" name="emailRecheck" value="0">
                 
-                <a href=""><i class="fas fa-fingerprint fa-2x"></i></a>
-                <i class="fas fa-times fa-2x" id="noneCode"></i>
-                <i class="fas fa-check fa-2x" id="checkCode"></i>
+                <a href="javascript:codeCertified();"><i class="fas fa-fingerprint fa-2x"></i></a>
+                <i class="fas fa-times fa-2x" id="noneCode" style="display:inline-block;"></i>
+                <i class="fas fa-check fa-2x" id="checkCode" style="display:none;"></i>
                 <input type="hidden" id="codeRecheck" value="0">
             </div>
             
             <div class="btn-area">
-                    <button id="btn" onclick="return recheck();">JOIN</button>
+                    <button type="submit" id="btn" onclick="return recheck();">JOIN</button>
             </div>
         </form>
     </section>
@@ -80,22 +80,31 @@
     			alert("아이디를 재확인해주세요.");
     			$("#memberId").focus();
     			return false;
-    		} else {
-    			return true;
-    		}
+    		} 
     		
     		if ($("#pwRecheck").val() == 0) {
     			alert("비밀번호를 재확인해주세요.");
     			$("#password").focus();
     			return false;
-    		} else {
-    			return true;
     		}
+    		
+    		if ($("#emailRecheck").val() == 0) {
+    			alert("이메일 인증을 진행해주세요");
+    			$("#email").focus();
+    			return false;
+    		}
+    		
+    		if ($("#codeRecheck").val() == 0) {
+    			alert("인증번호 인증을 진행해주세요");
+    			$("#code").focus();
+    			return false;
+    		} 
+    		
     	}
     	
     	
     	// 아이디값 정상여부 체크
-    	$("#memberId").on("blur", function() {
+    	$("#memberId").on("input", function() {
     		var memberId = $(this).val();
     		
     		// 아이디 중복체크
@@ -131,7 +140,7 @@
     	
     	
     	// 비밀번호값 정상여부 체크
-    	$("#password").on("blur", function() {
+    	$("#password").on("input", function() {
     		var password = $(this).val();
     		
     		if (password.length<8 || 20<password.length) {
@@ -147,7 +156,7 @@
     	
     	
     	// 비밀번호 재확인 정상여부 체크
-    	$("#passwordRecheck").on("blur", function() {
+    	$("#passwordRecheck").on("input", function() {
     		var password = $("#password").val();
     		var passwordRecheck = $(this).val();
     		
@@ -168,26 +177,29 @@
     		var email = $("#email").val();
     		window.open('emailCertified.do?email='+email,'이메일 인증', 'width=500px, height=160px, location=no');
     	}
+    	
+    	// 인증번호 인증
+    	function codeCertified() {
+    		var email = $("#email").val();
+    		var authNum = $("#code").val();
+    		
+    		$.ajax({
+    			url : "codeCertified.do",
+    			data : {"email" : email, "authNum" : authNum},
+    			success : function(data) {
+    				if (data == 'true') {
+    					alert("인증번호 확인완료.");
+    					$("#noneCode").hide();
+    					$("#checkCode").show();
+    					$("#codeRecheck").val(1);
+    				} else {
+    					alert("인증번호를 재확인해주세요.");
+    					$("#code").focus();
+    				}
+    			}
+    		});
+    	}
 
-    	
-    	// 이메일 인증여부 확인
-	    if ($("#emailRecheck").val() == 0) {
-	    	$("#checkEmail").hide();
-	    	$("#noneEmail").show();
-	    } else {
-	    	$("#noneEmail").hide();
-	    	$("#checkEmail").show();
-	    }
-	    
-    	
-    	// 인증번호 인증여부 확인
-    	if ($("#codeRecheck").val() == 0) {
-	    	$("#checkCode").hide();
-	    	$("#noneCode").show();
-	    } else {
-	    	$("#noneCode").hide();
-	    	$("#checkCode").show();
-	    }
     
     </script>
     

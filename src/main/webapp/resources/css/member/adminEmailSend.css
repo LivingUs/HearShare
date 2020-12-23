@@ -1,12 +1,21 @@
 @charset "UTF-8";
 
+/* 포인트 글꼴 */
+@font-face {
+    font-family: 'Jal_Onuel';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
 		background-image: url("../../images/overlay.png"), url("../../images/bg.jpg");
 		background-repeat: repeat, no-repeat;
 		background-size: auto, 100% 100%;
 		background-attachment: fixed;
 		overflow-y: scroll;
-	}
+	}	
+	
 
 #wrapper {
       width: 70em;
@@ -34,52 +43,52 @@ body {
       -webkit-transition: opacity 1s ease-in-out;
       -ms-transition: opacity 1s ease-in-out;
       transition: opacity 1s ease-in-out;
-   }
+   }   
+
+body.is-preload #wrapper {
+			opacity: 0;
+		}
+
+		@media screen and (max-width: 1280px) {
+
+			#wrapper {
+				padding: 3em 0;
+				max-width: calc(100% - 6em);
+			}
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+			#wrapper {
+				padding: 1.5em 0;
+				max-width: calc(100% - 8em);
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			#wrapper {
+				padding: 1em 0;
+				max-width: calc(100% - 2em);
+			}
+
+		}
+
+		@media screen and (max-width: 360px) {
+
+			#wrapper {
+				padding: 1em 0;
+				max-width: 100%;
+			}
+
+		}
+
 
 /*smallnav*/
-    #smallnav {
-        text-align: right;
-    }
-
-    #smallnav>a {
-        margin: 0px 10px 0px 10px;
-        font-size: 30px;
-        color: black;
-    }
-
-    #smallnav>a:hover {
-        color: hotpink;
-    }
-
-/*a*/
-a:link { text-decoration: none;}
-
-/* main */
-
-#main {
-      position: relative;
-      overflow: hidden;
-      padding : 30px;
-      width: 100%;
-      background: #ffffff;
-      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
-      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-   }
-   
-
-    
-    
-/* BoardContent */
-#main div {
-	float : left;
-}
-
 #smallnav {
     text-align: right;
-    float : left;
 }
 
 #smallnav a {
@@ -92,8 +101,6 @@ a:link { text-decoration: none;}
     -webkit-transition: opacity .25s ease-in-out;
     -ms-transition: opacity .25s ease-in-out;
     transition: opacity .25s ease-in-out;
-    left : 580px;
-    bottom : 10px;
     text-decoration : none;
 }
 
@@ -172,105 +179,41 @@ a:link { text-decoration: none;}
      }
  }
 
+/*a*/
+a:link { text-decoration: none;}
 
-/* boardContent */
+/* main */
 
-#noneFile {
-	white-space: pre-wrap;
-}
-
-#inFile {
-	white-space: pre-wrap;
-	width : 550px;
-}
-
-.fas.fa-heart {
-	color : red;
-}
-
-.far.fa-heart {
-	color : red;
-}
-
-#boardContent>button {
-	position : static;
-	left : 870px;
-}
-
-#boardContent img {
-	height : auto;
-	width : 450px;
-	margin-left : 50px;
-	margin-bottom : 20px;
-}
-
-#boardContentOther * {
-	position: relative;
-	float:left;
-}
-
-#boardContentOther i {
-	margin-right:5px;
-}
-
-#boardContentOther p {
-	font-size:17px;
-	top:3px;
-	margin-right:25px;
-	margin-bottom : 0px;
+#main {
+      position: relative;
+      overflow: visible;
+      /* overflow: hidden; */
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+   
+   
+/* adminpage */   
+header>h3 {
+	font-family: 'Jal_Onuel';
+	float: left; 
+	width: 30%; 
+	font-weight: bold;
+	margin-bottom: 0px;
 }
 
 
-.boardComment {
-	line-height:110%;
-}
-
-.boardComment h6 {
-	position : relative;
-	float : left;
-}
-
-#commentInput {
-	width:100%;
-	z-index: 2;
-	position: fixed;
-	bottom: 0;
-	margin-left:168px;
-}
-
-.boardComment p {
-	width:1000px;
-	float : left;
-}
-
-.boardComment hr {
-	float : left;
-	margin-top:0px;
-}
-
-#commentInput {
-	width:1288px;
-}
-
-#commentInput input {
-	float:left;
-}
-
-#commentInput input[type="text"] {
-	width:80%;
-}
-
-#commentDelete {
-	float : left;
-	position : relative;
-	bottom : 25px;
-}
-
-#nav a:nth-child(1) {
+#nav a:nth-child(4) {
     opacity: 1.0;
 }
 
-#nav a:nth-child(1):after {
+#nav a:nth-child(4):after {
 	opacity: 1.0;
     border-bottom-width: 0.5em;
 }

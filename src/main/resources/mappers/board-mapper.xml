@@ -9,7 +9,13 @@
 	
 	<update id="updateBoard" parameterType="Board">
 		UPDATE BOARD
-		SET BTITLE = #{bTitle}, BCONTENT = #{bContent}, BUPDATEDATE = SYSDATE, BFILENAME = #{bFileName}, BHEAD = #{bHead}
+		<set>
+			<if test="bTitle != ''">BTITLE = #{bTitle},</if>
+			<if test="bContent != ''">BCONTENT = #{bContent},</if>
+			<if test="bFileName != ''">BFILENAME = #{bFileName},</if>
+			<if test="bHead != ''">BHEAD = #{bHead},</if>
+			BUPDATEDATE = SYSDATE
+		</set>
 		WHERE BNO = #{bNo}
 	</update>
 	
@@ -21,7 +27,7 @@
 	
 	<select id="boardListCount" resultType="int">
 		SELECT COUNT(*) FROM BOARD
-		WHERE BYN = 'Y'
+		WHERE BYN = 'Y' AND MEMBERID != 'admin'
 	</select>
 	
 	<select id="boardList" resultType="Board">

@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="MemberMapper">
-
-	<select id="studyPayList" resultType="Reserve">
-		SELECT RDATE, COUNT(RTIME) "RTIME"
-		FROM RESERVE
-		WHERE MEMBERID='user22' AND RTYN='Y' AND RCODE='S'
-		GROUP BY RDATE
-		ORDER BY RDATE DESC
+	
+	<insert id="joinMember" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES (#{memberId}, #{password}, #{memberName}, #{phone}, #{email}, #{code}, #{roomNo}, DEFAULT, DEFAULT)
+	</insert>
+	
+	<select id="selectOne" resultType="Member">
+		SELECT * FROM MEMBER
+		WHERE MEMBERID = #{memberId}
 	</select>
 	
-	<!-- studyPay select검색 -->
-	<select id="studySelect" parameterType="map" resultType="Reserve">
-		SELECT RDATE, COUNT(RTIME) "RTIME"
-		FROM RESERVE
-		WHERE MEMBERID='user22' AND RTYN='Y' AND RCODE='S'
-		AND SUBSTR(TO_CHAR(RDATE),1,2) LIKE SUBSTR(#{year},3,2) AND SUBSTR(TO_CHAR(RDATE),4,2) LIKE #{month}
-		GROUP BY RDATE
-		ORDER BY RDATE DESC
+	<select id="checkIdDup" resultType="int">
+		SELECT COUNT(*) FROM MEMBER 
+		WHERE MEMBERID = #{memberId}
 	</select>
-
+	
+	<select id="loginMember" resultType="Member">
+		SELECT * FROM MEMBER
+		WHERE MEMBERID = #{memberId} AND PASSWORD = #{password}
+	</select>
+	
+	<select id="listMember" resultType="Member">
+		SELECT * FROM MEMBER
+		WHERE MEMBERID != 'admin'
+		ORDER BY JOINDATE DESC
+	</select>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER
+		<set>
+			<if test="password != ''">PASSWORD = #{password},</if>
+			<if test="phone != ''">PHONE = #{phone},</if>
+			<if test="email != ''">EMAIL = #{email}</if>
+		</set>
+		WHERE MEMBERID = #{memberId}
+	</update>
+	
+	<insert id="insertInvite" parameterType="Invite">
+		INSERT INTO INVITE
+		VALUES (#{email}, #{authNum})
+	</insert>
+	
+	<select id="codeCheck" resultType="int">
+		SELECT COUNT(*) FROM INVITE
+		WHERE EMAIL = #{email} AND AUTHNUM = #{authNum}
+	</select>
+	
 </mapper>

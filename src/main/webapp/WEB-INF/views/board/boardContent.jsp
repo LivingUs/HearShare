@@ -30,14 +30,14 @@
                         <nav id="smallnav">
                         	<c:if test="${board.memberId eq loginMember.memberId }">
                         		<c:if test="${board.memberId eq 'admin' }">
-			                        <a class="fas fa-user-edit" onclick="updateNotice();"><span>수정</span></a> 
-								    <a class="far fa-trash-alt" onclick="return questionBoard();"><span>삭제</span></a>
-								    <a class="fas fa-list" onclick="location.href='boardList.do'"><span>목록</span></a>
+			                        <a href="#" class="fas fa-user-edit" onclick="updateNotice();"><span>수정</span></a> 
+								    <a href="#" class="far fa-trash-alt" onclick="return questionBoard();"><span>삭제</span></a>
+								    <a href="#" class="fas fa-list" onclick="location.href='boardList.do'"><span>목록</span></a>
 						    	</c:if>
 						    	<c:if test="${board.memberId ne 'admin' }">
-			                        <a class="fas fa-user-edit" onclick="updateBoard();"><span>수정</span></a> 
-								    <a class="far fa-trash-alt" onclick="return questionBoard();"><span>삭제</span></a>
-								    <a class="fas fa-list" onclick="location.href='boardList.do'"><span>목록</span></a>
+			                        <a href="#" class="fas fa-user-edit" onclick="updateBoard();"><span>수정</span></a> 
+								    <a href="#" class="far fa-trash-alt" onclick="return questionBoard();"><span>삭제</span></a>
+								    <a href="#" class="fas fa-list" onclick="location.href='boardList.do'"><span>목록</span></a>
 						    	</c:if>
 						    </c:if>
 						    <c:if test="${board.memberId ne loginMember.memberId }">

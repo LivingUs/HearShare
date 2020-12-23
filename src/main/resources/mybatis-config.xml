@@ -11,6 +11,7 @@
 
 	<typeAliases>
 		<typeAlias type="com.kh.spring.member.domain.Member" alias="Member"/>
+		<typeAlias type="com.kh.spring.member.domain.Invite" alias="Invite"/>
 		<typeAlias type="com.kh.spring.board.domain.Board" alias="Board"/>
 		<typeAlias type="com.kh.spring.board.domain.BoardComment" alias="BoardComment"/>
 		<typeAlias type="com.kh.spring.board.domain.BoardLike" alias="BoardLike"/>

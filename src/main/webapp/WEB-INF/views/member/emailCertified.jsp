@@ -10,23 +10,25 @@
     
 	<script>
 	function check(){
-		var form = document.authenForm;
+		var form = document.getElementById("code");
 		var authNum = ${authNum };
 		
-		if (!form.authNum.value) {
+		if (!form.value) {
 			alert("인증번호를 입력해주세요.");
 			return false;
 		}
 		
-		if (form.authNum.value!=authNum) {
+		if (form.value!=authNum) {
 			alert("틀린 인증번호입니다.인증번호를 다시 입력해주세요.");
 			form.authNum.value="";
 			return false;
 		}
 		
-		if(form.authNum.value==authNum) {
+		if(form.value==authNum) {
 			alert("인증완료!");
-			opener.document.memberJoinForm.emailRecheck.value="1";
+			opener.document.getElementById('noneEmail').style.display = 'none';
+			opener.document.getElementById('checkEmail').style.display = 'inline-block';
+			opener.document.getElementById('emailRecheck').value = "1";
 			window.close();
 		}
 	}
@@ -39,10 +41,8 @@
 	<h5>인증번호 7자리를 입력하세요</h5>
 	<br>
 	<div>
-		<form method="post" name="authenForm" onSubmit="return check();">
-			<input type="text" class="form-control" aria-describedby="emailHelp" placeholder="인증번호를 입력하세요." required style="width:70%;float:left" name="authNum">
-			<button type="submit" class="btn btn-secondary" style="float:left;">인증하기</button>
-		</form>
+		<input type="text" id="code" class="form-control" aria-describedby="emailHelp" placeholder="인증번호를 입력하세요." required style="width:70%;float:left" name="authNum">
+		<input type="button" class="btn btn-secondary" onclick="return check();" style="float:left;" value="인증하기">
 	</div>
 	
 </body>

@@ -81,11 +81,12 @@ a:link { text-decoration: none;}
 
 /* BoardWrite */
 header>h3 {
+	font-family: 'Jal_Onuel';
 	float: left; 
 	width: 30%; 
 	font-weight: bold;
-	font-family: 'Jal_Onuel'; 
-	margin-top:10px;
+	margin-bottom: 0px;
+	margin-top : 10px;
 }
 
 #buttonGroup {
@@ -144,4 +145,14 @@ header>h3 {
 	/* 네이티브 외형 감추기 */ 
 	-moz-appearance: none; 
 	appearance: none; 
+}
+
+
+#nav a:nth-child(1) {
+    opacity: 1.0;
+}
+
+#nav a:nth-child(1):after {
+	opacity: 1.0;
+    border-bottom-width: 0.5em;
 }

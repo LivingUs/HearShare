@@ -21,9 +21,9 @@
 				<header>
 					<h3>&nbsp;Board Write</h3>
 					    <nav id="smallnav">
-					        <a href="#" onclick="location.href='boardWrite.do'"><i class="fas fa-edit"></i></a> 
-					        <a href="#"><i class="fas fa-user-edit"></i></a> 
-					        <a href="#"><i class="fas fa-search"></i></a> 
+					        <a href="#"></a> 
+					        <a href="#"></a> 
+					        <a href="#"></a> 
 					    </nav>
 					    <hr>
 				</header>
