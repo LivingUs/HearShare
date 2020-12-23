@@ -21,5 +21,6 @@ public interface ReserveService {
 	public int ticketEnd(Ticket ticket);
 	//바베큐장 인서트
 	public int bbqInsert(Reserve reserve);
-
+	//바베큐장 리스트
+	public ArrayList<Reserve> bbqList();
 }

@@ -46,4 +46,9 @@ public class ReserveServiceImpl implements ReserveService {
 		return rStore.bbqInsert(reserve);
 	}
 
+	@Override
+	public ArrayList<Reserve> bbqList() {
+		return rStore.bbqList();
+	}
+
 }

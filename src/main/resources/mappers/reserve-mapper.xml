@@ -20,7 +20,8 @@
 	</insert>
 	
 	<select id="reserveList" parameterType="HashMap" resultType="Reserve">
-		SELECT * FROM RESERVE WHERE RCODE=#{rCode} AND RDATE=#{rDate}
+		SELECT RNO,RDATE,RTIME,RTYN,RCODE,MEMBERID,MEMBERNAME FROM RESERVE
+		JOIN MEMBER USING (MEMBERID) WHERE RCODE=#{rCode} AND RDATE=#{rDate}
 	</select>
 	
 	<update id="ticketUpdate" parameterType="Ticket">
@@ -34,4 +35,10 @@
 	<insert id="bbqInsert" parameterType="Reserve">
 		INSERT INTO RESERVE VALUES (RESERVE_SEQ.NEXTVAL, #{rDate}, #{rTime}, DEFAULT, DEFAULT, NULL, 'B', #{memberId})
 	</insert>
+	
+	<select id="bbqList" resultType="Reserve">
+		SELECT * FROM RESERVE WHERE RCODE='B'
+	</select>
+	
+	
 </mapper>

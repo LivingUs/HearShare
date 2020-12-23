@@ -46,4 +46,9 @@ public class ReserveStroreLogic implements ReserveStore{
 		return sqlSession.insert("reserveMapper.bbqInsert", reserve);
 	}
 
+	@Override
+	public ArrayList<Reserve> bbqList() {
+		return (ArrayList)sqlSession.selectList("reserveMapper.bbqList");
+	}
+
 }

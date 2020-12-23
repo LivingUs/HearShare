@@ -15,4 +15,5 @@ public interface ReserveStore {
 	public int ticketUpdate(Ticket ticket);
 	public int ticketEnd(Ticket ticket);
 	public int bbqInsert(Reserve reserve);
+	public ArrayList<Reserve> bbqList();
 }

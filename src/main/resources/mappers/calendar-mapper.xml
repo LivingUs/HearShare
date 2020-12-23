@@ -3,11 +3,54 @@
 <mapper namespace="calendarMapper">
 
 	<select id="reserveList" parameterType="String" resultType="Reserve">
-		SELECT * FROM RESERVE WHERE MEMBERID=#{memberId}
+		SELECT RDATE, RTIME, RCODE, RNO
+		FROM RESERVE
+		WHERE MEMBERID=#{memberId}
+		UNION
+		SELECT MPDATE, MPMEANS, MYN, MPNO
+		FROM MONTHPAY
+		WHERE MEMBERID=#{memberId}
+		UNION
+		SELECT MDATE, MEMBERID, MTITLE, MINNO
+		FROM MINSERT
+		JOIN MEETING USING (MEMBERID)
+		WHERE MEMBERID=#{memberId}
 	</select>
 	
 	<select id="reserveToday" parameterType="HashMap" resultType="Reserve">
 		SELECT * FROM RESERVE WHERE MEMBERID=#{memberId} AND RDATE=#{today}
 		ORDER BY RTIME
+	</select>
+	
+	<delete id="calDelete" parameterType="Reserve">
+		DELETE FROM RESERVE WHERE MEMBERID=#{memberId} AND RNO=#{rNo} AND RCHECKYN='N'
+	</delete>
+	
+	<update id="monthpayInsert" parameterType="MonthPay">
+		UPDATE MONTHPAY SET MPDATE=#{mpDate}, MPPRICE=#{mpPrice}, MPMEANS=#{mpMeans}, MPTYN=#{mpTyn}, MEMBERID=#{memberId}, MYN='Y'
+		WHERE MPNO=#{mpNo}
+	</update>
+	
+	<select id="getMonthPay" resultType="MonthPay">
+		SELECT * FROM(
+		    SELECT * FROM MONTHPAY
+		    WHERE MPTYN='Y'
+		    ORDER BY MPDATE
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<update id="autoPayment" parameterType="MonthPay">
+		UPDATE MONTHPAY SET MPDATE=#{mpDate}, MPPRICE=#{mpPrice}, MPMEANS=#{mpMeans}, MPTYN=#{mpTyn}, MEMBERID=#{memberId}, MYN=#{mYn}
+		WHERE MPNO=(SELECT * FROM (SELECT MPNO FROM MONTHPAY WHERE MPTYN='N' ORDER BY MPDATE) WHERE ROWNUM=1)
+	</update>
+	
+	<insert id="autoMonth" parameterType="HashMap">
+		INSERT INTO MONTHPAY VALUES (MONTHPAY_SEQ.NEXTVAL, TO_CHAR(ADD_MONTHS(TO_DATE(#{today}), 6), 'YYYY-MM-DD'), NULL, NULL, DEFAULT, #{memberId}, DEFAULT )
+	</insert>
+	
+	<select id="getCheckPay" parameterType="HashMap" resultType="MonthPay">
+		SELECT * FROM MONTHPAY
+		WHERE MEMBERID=#{memberId} AND MPDATE=#{today}
 	</select>
 </mapper>

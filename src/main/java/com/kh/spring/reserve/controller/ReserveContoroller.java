@@ -2,11 +2,15 @@ package com.kh.spring.reserve.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh.spring.member.domain.Member;
 import com.kh.spring.reserve.domain.Reserve;
 import com.kh.spring.reserve.domain.Ticket;
 import com.kh.spring.reserve.service.ReserveService;
@@ -31,8 +36,8 @@ public class ReserveContoroller {
 	
 	//예약 화면 View
 	@RequestMapping(value="studyReserve.do", method=RequestMethod.GET)
-	public String studyReserveView(Model model) {
-		String memberId = "admin";
+	public String studyReserveView(Model model, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
 		String rCode = "S";
 		
 		HashMap<String, String> para = new HashMap<String, String>();
@@ -47,8 +52,8 @@ public class ReserveContoroller {
 			return "reservation/studyReserve";
 	}
 	@RequestMapping(value="healthReserve.do", method=RequestMethod.GET)
-	public String healthReserveView(Model model) {
-		String memberId = "admin";
+	public String healthReserveView(Model model, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
 		String rCode = "H";
 		
 		HashMap<String, String> para = new HashMap<String, String>();
@@ -68,14 +73,18 @@ public class ReserveContoroller {
 	
 	//예약리스트 Ajax
 	@RequestMapping(value="reserveList.do", method=RequestMethod.GET)
-	public void reserveList(HttpServletResponse response, String date, String rCode) throws Exception {
-		String memberId = "admin";
+	public void reserveList(HttpServletResponse response, String date, String rCode, HttpSession session) throws Exception {
+		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
 		HashMap<String, String> para = new HashMap<String, String>();
 		para.put("rDate", date);
 		para.put("rCode", rCode);
 		 
 		ArrayList<Reserve> rList = rService.reserveList(para);
-		System.out.println(rList.toString());
+		for(int i = 0;i<rList.size();i++) {
+			String name = rList.get(i).getMemberName();
+			name = maskingName(name);
+			rList.get(i).setMemberName(name);
+		}
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
 		gson.toJson(rList, response.getWriter());
@@ -85,11 +94,11 @@ public class ReserveContoroller {
 	@ResponseBody
 	@RequestMapping(value="reserveInsert.do")
 	public String reserveInsert(String date, String rCode, @RequestParam(value="tNo", required=false) Integer tNo, HttpServletRequest request, 
-			@RequestParam(value="tUseNo", required=false) Integer tUseNo, @RequestParam(value="tPriceNo", required=false) Integer tPriceNo) {
+			@RequestParam(value="tUseNo", required=false) Integer tUseNo, @RequestParam(value="tPriceNo", required=false) Integer tPriceNo, HttpSession session) {
 		int result = 0;
 		int ticketResult = 0;
 		String [] timeList = request.getParameterValues("tList");
-		String memberId = "admin";
+		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
 		
 		//정기권 사용X
 		if(tNo==0) {
@@ -144,8 +153,8 @@ public class ReserveContoroller {
 	//바베큐장 인서트
 	@ResponseBody
 	@RequestMapping(value="bbqInsert.do")
-	public String bbqInsert(HttpServletRequest request, String rTime, String date) {
-		String memberId = "admin";
+	public String bbqInsert(HttpServletRequest request, String rTime, String date, HttpSession session) {
+		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
 		Reserve reserve = new Reserve();
 		reserve.setMemberId(memberId);
 		reserve.setrCode("B");
@@ -160,4 +169,45 @@ public class ReserveContoroller {
 			return "error";
 		}
 	}
+	
+	//	이름 가운데 마스킹
+	public static String maskingName(String str) {
+		String replaceString = str;
+
+		String pattern = "";
+		if(str.length() == 2) {
+			pattern = "^(.)(.+)$";
+		} else {
+			pattern = "^(.)(.+)(.)$";
+		}
+
+		Matcher matcher = Pattern.compile(pattern).matcher(str);
+
+		if(matcher.matches()) {
+			replaceString = "";
+
+			for(int i=1;i<=matcher.groupCount();i++) {
+				String replaceTarget = matcher.group(i);
+				if(i == 2) {
+					char[] c = new char[replaceTarget.length()];
+					Arrays.fill(c, '*');
+
+					replaceString = replaceString + String.valueOf(c);
+				} else {
+					replaceString = replaceString + replaceTarget;
+				}
+			}
+		}
+		return replaceString;
+	}
+	
+	@RequestMapping(value="bbqList.do")
+	public void bbqList(HttpServletResponse response) throws Exception {
+		ArrayList<Reserve> rList = rService.bbqList();
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
+		gson.toJson(rList, response.getWriter());
+	}
+	
+	
 }

@@ -11,18 +11,15 @@ public class Reserve {
 	private String rTyn;
 	private Timestamp rCheckTime;
 	private String rCode;
-	private String memberId; 
+	private String memberId;
+	private String memberName;
 	
 	public Reserve() {}
-
 	
-
-	
-
 
 
 	public Reserve(int rNo, String rDate, String rTime, String rTyn, Timestamp rCheckTime, String rCode,
-			String memberId) {
+			String memberId, String memberName) {
 		super();
 		this.rNo = rNo;
 		this.rDate = rDate;
@@ -31,11 +28,20 @@ public class Reserve {
 		this.rCheckTime = rCheckTime;
 		this.rCode = rCode;
 		this.memberId = memberId;
+		this.memberName = memberName;
+	}
+	
+
+
+	public String getMemberName() {
+		return memberName;
 	}
 
 
 
-
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
 
 
 
@@ -117,9 +123,9 @@ public class Reserve {
 	@Override
 	public String toString() {
 		return "Reserve [rNo=" + rNo + ", rDate=" + rDate + ", rTime=" + rTime + ", rTyn=" + rTyn + ", rCheckTime="
-				+ rCheckTime + ", rCode=" + rCode + ", memberId=" + memberId + "]";
+				+ rCheckTime + ", rCode=" + rCode + ", memberId=" + memberId + ", memberName=" + memberName + "]";
 	}
-
+	
 	
 
 }
