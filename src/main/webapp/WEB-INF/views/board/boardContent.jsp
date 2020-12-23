@@ -160,7 +160,7 @@
      		var bNo = ${board.bNo};
      			
      		$.ajax({
-     			url : "commentList.do",
+     			url : "boardCommentList.do",
      			type : "get",
      			data : {"bNo" : bNo},
      			dataType : "json",

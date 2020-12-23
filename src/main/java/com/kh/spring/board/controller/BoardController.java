@@ -419,7 +419,7 @@ public class BoardController {
 	
 	
 	// 댓글 전체 조회
-	@RequestMapping(value="commentList.do", method=RequestMethod.GET)
+	@RequestMapping(value="boardCommentList.do", method=RequestMethod.GET)
 	public void getCommentList (HttpServletResponse response, int bNo) throws Exception {
 		ArrayList<BoardComment> bcList = bService.listBoardComment(bNo);
 		
