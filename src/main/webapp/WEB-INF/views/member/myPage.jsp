@@ -25,8 +25,8 @@
 					    <nav id="smallnav">
 					        <a href="#mypage" onclick="location.href='myPage.do'" class="fas fa-user-cog"><span>마이페이지</span></a> 
 					        <a href="#ticket" onclick="location.href='payAllList.do'" class="fas fa-ticket-alt"><span>정기권</span></a> 
-					        <a href="#autoPay" class="far fa-credit-card"><span>결제관리</span></a> 
-					        <a href="#chart" class="fas fa-chart-bar"><span>지출관리</span></a> 
+					        <a href="#autoPay" onclick="location.href='autoPayList.do'" class="far fa-credit-card"><span>결제관리</span></a> 
+					        <a href="#chart" onclick="location.href='accountList.do'" class="fas fa-chart-bar"><span>지출관리</span></a> 
 					    </nav>
 					    <hr>
 				</header>

@@ -172,16 +172,16 @@ $(document).ready(function() {
 				<div class="study_submit">
 					<div class="radio">
 							  <label>
-								<input type="radio" name="tPriceNo" id="health10" value="10" checked><b>&nbsp;&nbsp;10</b>시간권 &nbsp;&nbsp;&nbsp;<b>8,000</b>원
+								<input type="radio" name="tPriceNo" id="health10" value="10" checked><b>&nbsp;&nbsp;10</b>시간권 &nbsp;&nbsp;&nbsp;<b>4,000</b>원
 							  </label>
 								<label>
-								<input type="radio" name="tPriceNo" id="health10" value="20"><b>&nbsp;&nbsp;20</b>시간권 &nbsp;<b>16,000</b>원
+								<input type="radio" name="tPriceNo" id="health10" value="20"><b>&nbsp;&nbsp;20</b>시간권 &nbsp;<b>8,000</b>원
 							  </label>
 								<label>
-								<input type="radio" name="tPriceNo" id="study50" value="50"><b>&nbsp;&nbsp;50</b>시간권 &nbsp;<b>40,000</b>원
+								<input type="radio" name="tPriceNo" id="study50" value="50"><b>&nbsp;&nbsp;50</b>시간권 &nbsp;<b>20,000</b>원
 							  </label>
 								<label>
-								<input type="radio" name="tPriceNo" id="study100" value="100"><b>100</b>시간권 &nbsp;<b>80,000</b>원
+								<input type="radio" name="tPriceNo" id="study100" value="100"><b>100</b>시간권 &nbsp;<b>40,000</b>원
 							  </label><br>
 							<button class="btn btn-outline-danger" id="payModule" type="button" onclick="return getPayModuleHealth();" style="width:120px; padding:10px; margin-top:20px; margin-left:40px;">구매하기</button>
 					</div>
@@ -203,7 +203,7 @@ $(document).ready(function() {
 	            pay_method : 'card',
 	            merchant_uid : 'merchant_' + new Date().getTime(),
 	            name :  'HearShare 헬스룸 정기권 구매',
-	            amount : $tPriceNo*800,
+	            amount : $tPriceNo*400,
 	            buyer_email : 'hearShare@naver.com',
 	            buyer_name : '${loginUser}'
 	        }, function(rsp) {

@@ -16,8 +16,8 @@
         <!-- Nav -->
         <nav id="nav">
             <a href="#board" onclick="location.href='boardList.do'" class="fas fa-clipboard-list fa-4x"><span>자유게시판</span></a>
-            <a href="#meeting" class="fas fa-users fa-4x"><span>모임활동</span></a>
-            <a href="#calender" class="far fa-calendar-check fa-4x"><span>캘린더</span></a>
+            <a href="#meeting" onclick="location.href='meeting.do'" class="fas fa-users fa-4x"><span>모임활동</span></a>
+            <a href="#calender" onclick="location.href='studyReserve.do'" class="far fa-calendar-check fa-4x"><span>캘린더</span></a>
             <c:if test="${loginMember.memberId eq 'admin' }">
             	<a href="#adminPage" onclick="location.href='adminPage.do'" class="fas fa-user fa-4x"><span>관리페이지</span></a>
             </c:if>
