@@ -144,12 +144,11 @@ public class CalendarController {
 	/* 월세 결제 페이지 뷰 */
 	@RequestMapping(value="monthpayView.do", method=RequestMethod.GET)
 	public String monthpayView(HttpSession session, Model model, @RequestParam("mpNo") Integer mpNo) {
-		/*
-		 * String memberName =
-		 * ((Member)session.getAttribute("loginMember")).getMemberName();
-		 */
+		
+		  String memberName = ((Member)session.getAttribute("loginMember")).getMemberName();
+		 
 		model.addAttribute("mpNo", mpNo);
-		/* model.addAttribute("memberName", memberName); */
+		model.addAttribute("memberName", memberName); 
 		return "calendar/monthpay";
 	}
 	

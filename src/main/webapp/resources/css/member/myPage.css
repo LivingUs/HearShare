@@ -104,10 +104,6 @@ body.is-preload #wrapper {
     text-decoration : none;
 }
 
-#smallnav a:hover {
-	color: hotpink;
-}
-
 
 #smallnav a:after {
    content: '';
@@ -156,10 +152,10 @@ body.is-preload #wrapper {
      border-left: solid 0.6em transparent;
      border-right: solid 0.6em transparent;
  }
-
+ 
 #smallnav a:hover {
-     opacity: 1.0;
- }
+	opacity: 0.6;
+}
 
 #smallnav a:hover span {
      opacity: 1.0;

@@ -18,8 +18,15 @@
 	</select>
 	
 	<select id="reserveToday" parameterType="HashMap" resultType="Reserve">
-		SELECT * FROM RESERVE WHERE MEMBERID=#{memberId} AND RDATE=#{today}
-		ORDER BY RTIME
+		select rtime, rcode
+		from reserve
+		where memberid=#{memberId} and rdate=#{today}
+		union
+		select mdate, mtitle
+		from minsert
+		join meeting using (memberid)
+		where memberid=#{memberId} and mdate=#{today}
+		order by rtime
 	</select>
 	
 	<delete id="calDelete" parameterType="Reserve">

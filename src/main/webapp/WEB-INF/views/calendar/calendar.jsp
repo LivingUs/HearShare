@@ -64,7 +64,8 @@ var moList = [];
     				$li =  $("<li>").text("바베큐장 예약");
    				 $ul.append($li);
     			 } else {
-    				 
+    				 $li =  $("<li>").text("'"+data[i].rCode+"'"+" 모임");
+   					 $ul.append($li);
     			 }
     		 }
     	 }
