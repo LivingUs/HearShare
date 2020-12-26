@@ -21,7 +21,6 @@ public interface BoardStore {
 	public ArrayList<Board> listMyBoard(Board board);
 	public ArrayList<Board> selectList(PageInfo pi);
 	public int insertBoardComment(BoardComment bComment);
-	public int updateBoardComment(BoardComment bComment);
 	public int deleteBoardComment(BoardComment bComment);
 	public ArrayList<BoardComment> listBoardComment(int bNo);
 	public int addLike(BoardLike bLike);

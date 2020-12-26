@@ -74,12 +74,6 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int updateBoardComment(BoardComment bComment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int deleteBoardComment(BoardComment bComment) {
 		return bStore.deleteBoardComment(bComment);
 	}

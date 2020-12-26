@@ -81,12 +81,6 @@ public class BoardStoreLogic implements BoardStore {
 	}
 
 	@Override
-	public int updateBoardComment(BoardComment bComment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int deleteBoardComment(BoardComment bComment) {
 		return sqlSession.delete("BoardMapper.deleteComment", bComment);
 	}
