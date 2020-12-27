@@ -176,10 +176,10 @@ $(document).ready(function() {
 					<div class="study_submit">
 						<div class="radio">
 								  <label>
-									<input type="radio" name="tPriceNo" id="study10" value="10" checked><b>&nbsp;&nbsp;10</b>시간권 &nbsp;&nbsp;&nbsp;<b>4,000</b>원
+									<input type="radio" name="tPriceNo" id="study10" value="10" checked><b>&nbsp;&nbsp;10</b>시간권 &nbsp;&nbsp;<b>4,000</b>원
 								  </label>
 									<label>
-									<input type="radio" name="tPriceNo" id="study20" value="20"><b>&nbsp;&nbsp;20</b>시간권 &nbsp;<b>8,000</b>원
+									<input type="radio" name="tPriceNo" id="study20" value="20"><b>&nbsp;&nbsp;20</b>시간권 &nbsp;&nbsp;<b>8,000</b>원
 								  </label>
 									<label>
 									<input type="radio" name="tPriceNo" id="study50" value="50"><b>&nbsp;&nbsp;50</b>시간권 &nbsp;<b>20,000</b>원
@@ -198,10 +198,10 @@ $(document).ready(function() {
 		//study 구매
 	    function getPayModuleStudy() {
 	        var IMP = window.IMP;
-	        IMP.init('imp11889581');
+	        IMP.init('imp60714204');
 	        var msg;
 	        var $tPriceNo = $(':radio[name="tPriceNo"]:checked').val();
-	        
+	        console.log($tPriceNo);
 	        IMP.request_pay({
 	            pg : 'html5_inicis',
 	            pay_method : 'card',

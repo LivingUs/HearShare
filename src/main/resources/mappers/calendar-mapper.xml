@@ -11,7 +11,7 @@
 		FROM MONTHPAY
 		WHERE MEMBERID=#{memberId}
 		UNION
-		SELECT MDATE, MEMBERID, MTITLE, MINNO
+		SELECT MTIME, MEMBERID, MTITLE, MINNO
 		FROM MINSERT
 		JOIN MEETING USING (MEMBERID)
 		WHERE MEMBERID=#{memberId}
@@ -22,10 +22,10 @@
 		from reserve
 		where memberid=#{memberId} and rdate=#{today}
 		union
-		select mdate, mtitle
+		select MTIME, mtitle
 		from minsert
 		join meeting using (memberid)
-		where memberid=#{memberId} and mdate=#{today}
+		where memberid=#{memberId} and MTIME=#{today}
 		order by rtime
 	</select>
 	

@@ -87,6 +87,8 @@ public class CalendarController {
 	public void reserveList(HttpSession session, HttpServletResponse response) throws Exception {
 		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
 		ArrayList<Reserve> rList = cService.reserveList(memberId);
+		
+		System.out.println(rList.toString());
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
 		gson.toJson(rList, response.getWriter());
@@ -204,6 +206,7 @@ public class CalendarController {
 			int result = cService.monthInsert(mp);
 			if(result>0) {
 				int auto = cService.autoMonth(hash);
+				System.out.println(auto);
 					return "OK";
 			} else {
 				return "error";

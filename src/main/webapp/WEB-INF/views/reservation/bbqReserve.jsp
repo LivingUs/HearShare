@@ -9,10 +9,17 @@
 <!-- fullCal -->
 <link href='../resources/fullcal/core/main.css' rel='stylesheet' />
 <link href='../resources/fullcal/daygrid/main.css' rel='stylesheet' />
+<link href='../resources/fullcal/timegrid/main.css' rel='stylesheet' />
+<link href='../resources/fullcal/bootstrap/main.css' rel='stylesheet' />
+<link href='../resources/fullcal/list/main.css' rel='stylesheet' />
 <script src='../resources/fullcal/core/main.js'></script>
 <script src='../resources/fullcal/daygrid/main.js'></script>
 <script src='../resources/fullcal/interaction/main.js'></script>
 <script src='../resources/fullcal/timegrid/main.js'></script>
+<script src='../resources/fullcal/bootstrap/main.js'></script>
+<script src='../resources/fullcal/list/main.js'></script>
+<script src='../resources/fullcal/moment/main.js'></script>
+<script src='../resources/fullcal/rrule/main.js'></script>
 <!-- jQuery -->
 <script type="text/javascript"src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- 공통 script -->
@@ -38,7 +45,7 @@ var today = d.getFullYear() + '-' +
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
 		var calendar = new FullCalendar.Calendar(calendarEl, {
-			plugins : [ 'interaction', 'dayGrid', 'timeGrid' ],
+			plugins : [ 'interaction', 'dayGrid', 'timeGrid', 'moment', 'bootstrap', 'list', 'rrule'],
 			defaultView : 'dayGridMonth',
 			eventLimit: true,
 			defaultDate : new Date(),
@@ -46,49 +53,88 @@ var today = d.getFullYear() + '-' +
 			
 			/* 날짜 선택시 셀 CSS 변경  */
 			dateClick : function(info) {
+				var d = new Date();
+
+				var month = d.getMonth()+1;
+				var day = d.getDate();
+
+				var output = d.getFullYear() + '-' +
+				    (month<10 ? '0' : '') + month + '-' +
+				    (day<10 ? '0' : '') + day;	//오늘 날짜 데이터
+				
+		     	 moment = info.dateStr;	//누른 날짜 데이터 
+			     moList.push(moment);	//처음 누른 날짜, 다음 누른 날짜 비교해서 배경 변경
 			     
-			     moment = info.dateStr;
-			     moList.push(moment); 
-			     
-			     /* 이전 날짜 검사 */
-			     if(moment < today) {
-			    	 alert("이전 날짜는 예약하실 수 없습니다.");
+			     if(moment<output) {
+			    	 alert("이전 날짜는 선택하실 수 없습니다.");
 			    	 return false;
 			     }
-			     			     
 			      $('[data-date='+moment+']').css({"backgroundColor": "#fc9d9a"});
 			     for (var i = 0; i < moList.length; i++) {
 			             for (var j = 0; j < moList.length; j++) {
 			            	 if(moList[i] != moList[j]) {
-			            		 $('[data-date='+moList[j]+']').css({"backgroundColor": "white"});
-			            		 $('[data-date='+moList[i]+']').css({"backgroundColor": "#fc9d9a"});
+			            		 if(moList[j]!=output) {
+			            			 $('[data-date='+moList[i]+']').css({"backgroundColor": "#fc9d9a"});
+			            			 $('[data-date='+moList[j]+']').css({"background": "none"});
+			            		 } else {
+			            			 $('[data-date='+moList[i]+']').css({"backgroundColor": "#fc9d9a"});
+			            			 $('[data-date='+moList[j]+']').css({"background": "#fcf8e3"});
+			            		 }
 			            		 moList.clear;
 			            	 }
 			             }
-			         }; 
-			    		 var rCode = $("#rCode").val();
+			         };
+		    		 var rCode = $("#rCode").val();
+		    		 $.ajax({
+				            url         :   "reserveList.do",
+				            dataType: "json",
+							type: "get",
+				            data        :   {
+				                "rCode" : rCode,
+				                "date"	   : moment
+				            },
+				            success     :   function(data){
+			                	if(data.length>0) {
+			                		for(var i in data) {
+			                			$("#user").val("'"+data[i].memberName+"'"+" 님");
+			                			$("#userDate").val(data[i].rDate);
+			                		}
+			                	}
+				            },
+				            error       :   function(request, status, error){
+				                console.log("AJAX_ERROR");
+				            }
+				        });
 			     
-			   /*   시간박스 유효성 검사 코드   */
-			     $.ajax({
-			            url         :   "reserveList.do",
-			            dataType: "json",
-						type: "get",
-			            data        :   {
-			                "rCode" : rCode,
-			                "date"	   : moment
-			            },
-			            success     :   function(data){
-		                	if(data.length>0) {
-		                		for(var i in data) {
-		                			$('[data-date='+data[i].rDate+']').css({"backgroundColor": "yellow"});
-		                		}
-		                	}
-			            },
-			            error       :   function(request, status, error){
-			                console.log("AJAX_ERROR");
-			            }
-			        });
 			},
+			 /*   예약날짜 유효성 검사 코드, 예약현황 박스 value   */
+			events:function(info, successCallback, failureCallback){
+	            $.ajax({
+	            	 url         :   "bbqList.do",
+			            dataType: "json",
+	                   success: 
+	                       function(data) {
+	 
+	                           var events = [];
+	                          
+	                           if(data!=null){
+	                               
+                                   $.each(data, function(index, element) {
+	                                    var startdate=element.rDate;
+	                                    var rCode = element.rCode;
+                                	   events.push({
+	                                    
+                                        title: "예약",
+                                        start: startdate,
+                                        color:"#a79c8e"
+	                                    
+	                               }); //.each()
+                                  });
+	                           }
+	                           successCallback(events);
+	                       }//success: function end                          
+	            }); //ajax end
+	        }, //events:function end
 			header : {
 				left : 'prev,next',
 				center : 'title',
@@ -143,7 +189,12 @@ var today = d.getFullYear() + '-' +
 });   
  $(function() {
     $("#reserveSubmit").click(function() {
-    	 var result =  confirm(moment + " - 바베큐장 예약하시겠습니까?");
+    	 if($("#reUser").text() != "") {
+    		alert("예약 완료된 날짜는 예약하실 수 없습니다.");
+    		return false;
+    	}
+    	
+    	 var result =  confirm(moment + " // 바베큐장 예약하시겠습니까?");
     	 
     	 if(result) {
 	        //ajax로 데이터 보내줌
@@ -186,6 +237,14 @@ var today = d.getFullYear() + '-' +
 }
    
    /* 내부 CSS */
+   	#nav a:nth-child(3) {
+    opacity: 1.0;
+	}
+	
+	#nav a:nth-child(3):after {
+	   opacity: 1.0;
+	    border-bottom-width: 0.5em;
+	}
     #btn_study,
     #btn_health,
     #btn_bbq {
@@ -219,6 +278,10 @@ var today = d.getFullYear() + '-' +
 	.fc-sat {color:#007dc3}
 	input {
 		border: none;
+		border-radius : 3px;
+	}
+	.fc-scroller {
+	  overflow-y: hidden !important;
 	}
 </style>
 <body>
@@ -249,32 +312,27 @@ var today = d.getFullYear() + '-' +
 		            <button id="btn_bbq" class="btn_calender" onclick="location.href='bbqReserve.do'" style="background:#eeb6a5">바베큐장</button>
 		        </div><br><br>
 		        <div style="text-align: center;">
-		            <div id="studyreservation" style="width:100%; display: inline-block; padding: 50px; text-align: center; position:relative; left:35px;">
-		                <div id="calendar" style="font-family:NIXGONM-Vb; border:10px solid pink; width:50%; height: 100px; float: left; position:relative; top:-10px;"></div>
+		            <div id="studyreservation" style="width:100%; display: inline-block; padding: 50px; text-align: center; position:relative; left:47px;">
+		                <div id="calendar" style="font-family:NIXGONM-Vb; text-align:center; border:10px solid pink; border-radius:5px; width:50%; height: 100px; float: left; position:relative; top:-10px;"></div>
 		                <div style="position:relative; top:3px;">
 		                <div style="border: 1px solid lightgray; width: 1px; height: 430px; float: left; margin: 0px 30px 0px 30px; position: relative; top: 15px;"></div>
-		                <div style="width: 38%; height: 120px; background-color: #eeb6a5; float: left; padding: 25px;">
-		                <span style="float:left; color: white; margin-right:20px;">테마룸 종류 : </span>
-		                <input type="text" style="width: 130px; text-align: center; float:left;  font-size:15px;" readonly value="바베큐장"><br><br>
-		                <span style="color: white; float:left; margin-right:20px;">정기권 사용 : </span>
-		                <select id="ticketBox" style="width: 150px; text-align: center; float:left;  font-size:15px;">
-		                    	<option selected disabled>정기권 없음</option>
-		                </select>
+		                <div style="width: 35%; height: 400px; background-color: #eeb6a5; float: left; padding: 25px; border-radius:10px; margin-top:20px;">
+		                <span style="float:left; color: white; margin-right:20px; margin-top:10px;">테마룸 종류 : </span>
+		                <input type="text" style="width: 130px; text-align: center; float:left;  font-size:15px; margin-top:10px;" readonly value="바베큐장"><br><br>
+		                <hr style="margin-bottom:30px;">
+		                <i class="fas fa-angle-double-right" style="color:#9B8281;"></i>
+		                <span style="color:white; font-weight:bolder; font-size:20px;">예약 현황</span><i class="fas fa-angle-double-left" style="color:#9B8281;"></i><br><br>
+		                
+		                <span id="reUser" style="color: white; float:left; margin-left:25px; margin-right: 20px;">예약자 : </span>
+		                <input type="text" id="user" style="width: 155px; text-align: center; float:left; font-size:15px;" readonly value=""><br><br>
+		                <span style="color: white; float:left; margin-left:10px; margin-right: 20px;">예약일자 : </span>
+		                <input type="text" id="userDate" style="width: 155px; text-align: center; float:left;  font-size:15px;" readonly value=""><br><br>
+		                <span style="color: white; float:left; margin-left:10px; margin-right: 20px;">마감시간 : </span>
+		                <input type="text" style="width: 155px; text-align: center; float:left;  font-size:15px;" readonly value="22:00시까지"><br><br>
+		                
+		                <span style="font-size:13px; padding-top:3px; color:dimgray;"><i class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;원활한 공동생활을 위해 21:00시 이후<br>큰 소리로 소음 공해를 일으키는 것을 금합니다.</span>
 		                </div><br>
-		                <div style="width: 38%; height: 260px; background-color: #eeb6a5; float: left; padding: 20px; position: relative; top: 50px; color: white;">
-		           		    <section id="time"> 
-		               		    <span style="position:relative; left50px;">예약 현황</span><br>
-		               		    <hr style="position:relative; bottom:8px;">
-		               		    <span>예약자   :  <input type="text"></span>
-		               		    
-		                        <div id="timeBox" style="font-weight:400; position:relative; bottom:5px; font-size:13px;">
-		                            
-		                    </section>
-		                </div>
-		                <div style="width: 24%; height: 40px; background-color: #eeb6a5; float: left; padding: 10px; position: relative; top: 70px; color: white; text-align:left; padding-left:30px; line-height:1.4;">
-		                총액 : <input type="text" style="border:none; width:40px; background-color: #eeb6a5; color:white;" id="count" name="count">원
-		                </div>
-		                <button id="reserveSubmit" class="btn btn-outline-danger" style="width: 100px; height: 35px;float: left; position: relative; top: 75px; left: 30px; font-size:14px; border-radius:5px;">
+		                <button id="reserveSubmit" class="btn btn-outline-danger" style="width: 200px; height: 35px;float: left; position: relative; top: 30px; left: 80px; font-size:14px; border-radius:5px;">
 		                예약하기
 		                </button>
 		                </div>

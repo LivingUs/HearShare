@@ -51,7 +51,7 @@
 					    	<pre id="inFile">${board.bContent }</pre>
 					    </div>
 					    <div>
-					    	<img src="../../../resources/buploadFiles/${board.bFileName }">
+					    	<img src="../../../resources/bUploadFiles/${board.bFileName }">
 					    </div>
 					    </c:if>
 					    <c:if test="${board.bFileName eq null }">

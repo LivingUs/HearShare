@@ -248,8 +248,9 @@ public class OtherController {
 		String memberId = loginMember.getMemberId();
 		Ticket ticket = new Ticket();
 		ticket.setMemberId(memberId);
-		
+		System.out.println(ticket.gettPriceNo());
 		int result = service.insertStudyTicket(ticket);
+		
 		if(result > 0) {
 			return "other/ticket";
 		}else {
@@ -387,11 +388,10 @@ public class OtherController {
 		Cell cell = null;
 		int rowNo = 0;
 		//컬럼 폭 설정
-		sheet.setColumnWidth(1, 2000);
-	    sheet.setColumnWidth(2, 6000);
-	    sheet.setColumnWidth(3, 3000);
-	    sheet.setColumnWidth(4, 4000);
-	    sheet.setColumnWidth(5, 7000);
+	    sheet.setColumnWidth(1, 6000);
+	    sheet.setColumnWidth(2, 3000);
+	    sheet.setColumnWidth(3, 4000);
+	    sheet.setColumnWidth(4, 7000);
 	    //headStyle
 		CellStyle headStyle = wb.createCellStyle();
 		headStyle.setBorderTop(BorderStyle.THIN);
@@ -417,38 +417,34 @@ public class OtherController {
 	    //헤더 생성
 	    rowNo++;
 	    row = sheet.createRow(rowNo++);
+	    
 	    cell = row.createCell(1);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("번호");
+	    cell.setCellValue("날짜");
 	    cell = row.createCell(2);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("날짜");
+	    cell.setCellValue("분류");
 	    cell = row.createCell(3);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("분류");
-	    cell = row.createCell(4);
-	    cell.setCellStyle(headStyle);
 	    cell.setCellValue("내용");
-	    cell = row.createCell(5);
+	    cell = row.createCell(4);
 	    cell.setCellStyle(headStyle);
 	    cell.setCellValue("금액");
 	    //받아온 리스트로 반복
 	    for(Account acc : eList) {
 	    	//행 생성
 	        row = sheet.createRow(rowNo++);
+	        
 	        cell = row.createCell(1);
 	        cell.setCellStyle(bodyStyle);
-	        cell.setCellValue(acc.getAcNo());
+	        cell.setCellValue(acc.getAcDate());
 	        cell = row.createCell(2);
 	        cell.setCellStyle(bodyStyle);
-	        cell.setCellValue(acc.getAcDate());
+	        cell.setCellValue(acc.getAcBig());
 	        cell = row.createCell(3);
 	        cell.setCellStyle(bodyStyle);
-	        cell.setCellValue(acc.getAcBig());
-	        cell = row.createCell(4);
-	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(acc.getAcSmall());
-	        cell = row.createCell(5);
+	        cell = row.createCell(4);
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(acc.getAcPrice());
 	    }

@@ -47,26 +47,37 @@ var today = d.getFullYear() + '-' +
 			height: 490,
 			//날짜 선택시 셀 CSS 변경, 날짜 유효성 검사 후 데이터 다르면 원상복귀
 			dateClick : function(info) { 
+				var d = new Date();
+
+				var month = d.getMonth()+1;
+				var day = d.getDate();
+
+				var output = d.getFullYear() + '-' +
+				    (month<10 ? '0' : '') + month + '-' +
+				    (day<10 ? '0' : '') + day;	//오늘 날짜 데이터
+				
+		     	 moment = info.dateStr;	//누른 날짜 데이터 
+			     moList.push(moment);	//처음 누른 날짜, 다음 누른 날짜 비교해서 배경 변경
 			     
-		     	 moment = info.dateStr;
-			     moList.push(moment);
-			     console.log(moment);
-			     
-			     if(moment < today) {
-			    	 alert("이전 날짜는 예약하실 수 없습니다.");
+			     if(moment<output) {
+			    	 alert("이전 날짜는 선택하실 수 없습니다.");
 			    	 return false;
 			     }
-			     
 			      $('[data-date='+moment+']').css({"backgroundColor": "#fc9d9a"});
 			     for (var i = 0; i < moList.length; i++) {
 			             for (var j = 0; j < moList.length; j++) {
 			            	 if(moList[i] != moList[j]) {
-			            		 $('[data-date='+moList[j]+']').css({"backgroundColor": "white"});
-			            		 $('[data-date='+moList[i]+']').css({"backgroundColor": "#fc9d9a"});
+			            		 if(moList[j]!=output) {
+			            			 $('[data-date='+moList[i]+']').css({"backgroundColor": "#fc9d9a"});
+			            			 $('[data-date='+moList[j]+']').css({"background": "none"});
+			            		 } else {
+			            			 $('[data-date='+moList[i]+']').css({"backgroundColor": "#fc9d9a"});
+			            			 $('[data-date='+moList[j]+']').css({"background": "#fcf8e3"});
+			            		 }
 			            		 moList.clear;
 			            	 }
 			             }
-			         }; 
+			         };
 			    		 var rCode = $("#rCode").val();
 			     
 			     //시간박스 유효성 검사 코드
@@ -125,8 +136,6 @@ var today = d.getFullYear() + '-' +
 		});
 		calendar.render();
 		
-		/* calendar.addEvent( {'title':'월세', 'start':'2020-12-01', 'end':'2020-12-01'}); */
-		
 	}); 
 	
 	/* 페이지 내의 네비바 */
@@ -171,8 +180,10 @@ var today = d.getFullYear() + '-' +
     /* 시간 박스 비교해서 활성화, 비활성화 */
    	var checkId = $(this).parent().parent().attr('id');
    	
+   	/* 시간박스 선택 효과 */
     if($("input:checkbox[name='ck']").is(":checked") == true) {
-    	$("#"+checkId).css("background-color", "red");
+    	$("#"+checkId).css("background-color", "#f15c5c");
+    	$("#"+checkId).css("color", "white");
     }
     /* 정기권, 시간 비교 */
     var tId = $(this).attr('id');
@@ -248,6 +259,7 @@ var today = d.getFullYear() + '-' +
             },
             success     :   function(data){
                 if(data == "OK") {
+                	alert("예약이 완료되었습니다. My Calendar에서 확인해 보세요!");
                     location.href="calendar.do";
                 } else {
                 	location.href="common/errorPage.do";
@@ -320,6 +332,14 @@ var today = d.getFullYear() + '-' +
 }
    
    /* 내부 CSS */
+   	#nav a:nth-child(3) {
+    opacity: 1.0;
+	}
+	
+	#nav a:nth-child(3):after {
+	   opacity: 1.0;
+	    border-bottom-width: 0.5em;
+	}
     #btn_study,
     #btn_health,
     #btn_bbq {
@@ -353,6 +373,9 @@ var today = d.getFullYear() + '-' +
 	.fc-sat {color:#007dc3}
 	input {
 		border: none;
+	}
+	.fc-scroller {
+ 		  overflow-y: hidden !important;
 	}
 </style>
 <body>
@@ -391,7 +414,7 @@ var today = d.getFullYear() + '-' +
 		                <span style="float:left; color: white; margin-right:20px;">테마룸 종류 : </span>
 		                <input type="text" style="width: 130px; text-align: center; float:left;  font-size:15px;" readonly value="스터디룸"><br><br>
 		                <span style="color: white; float:left; margin-right:20px;">정기권 사용 : </span>
-		                <select id="ticketBox" style="width: 150px; text-align: center; float:left;  font-size:15px;">
+		                <select id="ticketBox" class="btn btn-secondary dropdown-toggle" style="width: 160px; background-color:#004e66; text-align: center; float:left;  font-size:15px; position:relative; bottom:5px;">
 		                    <c:if test="${! empty tList }">
 		                    <option value="0" selected>사용 안 함</option>
 		                    	<option value="${tList.tNo }">스터디룸 ${tList.tPriceNo }시간권</option>

@@ -162,7 +162,7 @@
 					$pTextInfile = $("<p class='card-text' id='inFile'>").text(data.bList[i].bContent);
 					$pTextNonefile = $("<p class='card-text' id='noneFile'>").text(data.bList[i].bContent);
 					$divImg = $("<div id='imgArea'>");
-					$img = $("<img src='../../../resources/buploadFiles/"+data.bList[i].bFileName+"'>");
+					$img = $("<img src='../../../resources/bUploadFiles/"+data.bList[i].bFileName+"'>");
 					$hr = $("<hr>");
 					$divOther = $("<div class='card-body-other'>");
 					$iHeart = $("<i class='fas fa-heart fa-lg'>");
