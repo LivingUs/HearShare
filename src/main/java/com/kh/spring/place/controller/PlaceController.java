@@ -2,6 +2,7 @@ package com.kh.spring.place.controller;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh.spring.meeting.domain.Meeting;
 import com.kh.spring.member.domain.Member;
+import com.kh.spring.place.domain.Mlike;
 import com.kh.spring.place.domain.Mreview;
 import com.kh.spring.place.domain.Place;
 import com.kh.spring.place.service.PlaceService;
@@ -29,16 +32,11 @@ public class PlaceController {
 	@Autowired
 	private PlaceService pService;
 
-	@RequestMapping(value="like.do", method = RequestMethod.GET)
-	public String like() {
-		
-		return "place/like";
-	}
-	
 	// 장소 게시판 전체 조회
 	@RequestMapping(value="place.do", method = RequestMethod.GET)
 	public ModelAndView placeList(ModelAndView mv) {
 		ArrayList<Place> pList = pService.placeList();
+		
 		if(!pList.isEmpty()) {
 			mv.addObject("pList", pList);
 			mv.setViewName("place/place");
@@ -65,9 +63,19 @@ public class PlaceController {
 	// 장소 상세 페이지
 	@RequestMapping(value="placedetail.do", method = RequestMethod.GET)
 	public String placedetail(int pNo, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		String memberId = loginMember.getMemberId();
+		
 		Place place = pService.placedetail(pNo);
+		Mlike mLike = new Mlike();
+		mLike.setpNo(pNo);
+		mLike.setMemberId(memberId);
+		mLike = pService.selectmLike(mLike);
+		
 		if ( place != null ) {
 			model.addAttribute("place", place);
+			model.addAttribute("mLike", mLike);
 			return "place/placedetail";
 		} else {
 			model.addAttribute("msg", "오류가 발생했어요 ㅠ.ㅠ");
@@ -140,5 +148,53 @@ public class PlaceController {
 			model.addAttribute("msg", "오류가 발생했어요 ㅠ.ㅠ");
 			return "common/errorPage";
 		}
+	}
+	
+	// 찜하기
+	@ResponseBody
+	@RequestMapping(value="addmLike.do", method=RequestMethod.POST)
+	public Object addmLike(Model model, Mlike mLike, HttpServletRequest request, int pNo, String memberId) throws Exception {
+	   
+	Mlike mLikeYn = pService.selectmLike(mLike);
+	      
+	if (mLikeYn == null) {
+		int result = pService.addmLike(mLike);
+		} else {
+			if (mLikeYn.getmCheckYn().equals("Y")) {
+	    		int likeNcheck = pService.updateNmLike(mLikeYn);
+	        } else if (mLikeYn.getmCheckYn().equals("N")) {
+	        	int likeYcheck = pService.updateYmLike(mLikeYn);
+	        }         
+	   }
+	      
+    HashMap<String, String> paramMap = new HashMap<String, String>();
+	mLikeYn = pService.selectmLike(mLike);
+	         
+	paramMap.put("mlikeYn", mLikeYn.getmCheckYn());
+	return paramMap;
+	   
+	}	
+	
+	// 찜목록
+	@RequestMapping(value = "like.do", method = RequestMethod.GET)
+	public ModelAndView likeList(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+	    Member loginMember = (Member)session.getAttribute("loginMember");
+	    String memberId = loginMember.getMemberId();
+		
+		Place place = new Place(); 
+		place.setMemberId(memberId);
+	    
+		ArrayList<Place> plikeList = pService.likeList(place);
+		
+		if (!plikeList.isEmpty()) {
+			mv.addObject("plikeList", plikeList);
+			mv.addObject("loginMember", loginMember);
+			mv.setViewName("place/like");
+		} else if (plikeList.isEmpty()) {
+			mv.addObject("msg", "오류가 발생했어요 ㅠ.ㅠ");
+			mv.setViewName("place/like");
+		}
+		return mv;
 	}
 }

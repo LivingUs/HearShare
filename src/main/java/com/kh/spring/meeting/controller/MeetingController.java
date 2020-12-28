@@ -126,20 +126,21 @@ public class MeetingController {
 	// 모임 게시판 전체 조회
 	@RequestMapping(value = "meeting.do", method = RequestMethod.GET)
 	public ModelAndView meetingList(ModelAndView mv, HttpServletRequest request) {
-		Minsert minsert = new Minsert();
 		HttpSession session = request.getSession();
 	    Member loginMember = (Member)session.getAttribute("loginMember");
 	    String memberId = loginMember.getMemberId();
+	    Meeting meeting = new Meeting();
+	    meeting.setJoinMemberId(memberId);
 	    
+	    // 글 마감(시간)
 		int result = mService.meetingTimeDeadline();
 
 		ArrayList<Meeting> mList = mService.meetingList();
-		ArrayList<Meeting> mList2 = mService.meetingInsertList(minsert);
+		ArrayList<Meeting> mList2 = mService.meetingInsertList(meeting);
 
 		if (!mList.isEmpty() || !mList2.isEmpty() || result > 0) {
 			mv.addObject("mList", mList);
 			mv.addObject("mList2", mList2);
-			System.out.println(mList2);
 			mv.addObject("loginMember", loginMember);
 			mv.setViewName("meeting/meeting");
 		} else if (mList.isEmpty() || mList2.isEmpty() || result == 0) {
@@ -152,10 +153,17 @@ public class MeetingController {
 	// 모임 상세 페이지
 	@RequestMapping(value = "meetingdetail.do", method = RequestMethod.GET)
 	public String meetingdetail(int mNo, Integer pNo, Model model, HttpSession session) {
+		Member loginMember = (Member)session.getAttribute("loginMember");
+	    String memberId = loginMember.getMemberId();
+	    Meeting meeting = new Meeting();
+	    meeting.setJoinMemberId(memberId);
+	    meeting.setmNo(mNo);
+		meeting = mService.meetingJoinCheck(meeting);
+		
 		MeetingDetail meetingdetail = mService.meetingdetail(mNo, pNo);
-		Member loginMember = (Member) session.getAttribute("loginMember");
 		if (meetingdetail != null) {
 			model.addAttribute("meetingdetail", meetingdetail);
+			model.addAttribute("meeting", meeting);
 			model.addAttribute("loginMember", loginMember);
 			return "meeting/meetingdetail";
 		} else {
@@ -189,13 +197,13 @@ public class MeetingController {
 			return "common/errorPage";
 		}
 	}
-
+	
 	@RequestMapping(value = "meetingmodify.do", method = RequestMethod.GET)
 	public String meetingmodify() {
 
 		return "meeting/meetingmodify";
 	}
-
+	
 	// 모임 게시글 삭제
 	@RequestMapping(value = "meetingDelete.do", method = RequestMethod.GET)
 	public String meetingDelete(int mNo, Model model, HttpServletRequest request) {

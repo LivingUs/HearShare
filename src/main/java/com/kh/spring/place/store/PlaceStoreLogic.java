@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.spring.place.domain.Mlike;
 import com.kh.spring.place.domain.Mreview;
 import com.kh.spring.place.domain.Place;
 
@@ -48,5 +49,30 @@ public class PlaceStoreLogic implements PlaceStore{
 	@Override
 	public int ReviewDelete(int mrNo) {
 		return sqlSession.delete("placeMapper.ReviewDelete", mrNo);
+	}
+
+	@Override
+	public int addmLike(Mlike mLike) {
+		return sqlSession.insert("placeMapper.addmLike", mLike);
+	}
+
+	@Override
+	public int updateYmLike(Mlike mLike) {
+		return sqlSession.update("placeMapper.updateYmLike", mLike);
+	}
+
+	@Override
+	public int updateNmLike(Mlike mLike) {
+		return sqlSession.update("placeMapper.updateNmLike", mLike);
+	}
+
+	@Override
+	public Mlike selectmLike(Mlike mLike) {
+		return sqlSession.selectOne("placeMapper.selectmLike", mLike);
+	}
+
+	@Override
+	public ArrayList<Place> likeList(Place place) {
+		return (ArrayList)sqlSession.selectList("placeMapper.likeList", place);
 	}
 }

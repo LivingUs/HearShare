@@ -25,8 +25,8 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 	
 	@Override
-	public ArrayList<Meeting> meetingInsertList(Minsert minsert) {
-		return mStore.meetingInsertList(minsert);
+	public ArrayList<Meeting> meetingInsertList(Meeting meeting) {
+		return mStore.meetingInsertList(meeting);
 	}
 
 	@Override
@@ -47,6 +47,11 @@ public class MeetingServiceImpl implements MeetingService {
 	@Override
 	public int meetingJoin(Meeting meeting) {
 		return mStore.meetingJoin(meeting);
+	}
+	
+	@Override
+	public Meeting meetingJoinCheck(Meeting meeting) {
+		return mStore.meetingJoinCheck(meeting);
 	}
 	
 	@Override
@@ -88,8 +93,4 @@ public class MeetingServiceImpl implements MeetingService {
 	public int CommentDelete(int mcNo) {
 		return mStore.CommentDelete(mcNo);
 	}
-
-
-
-
 }

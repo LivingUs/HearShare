@@ -41,8 +41,6 @@
 		<c:set var="j" value="3" />	
     <table id="meeting_continue">
     	<c:forEach items="${mList}" var="meeting">
-    	<%-- <fmt:parseDate value='${meeting.mtime}' var='mtime' pattern="yyyy-mm-dd" scope="page"/> --%>
-
  		<c:set var="mDeadline" value="${meeting.mDeadline}"/>
  		<c:if test="${mDeadline eq 'Y'}">
 		<c:if test="${i%j == 0 }">
@@ -70,12 +68,20 @@
                 <div id="meeting_subtitle">
                     ${meeting.memberId}
                 </div>
-                <c:if test="${meeting.mPeoplecount == meeting.mPeople}">
-	            <span id="meeting_date">마감</span>
-	            </c:if>
-	            <c:if test="${meeting.mPeoplecount != meeting.mPeople}">
-                <span id="meeting_date">D-${meeting.mJYN}</span>
-	            </c:if>
+	            <c:choose>
+				    <c:when test="${meeting.mJYN < 1 && meeting.mPeoplecount == meeting.mPeople}">
+				    <span id="meeting_date">마감</span>
+				    </c:when>
+				    <c:when test="${meeting.mJYN > 0 && meeting.mPeoplecount == meeting.mPeople}">
+				    <span id="meeting_date">마감</span>
+				    </c:when>
+				    <c:when test="${meeting.mJYN < 1 && meeting.mPeoplecount != meeting.mPeople}">
+				    <span id="meeting_date">마감</span>
+				    </c:when>
+				    <c:when test="${meeting.mJYN > 0 && meeting.mPeoplecount != meeting.mPeople}">
+				    <span id="meeting_date">D-${meeting.mJYN}</span>
+				    </c:when>
+				</c:choose>
                 <span id="meeting_icon" class="fas fa-users fa-4x"></span>
 	            <span id="meeting_person">${meeting.mPeoplecount}/${meeting.mPeople}</span>
                 </div>
@@ -93,10 +99,10 @@
 		<c:set var="c" value="0" />
     <table id="meeting_enter" class="d-none">
     	<c:forEach items="${mList2}" var="meeting">
-    		<c:if test="${ loginMember.memberId eq meeting.memberId }">
+    		<c:if test="${ loginMember.memberId eq meeting.joinMemberId }">
 			<c:set var="c" value="${c+1 }" />
 			</c:if>			
-   			<c:if test="${ loginMember.memberId eq meeting.memberId  && c > 0}">
+   			<c:if test="${ loginMember.memberId eq meeting.joinMemberId  && c > 0}">
    			<c:if test="${a%b == 0 }">
 			<tr>
 			</tr>
@@ -117,14 +123,22 @@
 	                <div id="meeting_subtitle">
 	                    ${meeting.memberId}
 	                </div>
-	                <span id="meeting_date">D-7</span>
+		            <c:choose>
+					    <c:when test="${meeting.mJYN < 1 && meeting.mPeoplecount == meeting.mPeople}">
+					    <span id="meeting_date">마감</span>
+					    </c:when>
+					    <c:when test="${meeting.mJYN > 0 && meeting.mPeoplecount == meeting.mPeople}">
+					    <span id="meeting_date">마감</span>
+					    </c:when>
+					    <c:when test="${meeting.mJYN < 1 && meeting.mPeoplecount != meeting.mPeople}">
+					    <span id="meeting_date">마감</span>
+					    </c:when>
+					    <c:when test="${meeting.mJYN > 0 && meeting.mPeoplecount != meeting.mPeople}">
+					    <span id="meeting_date">D-${meeting.mJYN}</span>
+					    </c:when>
+					</c:choose>
 	                <span id="meeting_icon" class="fas fa-users fa-4x"></span>
-	                <c:if test="${meeting.mPeoplecount} == ${meeting.mPeople}">
-	                <span id="meeting_person">모임 마감</span>
-	                </c:if>
-	                <c:if test="${meeting.mPeoplecount} != ${meeting.mPeople}">
-	                <span id="meeting_person">${meeting.mPeoplecount}/${meeting.mPeople}</span>
-	                </c:if>
+					<span id="meeting_person">${meeting.mPeoplecount}/${meeting.mPeople}</span>
 	                </div>
 	            </a>
 	        </td>
@@ -186,35 +200,5 @@
             this.style.color = "white";
         });
     }
-    
-
-    
-    
-    <c:forEach items="${mList}" var="meeting">
-	    /*날짜 구하기*/
-	    var date = new Date();
-	    var year = date.getFullYear();
-	    var month = date.getMonth()+1
-	    var day = date.getDate();
-	    if(month < 10){
-	        month = "0"+month;
-	    }
-	    if(day < 10){
-	        day = "0"+day;
-	    }
-	    var today = year+""+month+""+day;
-	    document.write('<br>현재 날짜 : ' + today);
-	    
-	    var mtime = '${meeting.mtime}';
-	    document.write('<br>모임 날짜 : ' + mtime);
-    	var sub = mtime - date;
-    	var day = 1000 * 60 * 60 * 24;
-    	
-	    document.write('<br>' + (parseInt(sub/day)));
-    </c:forEach>
-    
-
-
-    
 </script>    
 </html>

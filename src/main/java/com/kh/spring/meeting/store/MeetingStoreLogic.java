@@ -32,8 +32,8 @@ public class MeetingStoreLogic implements MeetingStore {
 	}
 	
 	@Override
-	public ArrayList<Meeting> meetingInsertList(Minsert minsert) {
-		return (ArrayList)sqlSession.selectList("meetingMapper.meetingInsertList", minsert);
+	public ArrayList<Meeting> meetingInsertList(Meeting meeting) {
+		return (ArrayList)sqlSession.selectList("meetingMapper.meetingInsertList", meeting);
 	}
 
 	@Override
@@ -57,6 +57,11 @@ public class MeetingStoreLogic implements MeetingStore {
 	@Override
 	public int meetingJoin(Meeting meeting) {
 		return sqlSession.update("meetingMapper.meetingJoin", meeting);
+	}
+	
+	@Override
+	public Meeting meetingJoinCheck(Meeting meeting) {
+		return sqlSession.selectOne("meetingMapper.meetingJoinCheck", meeting);
 	}
 	
 	@Override

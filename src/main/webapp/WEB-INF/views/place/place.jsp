@@ -73,7 +73,14 @@
                     <div id="place_subtitle">
                         ${place.pmTitle}
                     </div>
-                    <a href="#" id="place_like" class="icon far fa-heart"></a> 
+<%--                     <a href="javascript:addmLike();" id="place_like" value="${place.pNo}">
+                               <c:if test="${empty mLike.mCheckYn || mLike.mCheckYn eq 'N'}">
+                                 <i class="far fa-heart" id="emptyHeart"></i>
+                              </c:if>
+                              <c:if test="${mLike.mCheckYn eq 'Y'}">
+                                 <i class="fas fa-heart" id="fullHeart"></i>
+                              </c:if>                            
+                           </a> --%>
                 </div>
             </a>
         </td>
@@ -97,9 +104,10 @@
     <script src="../../../resources/js/jquery.min.js"></script>
     <script src="../../../resources/js/breakpoints.min.js"></script>
     <script src="../../../resources/js/main.js"></script>
-</body>
-<!-- 지도 API -->
 	<script>
+
+		
+		<!-- 지도 API -->
 		 $(function() { /* 지도 시작점 */
          var map = new naver.maps.Map('map', {
             center: new naver.maps.LatLng(37.5679, 126.983),

@@ -13,9 +13,10 @@
 		<result property="pSaletime" column="PSALETIME"></result>
 		<result property="pClosedate" column="PCLOSEDATE"></result>
 		<result property="pFilename" column="PFILENAME"></result>
+		<result property="memberId" column="MEMBERID"></result>
 	</resultMap>
 	
-	<select id="placeList" resultType="Place">
+ 	<select id="placeList" resultType="Place">
 		SELECT * FROM PLACE
 		ORDER BY PNO ASC
 	</select>
@@ -50,4 +51,32 @@
 		DELETE FROM MREVIEW
 		WHERE MRNO = #{mrNo}
 	</delete>
+	
+	<insert id="addmLike" parameterType="Mlike">
+  	    INSERT INTO MLIKE
+    	VALUES (MLIKE_SEQ.NEXTVAL, DEFAULT, #{pNo}, #{memberId})
+    </insert>
+
+	<update id="updateYmLike" parameterType="Mlike">
+		UPDATE MLIKE
+		SET MCHECKYN = 'Y'
+		WHERE PNO = #{pNo} AND MEMBERID = #{memberId} 
+	</update>
+	
+	<update id="updateNmLike" parameterType="Mlike">
+		UPDATE MLIKE
+		SET MCHECKYN = 'N'
+		WHERE PNO = #{pNo} AND MEMBERID = #{memberId} 
+	</update>
+
+    <select id="selectmLike" resultType="Mlike">
+      	SELECT * FROM MLIKE
+    	WHERE PNO = #{pNo} AND MEMBERID = #{memberId}
+    </select>
+    
+    <select id="likeList" resultMap="placeResultMap">
+		SELECT PLACE.PNO, PTITLE, PMTITLE, PADDR, PPHONE, PPRICE, PPARKYN, PSALETIME, PCLOSEDATE, PFILENAME, MLIKE.MEMBERID FROM PLACE
+		JOIN MLIKE ON PLACE.PNO = MLIKE.PNO
+		WHERE MLIKE.MEMBERID = #{memberId} AND MCHECKYN = 'Y'
+	</select>
 </mapper>

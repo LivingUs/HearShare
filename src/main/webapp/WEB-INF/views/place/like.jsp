@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -29,24 +30,64 @@
 <hr>
 </header>
 <section>
+    	<c:set var="i" value="0" />
+		<c:set var="j" value="3" />	
+		<c:set var="c" value="0" />
     <table>
+    	<c:forEach items="${plikeList}" var="place">
+    	<c:if test="${loginMember.memberId eq place.memberId}">
+		<c:set var="c" value="${c+1 }" />
+		</c:if>
+		<c:if test="${ loginMember.memberId eq place.memberId && c > 0 }">
+		<c:if test="${i%j == 0 }">
+		<tr>
+		</tr>
+		</c:if>    	
         <td>
-            <a onclick="location.href='placedetail.do'">
+        	<c:url var="pDetail" value="placedetail.do">
+        	<c:param name="pNo" value="${place.pNo}"></c:param>
+        	</c:url>
+            <a href="${pDetail}">
                 <div id="place_div">
                     <div id="place_img">
-                        <img src="/resources/images/bg.jpg" style="width: 200px; height: 200px;">
+                        <img src="${place.pFilename}" style="width: 200px; height: 200px;">
                     </div>
                     <div id="place_title">
-                        ${place.placeName }젬옥
+                        ${place.pTitle}
                     </div>
                     <div id="place_subtitle">
-                        ${place.placeSubName}부젬옥
+                        ${place.pmTitle}
                     </div>
-                    <a href="#" id="place_like" class="icon far fa-heart"></a> 
+<%--                     <a href="javascript:addmLike();" id="place_like">
+                               <c:if test="${empty mLike.mCheckYn || mLike.mCheckYn eq 'N'}">
+                                 <i class="far fa-heart" id="emptyHeart"></i>
+                              </c:if>
+                              <c:if test="${mLike.mCheckYn eq 'Y'}">
+                                 <i class="fas fa-heart" id="fullHeart"></i>
+                              </c:if>                            
+                           </a> --%>
                 </div>
             </a>
         </td>
+        <c:if test="${i%j == j-1 }">
+		</c:if> 
+		<c:set var="i" value="${i+1 }" />
+		</c:if>
+        </c:forEach>
     </table>
+    
+    <c:if test="${c == 0 }">
+		<table id="meeting_enter2" style="margin: 0 auto;">
+	        <td>
+	            <div style="text-align: center; font-weight: bold;">
+	            <br><br><br><br><br><br><br><br><br>
+	            <p>찜한 장소가 없습니다 ㅠ_ㅠ</p>
+	            <p>내맘에 드는 장소를 찜해보세요!</p>
+	            <br><br><br><br><br><br><br><br><br><br><br>
+	            </div>
+	        </td>
+	    </table>
+	</c:if>
 </section>
 </article>
 </div>

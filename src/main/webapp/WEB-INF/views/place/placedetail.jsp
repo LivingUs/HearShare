@@ -40,8 +40,16 @@
                 ${place.pTitle}
             </div>
             <div id="placedetail_like">
-                <a href="#" class="far fa-heart" style="color: black;"></a>
-                <p id="placedetail_likesubtitle">찜하기</p></div><br><br>
+                    <a href="javascript:addmLike();" id="place_like" style="color:red;">
+                               <c:if test="${empty mLike.mCheckYn || mLike.mCheckYn eq 'N'}">
+                                 <i class="far fa-heart" id="emptyHeart"></i>
+                              </c:if>
+                              <c:if test="${mLike.mCheckYn eq 'Y'}">
+                                 <i class="fas fa-heart" id="fullHeart"></i>
+                              </c:if>                            
+                           </a>                
+                <p id="placedetail_likesubtitle">찜하기</p>
+            </div><br><br>
             <div id="placedetail_subtitle">
                 ${place.pmTitle}
             </div><br>
@@ -94,6 +102,29 @@
     <script src="../../../resources/js/jquery.min.js"></script>
     <script src="../../../resources/js/breakpoints.min.js"></script>
     <script src="../../../resources/js/main.js"></script>
+    <script>
+    function addmLike() {
+        var pNo = "${place.pNo}";
+        var memberId = "${loginMember.memberId}";
+        
+        $.ajax ({
+           url : "addmLike.do",
+           type : "post",
+           data : {"pNo" : pNo, "memberId" : memberId },
+           success : function(data) {
+              $place_like = $("#place_like");
+              
+              if(data.mlikeYn == "Y") {
+                 $place_like.html("");
+                 $place_like.append("<i class='fas fa-heart' id='fullHeart'></i>");
+              } else if (data.mlikeYn == "N") {
+                 $place_like.html("");
+                 $place_like.append("<i class='far fa-heart' id='emptyHeart'></i>");
+              }
+           }
+        });
+     }
+	</script>
 	<script>
 		$(function() {
 			getReviewList();
@@ -142,7 +173,7 @@
 							$memberId = data[i].memberId;
 							var checkId = '${loginMember.memberId }';
 							if (checkId == $memberId) {
-								$div = $("<span style='font-weight: bold; font-size: 20px;'>"+data[i].memberId+"</span><span style='font-size: 13px;'>&nbsp;&nbsp;("+data[i].mrTime+")</span><a onclick='ReviewDelete("+data[i].mrNo+");' style='float: right; cursor: pointer'>&nbsp;&nbsp;[삭제]</a><span style='float: right;'>[수정]</span><br><p style='font-size: 16px; margin-top: 3px;'>"+decodeURIComponent(data[i].mrContent).replace(/\+/g, " ")+"</p><hr>");
+								$div = $("<span style='font-weight: bold; font-size: 20px;'>"+data[i].memberId+"</span><span style='font-size: 13px;'>&nbsp;&nbsp;("+data[i].mrTime+")</span><a onclick='ReviewDelete("+data[i].mrNo+");' style='float: right; cursor: pointer'>&nbsp;&nbsp;[삭제]</a><br><p style='font-size: 16px; margin-top: 3px;'>"+decodeURIComponent(data[i].mrContent).replace(/\+/g, " ")+"</p><hr>");
 							} else {
 								$div = $("<span style='font-weight: bold; font-size: 20px;'>"+data[i].memberId+"</span><span style='font-size: 13px;'>&nbsp;&nbsp;("+data[i].mrTime+")</span><br><p style='font-size: 16px; margin-top: 3px;'>"+decodeURIComponent(data[i].mrContent).replace(/\+/g, " ")+"</p><hr>");
 							}

@@ -46,12 +46,12 @@
                     ${place.pTitle}
                 </div>
                 <div id="placetop_like">
-                    <a href="#" class="far fa-heart" style="color: black;"></a>
-                    <p id="placetop_likespan">찜하기</p></div><br><br>
+<!--                     <a href="#" class="far fa-heart" style="color: black;"></a>
+                    <p id="placetop_likespan">찜하기</p> --></div><br><br>
                 <div id="placetop_addr">
                     ${place.pmTitle}
                 </div><br><br><br>
-                <div>
+                <div style="color: black;">
                     <p>영업시간 : ${place.pSaletime}</p> 
                   	<p>주소 : ${place.pAddr}<p> 
                 </div>

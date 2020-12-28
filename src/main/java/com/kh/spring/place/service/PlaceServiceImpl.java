@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.place.domain.Mlike;
 import com.kh.spring.place.domain.Mreview;
 import com.kh.spring.place.domain.Place;
 import com.kh.spring.place.store.PlaceStore;
@@ -48,5 +49,30 @@ public class PlaceServiceImpl implements PlaceService{
 	@Override
 	public int ReviewDelete(int mrNo) {
 		return pStore.ReviewDelete(mrNo);
+	}
+
+	@Override
+	public int addmLike(Mlike mLike) {
+		return pStore.addmLike(mLike);
+	}
+
+	@Override
+	public int updateYmLike(Mlike mLike) {
+		return pStore.updateYmLike(mLike);
+	}
+
+	@Override
+	public int updateNmLike(Mlike mLike) {
+		return pStore.updateNmLike(mLike);
+	}
+
+	@Override
+	public Mlike selectmLike(Mlike mLike) {
+		return pStore.selectmLike(mLike);
+	}
+
+	@Override
+	public ArrayList<Place> likeList(Place place) {
+		return pStore.likeList(place);
 	}
 }

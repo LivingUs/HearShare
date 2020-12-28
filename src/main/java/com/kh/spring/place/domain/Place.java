@@ -12,6 +12,7 @@ public class Place {
 	private String pSaletime;
 	private String pClosedate;
 	private String pFilename;
+	private String memberId;
 	
 	public Place() {}
 
@@ -95,10 +96,36 @@ public class Place {
 		this.pFilename = pFilename;
 	}
 
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
 	@Override
 	public String toString() {
 		return "Place [pNo=" + pNo + ", pTitle=" + pTitle + ", pmTitle=" + pmTitle + ", pAddr=" + pAddr + ", pPhone="
 				+ pPhone + ", pPrice=" + pPrice + ", pParkYN=" + pParkYN + ", pSaletime=" + pSaletime + ", pClosedate="
-				+ pClosedate + ", pFilename=" + pFilename + "]";
+				+ pClosedate + ", pFilename=" + pFilename + ", memberId=" + memberId + "]";
 	}
+
+	public Place(int pNo, String pTitle, String pmTitle, String pAddr, String pPhone, String pPrice, String pParkYN,
+			String pSaletime, String pClosedate, String pFilename, String memberId) {
+		super();
+		this.pNo = pNo;
+		this.pTitle = pTitle;
+		this.pmTitle = pmTitle;
+		this.pAddr = pAddr;
+		this.pPhone = pPhone;
+		this.pPrice = pPrice;
+		this.pParkYN = pParkYN;
+		this.pSaletime = pSaletime;
+		this.pClosedate = pClosedate;
+		this.pFilename = pFilename;
+		this.memberId = memberId;
+	}
+
+	
 }

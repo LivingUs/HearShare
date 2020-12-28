@@ -16,11 +16,12 @@ public class Meeting {
 	private int mDate;
 	private String mJYN;
 	private String mYN;
-	private Date mtime;
+	private String mtime;
 	private String memberId;
 	private int pNo;
 	private int mPeoplecount;
 	private String mDeadline;
+	private String joinMemberId;
 	
 	public Meeting() {}
 
@@ -112,11 +113,11 @@ public class Meeting {
 		this.mYN = mYN;
 	}
 
-	public Date getMtime() {
+	public String getMtime() {
 		return mtime;
 	}
 
-	public void setMtime(Date mtime) {
+	public void setMtime(String mtime) {
 		this.mtime = mtime;
 	}
 
@@ -152,12 +153,20 @@ public class Meeting {
 		this.mDeadline = mDeadline;
 	}
 
+	public String getJoinMemberId() {
+		return joinMemberId;
+	}
+
+	public void setJoinMemberId(String joinMemberId) {
+		this.joinMemberId = joinMemberId;
+	}
+
 	@Override
 	public String toString() {
 		return "Meeting [mNo=" + mNo + ", mTitle=" + mTitle + ", mContent=" + mContent + ", mWritedate=" + mWritedate
 				+ ", mUpdatedate=" + mUpdatedate + ", moriginalFileName=" + moriginalFileName + ", mrenameFileName="
 				+ mrenameFileName + ", mPeople=" + mPeople + ", mDate=" + mDate + ", mJYN=" + mJYN + ", mYN=" + mYN
 				+ ", mtime=" + mtime + ", memberId=" + memberId + ", pNo=" + pNo + ", mPeoplecount=" + mPeoplecount
-				+ ", mDeadline=" + mDeadline + "]";
+				+ ", mDeadline=" + mDeadline + ", joinMemberId=" + joinMemberId + "]";
 	}
 }

@@ -60,12 +60,20 @@
                 ${meetingdetail.mTitle}
             </div>
             <div id="meetingdetail_subtitle">
-                <c:if test="${meetingdetail.mPeoplecount == meetingdetail.mPeople}">
-	            <span id="meetingdetail_date">마감</span>
-	            </c:if>
-	            <c:if test="${meetingdetail.mPeoplecount != meetingdetail.mPeople}">
-                <span id="meetingdetail_date">D-${meetingdetail.mJYN}</span>
-                </c:if>
+		        <c:choose>
+					<c:when test="${meetingdetail.mJYN < 1 && meetingdetail.mPeoplecount == meeting.mPeople}">
+					<span id="meetingdetail_date">마감</span>
+				    </c:when>
+				    <c:when test="${meetingdetail.mJYN > 0 && meetingdetail.mPeoplecount == meeting.mPeople}">
+				    <span id="meetingdetail_date">마감</span>
+				    </c:when>
+				    <c:when test="${meetingdetail.mJYN < 1 && meetingdetail.mPeoplecount != meeting.mPeople}">
+				    <span id="meetingdetail_date">마감</span>
+				    </c:when>
+				    <c:when test="${meetingdetail.mJYN > 0 && meetingdetail.mPeoplecount != meeting.mPeople}">
+				    <span id="meetingdetail_date">D-${meetingdetail.mJYN}</span>
+				    </c:when>
+				</c:choose>
                 <span id="meetingdetail_bar"></span>&nbsp;
                 <span id="meetingdetail_icon" class="fas fa-users fa-4x"></span>
                 <span id="meetingdetail_person">${meetingdetail.mPeoplecount}/${meetingdetail.mPeople}</span>
@@ -190,7 +198,7 @@
 							$memberId = data[i].memberId;
 							var checkId = '${loginMember.memberId }';
 							if (checkId == $memberId) {
-								$div = $("<span style='font-weight: bold; font-size: 20px;'>"+data[i].memberId+"</span><span style='font-size: 13px;'>&nbsp;&nbsp;("+data[i].mcTime+")</span><a onclick='CommentDelete("+data[i].mcNo+");' style='float: right; cursor: pointer'>&nbsp;&nbsp;[삭제]</a><span style='float: right;'>[수정]</span><br><p style='font-size: 16px; margin-top: 3px;'>"+decodeURIComponent(data[i].mcContent).replace(/\+/g, " ")+"</p><hr>");
+								$div = $("<span style='font-weight: bold; font-size: 20px;'>"+data[i].memberId+"</span><span style='font-size: 13px;'>&nbsp;&nbsp;("+data[i].mcTime+")</span><a onclick='CommentDelete("+data[i].mcNo+");' style='float: right; cursor: pointer'>&nbsp;&nbsp;[삭제]</a><br><p style='font-size: 16px; margin-top: 3px;'>"+decodeURIComponent(data[i].mcContent).replace(/\+/g, " ")+"</p><hr>");
 							} else {
 								$div = $("<span style='font-weight: bold; font-size: 20px;'>"+data[i].memberId+"</span><span style='font-size: 13px;'>&nbsp;&nbsp;("+data[i].mcTime+")</span><br><p style='font-size: 16px; margin-top: 3px;'>"+decodeURIComponent(data[i].mcContent).replace(/\+/g, " ")+"</p><hr>");
 							}
@@ -237,29 +245,23 @@
 	 	    	result = confirm('모임에 참여하시겠습니까?');
 	 	    	var loginMemberId = '${loginMember.memberId}';
 	 	    	var writeMemberId = '${meetingdetail.memberId}';
-	 	    	$.ajax({
-					url : "meetingJoin.do",
-					type : "get",
-					data : {"memberId" : memberId, "mNo" : mNo},
-					dataType : "json",
-					success : function(data) {
-						var enjoyMemberId = '${minsert.memberId}';
-			 	    	if(result == true){
-		 	 	    		if(loginMemberId == writeMemberId) {
-			 	    			alert("모임 주죄차이십니다.")
-			 	    			return false;
-		 	 	    		} else if(loginMemberId == enjoyMemberId) {
-				 	    		alert("이미 모임에 참가하셨습니다.")
-				 	    		return false;
-			 	    		} else {
-			 	    		alert("모임에 참가되셨습니다.")
-			 	    		location.href="${mJoin}";
-			 	    		}
-			 	    	} else {
-			 	    		return false;
-			 	    	}
-			 	    }
-		 	    });
-		     }
+	 	    	var joinMemberId = '${meeting.joinMemberId}';
+	 	    	var mNo = '${meetingdetail.mNo}';
+	 	    	
+ 	 	    	if(result == true){
+ 	 	    		if(writeMemberId == loginMemberId) {
+	 	    			alert("모임 주죄차이십니다.");
+	 	    			return false;
+ 	 	    		} else if(joinMemberId == loginMemberId) {
+ 	 	    			alert("이미 모임에 참가하셨습니다.");
+				 	    return false;
+ 	 	    		} else {
+		 	    		alert("모임에 참가되셨습니다.");
+		 	    		location.href="${mJoin}";
+		 	    	} 
+ 	 	    	} else {
+ 	 	    		return false;
+ 	 	    	}
+	     };
 	</script>
 </body></html>

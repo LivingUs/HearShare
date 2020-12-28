@@ -12,11 +12,12 @@ import com.kh.spring.place.domain.Place;
 public interface MeetingStore {
 
 	public ArrayList<Meeting> meetingList();
-	public ArrayList<Meeting> meetingInsertList(Minsert minsert);
+	public ArrayList<Meeting> meetingInsertList(Meeting meeting);
 	public int meetingWrite(Meeting meeting);
 	public MeetingDetail meetingdetail(int mNo, Integer pNo);
 	public Meeting meetingdetail(int mNo);
 	public int meetingJoin(Meeting meeting);
+	public Meeting meetingJoinCheck(Meeting meeting);
 	public ArrayList<Meeting> meetingDday();
 	public int meetingDeadline(Meeting meeting2);
 	public int meetingTimeDeadline();

@@ -15,7 +15,7 @@ public class MeetingDetail {
 	private int mDate;
 	private String mJYN;
 	private String mYN;
-	private Date mtime;
+	private String mtime;
 	private String memberId;
 	private int pNo;
 	private String pTitle;
@@ -114,11 +114,11 @@ public class MeetingDetail {
 		this.mYN = mYN;
 	}
 
-	public Date getMtime() {
+	public String getMtime() {
 		return mtime;
 	}
 
-	public void setMtime(Date mtime) {
+	public void setMtime(String mtime) {
 		this.mtime = mtime;
 	}
 
