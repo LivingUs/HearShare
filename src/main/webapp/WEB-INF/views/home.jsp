@@ -43,7 +43,7 @@
 		}
 		
 		$(function() {
-			if(day == 27) {
+			if(day == 28) {
 		    setTimeout(function () {
 		    	notify();
 		    }, 1000);

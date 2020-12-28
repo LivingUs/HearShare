@@ -19,14 +19,13 @@
 		<br><br>
 		<div id="main">
 		<article id="meeting" class="panel">
-<br>
 <header>
-<h3 style="float: left; font-weight: bold; font-family: 'Jal_Onuel';">&nbsp;Meeting</h3>
+<h3 style="float: left; font-weight: bold; font-family:'Jal_Onuel';">&nbsp;Meeting</h3>
     <nav id="smallnav">
-        <a onclick="location.href='meetingWriteView.do'" class="far fa-edit"></a> 
-        <a onclick="location.href='meeting.do'" class="fas fa-users"></a> 
-        <a onclick="location.href='place.do'" class="far fa-map"></a> 
-        <a onclick="location.href='like.do'" class="far fa-heart"></a>
+        <a onclick="location.href='meetingWriteView.do'" class="far fa-edit"><span>게시글 작성</span></a> 
+        <a onclick="location.href='meeting.do'" class="fas fa-users"><span>모임하기</span></a> 
+        <a onclick="location.href='place.do'" class="far fa-map"><span>장소추천</span></a> 
+        <a onclick="location.href='like.do'" class="far fa-heart"><span>찜목록</span></a>
     </nav>
 <hr>
 </header>
@@ -55,11 +54,11 @@
             <a href="${mDetail}">
                 <div id="meeting_div">
                 <div id="meeting_img">
-	            	<c:if test="${!empty meeting.moriginalFileName}">
-	            	<img src="/resources/meetingFiles/${meeting.moriginalFileName}" style="width: 200px; height: 200px;">
+	            	<c:if test="${!empty meeting.mrenameFileName}">
+	            	<img src="../../../resources/meetingFiles/${meeting.mrenameFileName}" style="width: 200px; height: 200px;">
 	            	</c:if>
-	            	<c:if test="${empty meeting.moriginalFileName}">
-	                <img src="/resources/images/home.png" style="width: 200px; height: 200px;">
+	            	<c:if test="${empty meeting.mrenameFileName}">
+	                <img src="../../../resources/images/home.png" style="width: 200px; height: 200px;">
 	                </c:if>                    
                 </div>
                 <div id="meeting_title">
@@ -164,13 +163,8 @@
 </section>
 </article>
 </div>
-	<!-- footer -->
-	<div id="footer_div">
-       <ul class="copyright">
-           <li>&copy; hear : share</li>
-           <li>대충 푸터랍니다.</li>
-       </ul>
-    </div>
+	<!-- Footer -->
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 </div>
 </body>
     <script src="../../../resources/js/jquery.min.js"></script>

@@ -33,7 +33,7 @@
 				</header>
 <section>
 	<div class="wrapper_autoPay">
-		<h2 align="center">자동결제일은 매달 <span style="font-size : 1.3em;">1일</span>입니다.</h2>
+		<h2 align="center">자동결제일은 매달 <span style="font-size : 1.3em;">28일</span>입니다.</h2>
 		<hr>
 		<div id="autoPay_top">
 			<c:if test="${!empty mList }">
@@ -77,7 +77,7 @@
 			<c:if test="${empty mList }">
 				<br>
 				<p style="text-align:center; font-size:20px; ">한 번의 자동결제 신청으로, 관리비 납입을 간편하게 이용하세요.<br><br>
-				<button class="btn btn-outline-danger" type="button" style="width:250px; height:50px;">자동결제 신청하러 가기>></button>
+				<button class="btn btn-outline-danger" type="button" style="width:250px; height:50px;" onclick="calendar.do">자동결제 신청하러 가기>></button>
 				</p>
 				<br>
 			</c:if>

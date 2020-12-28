@@ -94,7 +94,7 @@
 							   <c:if test="${bList.bFileName ne null }">
 							  	<p class="card-text" id="inFile">${bList.bContent }</p>
 							  	<div id="imgArea">
-							  		<img src="../../../resources/buploadFiles/${bList.bFileName }">
+							  		<img src="../../../resources/bUploadFiles/${bList.bFileName }">
 							  	</div>
 						  </c:if>
 						  <c:if test="${bList.bFileName eq null }">

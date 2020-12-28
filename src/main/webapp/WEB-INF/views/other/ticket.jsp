@@ -103,7 +103,7 @@ $(document).ready(function() {
 						0
 					</c:if>
 				</span>개 남았습니다.</p><br>
-				<a class="btn btn-outline-danger" href="#" role="button" style="margin-left:10px; padding:10px; width:120px;">테마룸 예약</a>&nbsp;&nbsp;
+				<a class="btn btn-outline-danger" href="studyReserve.do" role="button" style="margin-left:10px; padding:10px; width:120px;">테마룸 예약</a>&nbsp;&nbsp;
 				<a class="btn btn-outline-danger" href="#Buy_main" role="button" style="padding:10px; width:120px;">정기권 구매</a>
 			</div>
 		</div>

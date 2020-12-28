@@ -89,7 +89,7 @@
 	<select id="commentList" resultType="BoardComment">
 		SELECT * FROM BCOMMENT
 		WHERE BNO = #{bNo} AND BCYN = 'Y'
-		ORDER BY BCTIME DESC
+		ORDER BY BCTIME ASC
 	</select>
 	
 	<insert id="addLike" parameterType="BoardLike">

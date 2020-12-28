@@ -104,7 +104,7 @@ public class MeetingController {
 		String mrenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
 				+ moriginalFileName.substring(moriginalFileName.lastIndexOf(".") + 1);
 
-		String filePath = folder + "\\" + file.getOriginalFilename();
+		String filePath = folder + "\\" + mrenameFileName;
 		try {
 			file.transferTo(new File(filePath));
 		} catch (Exception e) {

@@ -47,6 +47,12 @@ var moList = [];
     			 var $ul = $("#dayList");
         		 $ul.empty();
     			 var $li;
+    			 var momentStr = today.substring(8,10);
+    			 
+    			 if(momentStr==28) {
+    				 $li =  $("<li style='color:red; font-weight:bolder;'>").text("월세 납부일");
+    				 $ul.append($li);
+    			 }
     			 
     		 if(data.length>0) {
     		 for(var i in data){
@@ -142,7 +148,7 @@ var moList = [];
 			        			 var momentStr = today.substring(8,10);
 			        			 
 			        			//월세 납부일자 등록
-			        			 if(momentStr==1) {
+			        			 if(momentStr==28) {
 			        				 $li =  $("<li style='color:red; font-weight:bolder;'>").text("월세 납부일");
 			        				 $ul.append($li);
 			        			 }
@@ -160,6 +166,9 @@ var moList = [];
 			        			 } else if(rCode =='B' ) {
 			        				$li =  $("<li>").text("바베큐장 예약");
 			       				 $ul.append($li);
+			        			 } else {
+			        				 $li =  $("<li>").text("'"+data[i].rCode+"'"+" 모임");
+			       					 $ul.append($li);
 			        			 }
 			        		 }
 			        	 } else {
@@ -201,18 +210,26 @@ var moList = [];
 	                                    var rCode = element.rCode;
 	                                    var rNo = element.rNo;
 	                                    
-	                                    // realmname (분야) 분야별로 color 설정
-	                                    if (rCode == "S"){
+	                                    // 분야별로 color 설정
+	                                    if (rCode == "Y" || rCode == "N") {
+	                                    	var newdate = startdate.substring(0,7)+'-28';
+	                                    	 events.push({
+	                                               title: "!월세 납부일",
+	                                               start: newdate,
+	                                               contents : rNo,
+	                                               rCode: rCode,
+	                                               color:"#E71D36"                                                   
+	                                            }); //.push()
+	                                                                        
+	                                    } else if (rCode == "S"){
 	                                        events.push({
 	                                               title: element.rTime + " 스터디룸 예약",
 	                                               start: startdate,
 	                                               contents : rNo,
 	                                               rCode: rCode,
-                                                   color:"#feee7d"                                                   
+                                                color:"#feee7d"                                                   
 	                                            }); //.push()
-	                                    }
-	                                                                        
-	                                    else if (rCode == "H"){
+	                                    } else if (rCode == "H"){
 	                                        events.push({
 	                                               title: element.rTime + " 헬스룸 예약",
 	                                               start: startdate,
@@ -220,24 +237,13 @@ var moList = [];
 	                                               rCode: rCode,
                                                    color:"#ef5285"                                                   
 	                                            }); //.push()
-	                                    }
-	                                    
-	                                    else if (rCode == "B"){
+	                                    }  else if (rCode == "B"){
 	                                        events.push({
 	                                               title: "바베큐장 예약",
 	                                               start: startdate,
 	                                               contents : rNo,
 	                                               rCode: rCode,
 	                                               color:"#60c5ba"                                                   
-	                                            }); //.push()
-	                                    } else if (rCode == "Y" || rCode == "N") {
-	                                    	var newdate = startdate.substring(0,7)+'-01';
-	                                    	 events.push({
-	                                               title: "월세 납부일",
-	                                               start: newdate,
-	                                               contents : rNo,
-	                                               rCode: rCode,
-	                                               color:"#E71D36"                                                   
 	                                            }); //.push()
 	                                    } else {
 	                                    	 events.push({
@@ -261,7 +267,7 @@ var moList = [];
 	        	var startDate = moment(eventObj.start).format('YYYY-MM-DD');
 	        	var mpCode = eventObj.extendedProps.rCode;
 	        	
-	        	if(eventObj.title=="월세 납부일") {
+	        	if(eventObj.title=="!월세 납부일") {
 	        		if(startDate>output) {
 	        			alert("이번 달 납부만 가능합니다.");
 	        		} else {
@@ -411,8 +417,8 @@ var moList = [];
 		<header>
 		    <h3 style="float: left; width: 30%; font-weight: bold; font-family:Jal_Onuel;">&nbsp;My Calendar</h3>
 		    <nav id="smallnav">
-		        <a href="studyReserve.do" class="far fa-calendar-check"><span>테마룸 예약</span></a>
-		        <a href="calendar.do" class="far fa-calendar-alt"><span>나의일정</span></a>
+		        <a href="studyReserve.do"><i class="far fa-calendar-check"></i></a>
+		        <a href="calendar.do"><i class="far fa-calendar-alt"></i></a>
 		    </nav>
 		    <hr>
 		</header><br><br>
@@ -438,7 +444,7 @@ var moList = [];
 		        <u style="position:relative; bottom:110px; left:70px; font-size:13px; font-weight:bolder; color:dimgray;">*월세 결제를 원하시는 분은 납부 일정을 클릭해 주세요!</u>
 		        <br><br><br><br><br><br>
 		        <p style="text-align: right; font-size: 18px; font-weight:600; position: relative; right: 35px;">월세 정기결제를 해지하고 싶다면?</p>
-		        <button style="width: 300px; height: 40px; background-color: rgb(255, 186, 179); border: none; float: right; color: white; margin-right:30px; border-radius:4px; font-weight:700;">
+		        <button onclick="location.href='autoPayList.do'" style="width: 300px; height: 40px; background-color: rgb(255, 186, 179); border: none; float: right; color: white; margin-right:30px; border-radius:4px; font-weight:700;">
 		         정기결제 해지하러 가기 &nbsp;&nbsp;<i class="fas fa-long-arrow-alt-right" style="font-size:25px; color:rgb(255, 124, 109);"></i>
 		        </button><br><br><br><br>
 		    </div>

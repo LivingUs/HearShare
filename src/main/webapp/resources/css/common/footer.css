@@ -10,21 +10,17 @@
 
 #footer.copyright {
     list-style: none;
-    padding-left: 0;
 }
 
 #footer .copyright li {
     display: inline-block;
-    padding-left: 1em;
-    margin-left: 1em;
-    border-left: solid 1px rgba(255, 255, 255, 0.25);
-    line-height: 1;
+    margin: 0px 10px 10px 10px;
     font-size : 15px;
+    text-align: center;
 }
 
-#footer .copyright li:first-child {
-	font-size : 30px;
+/* #footer .copyright li:first-child {
     padding-left: 0;
     margin-left: 0;
     border-left: 0;
-}
+} */
