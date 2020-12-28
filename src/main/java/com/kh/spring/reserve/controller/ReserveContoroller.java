@@ -162,7 +162,6 @@ public class ReserveContoroller {
 		reserve.setrTime(rTime);
 		
 		int result = rService.bbqInsert(reserve);
-		System.out.println(result);
 		if(result>0) {
 			return "OK";
 		} else {

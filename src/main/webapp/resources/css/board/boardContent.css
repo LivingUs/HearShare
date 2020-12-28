@@ -37,46 +37,6 @@ body {
    }
 
 /*smallnav*/
-    #smallnav {
-        text-align: right;
-    }
-
-    #smallnav>a {
-        margin: 0px 10px 0px 10px;
-        font-size: 30px;
-        color: black;
-    }
-
-    #smallnav>a:hover {
-        color: hotpink;
-    }
-
-/*a*/
-a:link { text-decoration: none;}
-
-/* main */
-
-#main {
-      position: relative;
-      overflow: hidden;
-      padding : 30px;
-      width: 100%;
-      background: #ffffff;
-      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
-      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-   }
-   
-
-    
-    
-/* BoardContent */
-#main div {
-	float : left;
-}
-
 #smallnav {
     text-align: right;
     float : left;
@@ -95,10 +55,6 @@ a:link { text-decoration: none;}
     left : 580px;
     bottom : 10px;
     text-decoration : none;
-}
-
-#smallnav a:hover {
-	color: hotpink;
 }
 
 
@@ -151,7 +107,7 @@ a:link { text-decoration: none;}
  }
 
 #smallnav a:hover {
-     opacity: 1.0;
+     opacity: 0.6;
  }
 
 #smallnav a:hover span {
@@ -171,6 +127,32 @@ a:link { text-decoration: none;}
         display: none;
      }
  }
+
+/*a*/
+a:link { text-decoration: none;}
+
+/* main */
+
+#main {
+      position: relative;
+      overflow: hidden;
+      padding : 30px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+      -moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      -ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+      transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+   }
+   
+
+    
+    
+/* BoardContent */
+#main div {
+	float : left;
+}
 
 
 /* boardContent */

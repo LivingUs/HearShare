@@ -22,10 +22,10 @@
 		from reserve
 		where memberid=#{memberId} and rdate=#{today}
 		union
-		select MTIME, mtitle
+		select mtime, mtitle
 		from minsert
 		join meeting using (memberid)
-		where memberid=#{memberId} and MTIME=#{today}
+		where memberid=#{memberId} and mtime=#{today}
 		order by rtime
 	</select>
 	

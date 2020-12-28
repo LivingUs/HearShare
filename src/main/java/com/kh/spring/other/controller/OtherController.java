@@ -101,8 +101,6 @@ public class OtherController {
 		paramMap.put("month", month);
 		paramMap.put("memberId", memberId);
 		ArrayList<Reserve> studySelect = service.studySelect(paramMap);
-		System.out.println(year);
-		System.out.println(month);
 		
 		//남은갯수
 		Ticket studyTicket = service.studyTicket(ticket);
@@ -197,8 +195,6 @@ public class OtherController {
 		paramMap.put("month", month);
 		paramMap.put("memberId", memberId);
 		ArrayList<Reserve> healthSelect = service.healthSelect(paramMap);
-		System.out.println(year);
-		System.out.println(month);
 		
 		//남은 갯수
 		Ticket healthTicket = service.healthTicket(ticket);
@@ -241,14 +237,14 @@ public class OtherController {
 	
 	//스터디 정기권 구매
 	@RequestMapping(value="insertStudyTicket.do", method=RequestMethod.POST)
-	public String insertStudyTicket(Model model) throws Exception {
+	public String insertStudyTicket(Model model, int tPriceNo) throws Exception {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		Ticket ticket = new Ticket();
 		ticket.setMemberId(memberId);
-		System.out.println(ticket.gettPriceNo());
+		ticket.settPriceNo(tPriceNo);
 		int result = service.insertStudyTicket(ticket);
 		
 		if(result > 0) {
@@ -260,13 +256,14 @@ public class OtherController {
 	
 	//헬스 정기권 구매
 	@RequestMapping(value="insertHealthTicket.do", method=RequestMethod.POST)
-	public String insertHealthTicket(Model model) {
+	public String insertHealthTicket(Model model, int tPriceNo) {
 		//세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		Ticket ticket = new Ticket();
 		ticket.setMemberId(memberId);
+		ticket.settPriceNo(tPriceNo);
 		
 		int result = service.insertHealthTicket(ticket);
 		if(result > 0) {
@@ -324,8 +321,7 @@ public class OtherController {
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		account.setMemberId(memberId);
-		
-		System.out.println(account);
+
 		int result = service.insertAccount(account);
 		if(result > 0) {
 			return "redirect:accountList.do";

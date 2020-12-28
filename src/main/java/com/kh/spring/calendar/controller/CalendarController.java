@@ -57,7 +57,6 @@ public class CalendarController {
 					para.put("today", "2021-01-01");
 					  
 					MonthPay checkPay = cService.getCheckPay(para);
-					System.out.println(checkPay.toString());
 		  
 					if(checkPay.getmYn().equals("N")) {
 						String today = year+"-"+month+"-"+day; 
@@ -85,10 +84,8 @@ public class CalendarController {
 	/* 캘린더 전체 리스트 */
 	@RequestMapping(value = "reserveMyList.do", method = RequestMethod.GET)
 	public void reserveList(HttpSession session, HttpServletResponse response) throws Exception {
-		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
+		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();
 		ArrayList<Reserve> rList = cService.reserveList(memberId);
-		
-		System.out.println(rList.toString());
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
 		gson.toJson(rList, response.getWriter());
@@ -98,14 +95,13 @@ public class CalendarController {
 	@RequestMapping(value = "reserveToday.do", method = RequestMethod.GET)
 	public void reserveToday(HttpSession session, HttpServletResponse response, String today) throws Exception {
 
-		String memberId = "admin";
+		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();
 
 		HashMap<String, String> para = new HashMap<String, String>();
 		para.put("today", today);
 		para.put("memberId", memberId);
 
 		ArrayList<Reserve> rToday = cService.reserveToday(para);
-
 		for (Reserve r : rToday) {
 			String str = r.getrTime();
 			r.setrTime(str.substring(0, 2));
@@ -128,13 +124,11 @@ public class CalendarController {
 	@RequestMapping(value = "calDelete.do", method = RequestMethod.GET)
 	public String calDelete(HttpSession session, @RequestParam(value = "calNo", required = false) Integer calNo,
 			HttpServletResponse response) {
-		System.out.println(calNo);
 		String memberId = ((Member)session.getAttribute("loginMember")).getMemberId();;
 		Reserve re = new Reserve();
 		re.setMemberId(memberId);
 		re.setrNo(calNo);
 		int result = cService.calDelete(re);
-		System.out.println(result);
 
 		if (result > 0) {
 			return "ok";

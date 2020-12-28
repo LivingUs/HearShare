@@ -199,6 +199,7 @@ var today = d.getFullYear() + '-' +
     if(tArr.length>tStock) {
     	alert("정기권 수량을 확인해 주세요.");
     	$("#"+checkId).css("background-color", "white");
+    	$("#"+checkId).css("color", "dimgray");
     	$("#"+tId).prop("checked", false);
     	console.log(tId);
     }
@@ -283,7 +284,7 @@ var today = d.getFullYear() + '-' +
 		        pay_method : 'card',
 		        merchant_uid : 'merchant_' + new Date().getTime(),
 		        name :	'HEAR:SHARE',
-		        amount : 100,
+		        amount : total,
 		        buyer_email : 'eye5277@naver.com',
 		        buyer_name : '입주민',
 		        buyer_tel : '010-2538-5276',
@@ -392,8 +393,8 @@ var today = d.getFullYear() + '-' +
 		<header>
 		    <h3 style="float: left; width: 30%; font-weight: bold; font-family:Jal_Onuel;">&nbsp;Reservation</h3>
 		    <nav id="smallnav">
-		        <a href="studyReserve.do"><i class="far fa-calendar-check"></i></a>
-		        <a href="calendar.do"><i class="far fa-calendar-alt"></i></a>
+		        <a href="studyReserve.do" class="far fa-calendar-check"><span>테마룸 예약</span></a>
+		        <a href="calendar.do" class="far fa-calendar-alt"><span>나의일정</span></a>
 		    </nav>
 		    <hr>
 		</header><br><br>

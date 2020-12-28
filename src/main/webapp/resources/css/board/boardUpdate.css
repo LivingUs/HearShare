@@ -47,10 +47,6 @@ body {
         color: black;
     }
 
-    #smallnav>a:hover {
-        color: hotpink;
-    }
-
 /*a*/
 a:link { text-decoration: none;}
 

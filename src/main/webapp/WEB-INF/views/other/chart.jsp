@@ -31,10 +31,10 @@
 			<header>
 				<h3 style="float: left; width: 30%; font-weight: bold; font-family: 'Jal_Onuel';">&nbsp;Account Book</h3>
 				    <nav id="smallnav">
-				        <a href="#mypage" onclick=""><i class="fas fa-user-edit"></i></a> 
-				        <a href="#ticket" onclick="location.href='payAllList.do'"><i class="fas fa-ticket-alt"></i></a> 
-					    <a href="#autoPay" onclick="location.href='autoPayList.do'"><i class="far fa-credit-card"></i></a> 
-				        <a href="#chart" onclick="location.href='accountList.do'"><i class="fas fa-chart-bar"></i></a> 
+					        <a href="#mypage" onclick="location.href='myPage.do'" class="fas fa-user-cog"><span>마이페이지</span></a> 
+					        <a href="#ticket" onclick="location.href='payAllList.do'" class="fas fa-ticket-alt"><span>정기권</span></a> 
+					        <a href="#autoPay" onclick="location.href='autoPayList.do'" class="far fa-credit-card"><span>결제관리</span></a> 
+					        <a href="#chart" onclick="location.href='accountList.do'" class="fas fa-chart-bar"><span>지출관리</span></a> 
 				    </nav>
 				    <hr>
 			</header>

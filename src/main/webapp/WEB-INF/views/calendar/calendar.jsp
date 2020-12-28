@@ -411,8 +411,8 @@ var moList = [];
 		<header>
 		    <h3 style="float: left; width: 30%; font-weight: bold; font-family:Jal_Onuel;">&nbsp;My Calendar</h3>
 		    <nav id="smallnav">
-		        <a href="studyReserve.do"><i class="far fa-calendar-check"></i></a>
-		        <a href="calendar.do"><i class="far fa-calendar-alt"></i></a>
+		        <a href="studyReserve.do" class="far fa-calendar-check"><span>테마룸 예약</span></a>
+		        <a href="calendar.do" class="far fa-calendar-alt"><span>나의일정</span></a>
 		    </nav>
 		    <hr>
 		</header><br><br>

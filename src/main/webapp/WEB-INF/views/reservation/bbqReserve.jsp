@@ -53,6 +53,9 @@ var today = d.getFullYear() + '-' +
 			
 			/* 날짜 선택시 셀 CSS 변경  */
 			dateClick : function(info) {
+				$("#user").val("");
+         		$("#userDate").val("");
+         		
 				var d = new Date();
 
 				var month = d.getMonth()+1;
@@ -189,10 +192,11 @@ var today = d.getFullYear() + '-' +
 });   
  $(function() {
     $("#reserveSubmit").click(function() {
-    	 if($("#reUser").text() != "") {
+    	console.log($("#user").val());
+    	if($("#user").val() != "") {
     		alert("예약 완료된 날짜는 예약하실 수 없습니다.");
     		return false;
-    	}
+    	} else {
     	
     	 var result =  confirm(moment + " // 바베큐장 예약하시겠습니까?");
     	 
@@ -207,6 +211,7 @@ var today = d.getFullYear() + '-' +
 	            },
 	            success     :   function(data){
 	                if(data == "OK") {
+	                	alert("예약이 완료되었습니다. My Calendar에서 확인해 보세요!");
 	                    location.href="calendar.do";
 	                } else {
 	                	location.href="common/errorPage.do";
@@ -217,8 +222,9 @@ var today = d.getFullYear() + '-' +
 	            }
 	        });
     	 }
-        
+    	}  
     });
+    
  });
 </script>
 </head>
@@ -298,8 +304,8 @@ var today = d.getFullYear() + '-' +
 		<header>
 		    <h3 style="float: left; width: 30%; font-weight: bold; font-family:Jal_Onuel;">&nbsp;Reservation</h3>
 		    <nav id="smallnav">
-		        <a href="studyReserve.do"><i class="far fa-calendar-check"></i></a>
-		        <a href="calendar.do"><i class="far fa-calendar-alt"></i></a>
+		        <a href="studyReserve.do" class="far fa-calendar-check"><span>테마룸 예약</span></a>
+		        <a href="calendar.do" class="far fa-calendar-alt"><span>나의일정</span></a>
 		    </nav>
 		    <hr>
 		</header><br><br>
@@ -323,7 +329,7 @@ var today = d.getFullYear() + '-' +
 		                <i class="fas fa-angle-double-right" style="color:#9B8281;"></i>
 		                <span style="color:white; font-weight:bolder; font-size:20px;">예약 현황</span><i class="fas fa-angle-double-left" style="color:#9B8281;"></i><br><br>
 		                
-		                <span id="reUser" style="color: white; float:left; margin-left:25px; margin-right: 20px;">예약자 : </span>
+		                <span style="color: white; float:left; margin-left:25px; margin-right: 20px;">예약자 : </span>
 		                <input type="text" id="user" style="width: 155px; text-align: center; float:left; font-size:15px;" readonly value=""><br><br>
 		                <span style="color: white; float:left; margin-left:10px; margin-right: 20px;">예약일자 : </span>
 		                <input type="text" id="userDate" style="width: 155px; text-align: center; float:left;  font-size:15px;" readonly value=""><br><br>
